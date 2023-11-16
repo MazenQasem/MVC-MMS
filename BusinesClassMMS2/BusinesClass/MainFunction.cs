@@ -10,7 +10,7 @@ namespace MMS2
     {
 
 
-        public static String SqlConn = "data source=localhost;initial catalog=HIS;persist security info=True;user id=sa;password=M@z499199*;MultipleActiveResultSets=True;App=EntityFramework";
+        public static String SqlConn = "data source=localhost;initial catalog=HIS;persist security info=True;user id=sa;password=*****;MultipleActiveResultSets=True;App=EntityFramework";
 
 
         public static SqlConnection MainConn()
