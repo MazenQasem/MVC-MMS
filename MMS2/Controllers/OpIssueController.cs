@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 
 
-
+/*C-ok*/
 namespace MMS2.Controllers
 {
     public class OpIssueController : Controller
