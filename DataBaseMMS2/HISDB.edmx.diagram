@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="feeaee48810048e3853a133a915d64e5" Name="DataBaseTables" ZoomLevel="100">
+        <EntityTypeShape EntityType="HISModel.Bank" Width="1.5" PointX="5.625" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Batch" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.BatchStore" Width="1.5" PointX="0.75" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.ItemGroup" Width="1.5" PointX="2.375" PointY="4.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.ItemStore" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Manufacturer" Width="1.5" PointX="2.375" PointY="4" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Packing" Width="1.5" PointX="2.375" PointY="3.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.PurchaseReceipt" Width="1.5" PointX="4" PointY="4" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.PurchaseReceiptDetail" Width="1.5" PointX="4" PointY="3.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.supplier" Width="1.5" PointX="0.75" PointY="4" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.AlterMRP" Width="1.5" PointX="4" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Employee" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Doctor" Width="1.5" PointX="2.375" PointY="3" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.ItemAvgSale" Width="1.5" PointX="2.375" PointY="2.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.BatchLocator" Width="1.5" PointX="0.75" PointY="5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Rack" Width="1.5" PointX="2.375" PointY="5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Shelf" Width="1.5" PointX="4" PointY="5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.TransactionType" Width="2.5" PointX="7" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HISModel.MMS_ItemMaster" Width="2.5" PointX="8.875" PointY="0.5" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Category" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Company" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Department" Width="1.5" PointX="2.375" PointY="5.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Grade" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.OPBService" Width="1.5" PointX="4" PointY="5.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.OPLOAOrder" Width="1.5" PointX="4" PointY="6.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.OPLOAOrderModify" Width="1.5" PointX="5.625" PointY="6.375" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.OPLOAService" Width="1.5" PointX="5.625" PointY="5.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Patient" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="false" />
+        <EntityTypeShape EntityType="HISModel.Item" Width="1.5" PointX="7.25" PointY="0.5" IsExpanded="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

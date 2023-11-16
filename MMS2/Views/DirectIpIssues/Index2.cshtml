@@ -1,0 +1,917 @@
+﻿@model MMS2.ParamDirectIpIssuesModel
+ @using MMS2
+
+@{
+    ViewBag.Title = "Direct IP Issues";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+
+
+    User u = (User)Session["User"];
+    string UserLoggedNAme = "";
+    UserLoggedNAme = u.Name;
+ 
+    
+   
+}
+
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuOrder').trigger('click');">Orders</a></li>
+        <li>Direct IP Issues </li>
+    </ul>
+</div>
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("IndentOrderSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Direct IP Issues  </h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                        <div class="span6  ">
+                            <span class="top"> Pin No.  </span>
+                            @Html.DropDownListFor(m => m.PinNo, new SelectList(Model.PinList,"IPId", "RegNo"), new { @class = "form-control  ", data_bind = "select2:{}", style="width:350px;" })
+                        </div>
+                            <div class="span4  ">
+                                <span class="top">Bed </span>
+                                @Html.DropDownListFor(m => m.Bed, new SelectList(Model.BedList,"Id", "Name"), new { @class = "form-control  ", data_bind = "select2:{}", style="width:150px;"  })
+                            </div>
+
+                           @* <div class="span5"></div>
+                            <div class="span2 head">
+                                <span class="top">Date From</span>
+                                <input type="text" id="FromDate" class="datepicker" value="" />
+                            </div>
+                            <div class="span2">
+                                <span class="top">To Date</span>
+                                <input type="text" id="ToDate" class="datepicker" value="" />
+
+                            </div>
+                            <div class="span3">
+                                <span class="top">.</span>
+                                <button class="btn btn-primary" id="btnShowData" style="width: 75%">Show</button>
+                            </div>*@
+                        </div>
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblIndentView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td class="hidden"> Id</td>
+                                            <th class="StationSLno">Issue No.</th>
+                                            <td class="PatientName" >PatientName</td>
+                                            <td class="IpNo">IP No</td>
+                                            <td class="Bed">Bed</td>
+                                            <td class="Doctor">Doctor</td>
+                                            <td class="DateTime">DateTime</td>
+                                            <td class="Operator">Operator</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span2">
+                                    @*<span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgba(255, 182, 193, 0.59); width: 100px;">New Indent</span>*@
+                                </div>
+                                <div class="span2">
+                                    @*<span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(224, 224, 66); width: 100px;">Pending Orders</span>*@
+                                </div>
+                                <div class="span2">
+                                    @*<span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(153, 255, 153); width: 100px;">Issued Indent</span>*@
+                                </div>
+                                <div class="span3">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnNewOrder" style="width: 75%">New Order</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Direct IP Issue</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span4  ">
+                                <span class="top">Pin No. </span>
+                            <select id="SelectedPinNo" name="SelectedPinNo" style="width: 350px;">
+                                @{ foreach (var item in Model.PinList){ <option value="@item.IPId" >@item.RegNo</option>} }
+                            </select>
+                            </div>
+                       
+                            <div class="span4  ">
+                                <span class="top">Patient</span>
+                                <select id="Patient_IpId" style="width: 350px;" ></select>
+                                @*@Html.TextBoxFor(m => m.lbldate, new { @class = "ViewTxtCSS" })*@
+                            </div>
+                            <div class="span1"></div>
+                            <div class="span3">
+                                <span class="top">Order No</span>
+                            <input type="text" id="orderno" name="orderno" class="ViewTxtCSS" />
+                                @*@Html.TextBoxFor(m => m.lbldate, new { @class = "ViewTxtCSS" })*@
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span2">
+                                <span class="top">Age</span>
+                                <input type="text" id="age" name="age" class="ViewTxtCSS" />
+                            </div>
+                            <div class="span2">
+                                <span class="top">Sex</span>
+                                <input type="text" id="sex" name="sex" class="ViewTxtCSS" />
+                            </div>
+                            <div class="span2">
+                                <span class="top">Bed</span>
+                                <input type="text" id="BedNO" name="BedNO" class="ViewTxtCSS" />
+                            </div>
+                            <div class="span3"></div>
+                            <div class="span3">
+                                <span class="top">DateTime</span>
+                                <input type="text" id="DateTime" name="DateTime" class="ViewTxtCSS" />
+                            </div>
+                             
+                        </div>
+                        <div class="row-form">
+                            <div class="span6">
+                                <span class="top">Allergies</span>
+                                <input type="text" id="allergies" name="allergies" class="ViewTxtCSS" />
+                            </div>
+                             
+                            <div class="span3"></div>
+                            <div class="span3">
+                                <span class="top">Operator</span>
+                                <input type="text" id="operator" name="operator" class="ViewTxtCSS" value="@UserLoggedNAme"/>
+                            </div>
+
+                        </div>
+
+                        <div class="row-form">
+                            <div class="span6">
+                                <span class="top">Doctor</span>
+                                <select id="doctor" name="doctor" style="width: 400px;">
+                                    @{ foreach (var item in Model.DoctorList){ <option value="@item.Id" >@item.Name</option>} }
+                                </select>
+                            </div>
+
+                            <div class="span3"></div>
+                            <div class="span3">
+                                <span class="top">Category</span>
+                                <select id="category" name="category" style="width:250px;">
+                                    @{ foreach (var item in Model.CategoryList){ <option value="@item.Id" >@item.Name</option>} }
+                                </select>
+                            </div>
+
+                        </div>
+
+                      @*  <div class="row-form">
+                            <div class="span3">
+                                <span class="top">Category</span>
+                                <select id="lstItemCategory"></select>
+                            </div>
+                            <div class="span3">
+                                <span class="top">Sections</span>
+                                <select id="lstSections" class="ViewTxtCSS"></select>
+                            </div>
+                            <div class="span3 hidden">
+                                <span class="top">QOH</span>
+                                <select id="lstQOH">
+                                    <option selected="selected">All Items</option>
+                                    <option>Greater than zero</option>
+                                </select>
+                            </div>
+
+                        </div>*@
+
+
+                        <div class="row-form" id="listitemDiv">
+                            
+                            <div class="span8">
+                                <input type="text" id="allItemsList" class="js-data-example-ajax" style="width: 100%" />
+                            </div>
+
+                            <div class="span1">
+                                @*<span class="top">.</span>*@
+                                <input type="button" class="button" id="btnAddItem" value="Add" />
+                            </div>
+                            <div class="dr"><span></span></div>
+                        </div>
+                        <table class="table" id="SelectedItemtbl"
+                            style="background-color: beige; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>sl.no</th>
+                                    <th>Drug Name </th>
+                                    <th>Dist.QOH</th>
+                                    <th>Req.Qty</th>
+                                    <th class="hidden">UnitID</th>
+                                    <th>Unit</th>
+                                    <th>Remarks</th>
+                                    <th class="hidden">Max Lvl</th>
+                                    <th class="hidden">QOH</th>
+                                    <th class="hidden">Min Lvl</th>
+                                    <th class="hidden">ID</th>
+                                    <th class="TAC">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnPrint" style="width: 75%">View</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+
+        }
+
+        @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<script>
+    $(document).ready(function (e) {
+        get_data();
+        $('.ViewWidget').show();
+        $('.DetailWidget').hide();
+        $('.ViewTxtCSS').attr("readonly", "readonly");
+        $("#category").val(7);  
+        var currentdate = new Date();
+        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var datetime = "" + currentdate.getDate() + "/" + monthNames[currentdate.getMonth()] + "/"+ currentdate.getFullYear() + "  "+ currentdate.getHours() + ":"+ currentdate.getMinutes() + ":" + currentdate.getSeconds();
+        $("#DateTime").val(datetime);
+        
+       
+     
+         
+     
+        try {
+           
+            $('#allItemsList').select2({
+                ajax: {
+                    url: GetAppName() + "/DirectIpIssues/LoadListItembyDirectIpIssue",
+                    dataType: 'json',
+                    type: "POST",
+                    delay: 150,
+                    data: function (params) {
+                        return {
+                            Cat: parseInt($('select#category option:selected').val()), ItemCode: params,
+                        };
+                    },
+                    results: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.Name,
+                                                                         id: item.ID
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2,
+                formatResult: FormatResult,
+                formatSelection: FormatSelection,
+            });
+
+        } catch (err) { ShowMessage('Cant found Items'); }
+
+
+        $('select').select2();
+        $("#PinNo").change(function () {
+            get_data();
+        });
+        $("#Bed").change(function () {
+            get_data(this.value);
+        });
+
+        $("#SelectedPinNo , #Patient_IpId").change(function () {
+            console.log(this.value);
+            get_InformationData(this.value);
+        });
+
+
+        $(document).on('click', '#btnNewOrder', function () {
+            clearcontrolls('new');
+           
+            get_PatientList();
+            $("#SelectedPinNo option[value='0']").remove();
+          
+         
+
+            return false;
+        });
+
+        
+        $(document).on('click', '#btnAddItem', function (e) {
+            var itemindex = $('#allItemsList').select2('val');
+            if (itemindex > 0) {
+
+                ItemSelect(itemindex);
+            } else {
+                ShowMessage('Please Select an Item First!');
+            }
+            return false;
+        });
+
+        $(document).on('click', '.save-user', function (e) {
+            var tr = $(this).parents('tr:first');
+                          
+            $(".edit-mode").addClass("hidden");
+            $(".display-mode").removeClass("hidden");
+            e.preventDefault();
+            return false;
+        });
+
+        $(document).on('click', '.cancel-user', function (e) {
+            var po = $(this).closest("tr").get(0);
+            var iPos = $("#SelectedItemtbl").dataTable().fnGetPosition(po);
+            if (iPos !== null) {
+                $("#SelectedItemtbl").dataTable().fnDeleteRow(iPos);             }
+            $(".edit-mode").addClass("hidden");
+            $(".display-mode").removeClass("hidden");
+            e.preventDefault();
+            return false;
+
+        });
+
+
+        $(document).on("click", ".edit-user", function (e) {
+            $(".edit-mode").addClass("hidden");
+            $(".display-mode").removeClass("hidden");
+            var tr = $(this).parents('tr:first');
+            tr.find('.edit-mode').removeClass("hidden");
+            tr.find('.display-mode').addClass("hidden");
+
+            var qty = tr.find('#lblReqQty').val();
+            $(this).parents('tr:first').find('#ReqQty').val(qty);
+            $(this).parents('tr:first').find('#ReqQty').focus();
+
+            var rmk = tr.find('#lblRemarks').text();
+            $(this).parents('tr:first').find('#NewRemarks').text(rmk);
+
+                         var ItemID = $(this).closest("tr").find('td:eq(10)').text();
+            var CurrentUOM = $(this).closest("tr").find('td:eq(4)').text();
+            
+            
+
+            return false;
+        });
+
+
+
+
+
+    });
+
+         $(document).on("change", ".UomAdd", function (e) {
+        ChangeInfo(this);
+    });
+    $(document).on("change", "#ReqQty", function (e) {
+        ChangeInfo(this);
+    });
+    $(document).on("change", "#NewRemarks", function (e) {
+        ChangeInfo(this);
+    });
+    function ChangeInfo(obj) {
+
+        var tr = $(obj).parents('tr:first');
+        var UList = tr.find(".UomAdd").find('option:selected').text();
+        tr.find("#UomInputName").val(UList);
+
+
+        var UListID = tr.find(".UomAdd").find('option:selected').val();
+        tr.find("td:eq(4)").text(UListID);
+
+        var Rem = tr.find('#NewRemarks').val();
+        tr.find('#lblRemarks').val(Rem);
+
+
+        var Qt = tr.find('#ReqQty').val();
+        tr.find('#lblReqQty').val(Qt);
+
+
+        return false;
+
+    }
+
+
+
+    $(document).on('click', '#btnSave', function () {
+
+        alert('btnSave');
+        if (Validate() == true) {
+            var IndentOrderModel = {};
+            var rows = $('#SelectedItemtbl').dataTable().fnGetNodes();
+            if (rows.length == 10) { ShowMessage("Can't Order more than 10 Items per Order!"); return false; }
+            var SelectedItem = [];
+            for (var i = 0; i < rows.length; i++) {
+                var IndentInsertedItemList = {};
+                IndentInsertedItemList.SNO = $(rows[i]).find("td:eq(0)").html();
+                IndentInsertedItemList.Name = $(rows[i]).find("td:eq(1)").html();
+                IndentInsertedItemList.DistinationQty = $(rows[i]).find("td:eq(2)").html();
+                IndentInsertedItemList.QtyReqeust = $(rows[i]).find("#lblReqQty").val();
+                IndentInsertedItemList.UnitID = $(rows[i]).find("td:eq(4)").html();
+                IndentInsertedItemList.UnitName = $(rows[i]).find("#UomInputName").val();
+                IndentInsertedItemList.Remarks = $(rows[i]).find("#lblRemarks").val();
+                IndentInsertedItemList.MaxLevel = $(rows[i]).find("td:eq(7)").html();
+                IndentInsertedItemList.QOH = $(rows[i]).find("td:eq(8)").html();
+                IndentInsertedItemList.MinLevel = $(rows[i]).find("td:eq(9)").html();
+                IndentInsertedItemList.ID = $(rows[i]).find("td:eq(10)").html();                 SelectedItem.push(IndentInsertedItemList);
+            }
+            IndentOrderModel.SelectedItem = SelectedItem;
+            IndentOrderModel.ToStationID = $('select#ToStationList option:selected').val();
+            IndentOrderModel.ItemCategory = $('select#lstItemCategory option:selected').val();
+            IndentOrderModel.SectionID = $('select#lstSections option:selected').val();
+            IndentOrderModel.dtpBydate = $('#dtpBydate').val();
+            IndentOrderModel.txtRef = $('#txtRef').val();
+            IndentOrderModel.lbldate = $('#lbldate').val();
+            IndentOrderModel.lblId = $('#lblId').val();
+            IndentOrderModel.lbloperator = $('#lbloperator').val();
+            IndentOrderModel.OrderID = $('#OrderID').val();
+
+            IndentOrderModel.IpId = $('#SelectedPinNo').val();
+
+            var URL = "/DirectIpIssues/Save";
+            $.ajax({
+                url: GetAppName() + URL,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                dataType: 'json',
+                data: JSON.stringify({ Order: IndentOrderModel }),
+                success: function (msg) {
+                    if (msg.ErrMsg != null) {
+                        ShowMessage(msg.ErrMsg);
+                        clearcontrolls('view');
+                    }
+                }
+            });
+            return false;
+        }
+
+        return false;
+    });
+
+
+    function ItemSelect(ItemID) {
+                          alert('ItemSelect');
+        var rows = $('#SelectedItemtbl').dataTable().fnGetNodes();
+        if (rows.length == 10) { ShowMessage("Can't Order more than 10 Items per Order!"); return false; }
+        var SelectedItem = [];
+        for (var i = 0; i < rows.length; i++) {
+            var IndentInsertedItemList = {};
+            IndentInsertedItemList.SNO = $(rows[i]).find("td:eq(0)").html();
+            IndentInsertedItemList.Name = $(rows[i]).find("td:eq(1)").html();
+            IndentInsertedItemList.DistinationQty = $(rows[i]).find("td:eq(2)").html();
+            IndentInsertedItemList.QtyReqeust = $(rows[i]).find("#lblReqQty").val();
+            IndentInsertedItemList.UnitID = $(rows[i]).find("td:eq(4)").html();
+            IndentInsertedItemList.UnitName = $(rows[i]).find("#UomInputName").val();
+            IndentInsertedItemList.Remarks = $(rows[i]).find("#lblRemarks").val();
+            IndentInsertedItemList.MaxLevel = $(rows[i]).find("td:eq(7)").html();
+            IndentInsertedItemList.QOH = $(rows[i]).find("td:eq(8)").html();
+            IndentInsertedItemList.MinLevel = $(rows[i]).find("td:eq(9)").html();
+            IndentInsertedItemList.ID = $(rows[i]).find("td:eq(10)").html();
+            if (IndentInsertedItemList.ID == ItemID) {
+                ShowMessage('Item Already Selected !');
+                return false;
+            }
+            else {
+                                 SelectedItem.push(IndentInsertedItemList);
+            }
+        }
+        var ToStationID =  $('select#ToStationList option:selected').val();
+        var URL = "/IndentOrder/InsertItem";
+        $.ajax({
+            url: GetAppName() + URL,
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            dataType: 'json',
+            data: JSON.stringify({ ItemID: ItemID, ToStationID: ToStationID, SelectedItem: SelectedItem, }),
+            success: function (msg) {
+                                 if (msg[0].ErrMsg != null) {
+                    ShowMessage(msg[0].ErrMsg);
+                }
+                InsertItemtoBill(msg);
+            }
+        });
+        return false;
+    }
+
+    function InsertItemtoBill(itm) {
+  
+        var IndentInsertedItemList = [];
+        IndentInsertedItemList = itm;
+        render_InsertSelectedItem('#SelectedItemtbl', IndentInsertedItemList);
+        TempDataTbl = null;          $('#btnSave').focus();          return false;
+    }
+    function render_InsertSelectedItem(tblid, xItem) {
+        var SelectItemsTable = $(tblid).dataTable({
+            destroy: true,
+            data: xItem,
+            paging: false,
+            ordering: false,
+            searching: false,
+            info: false,
+            processing: false,
+            scrollCollapse: false,
+            columnDefs: [
+                { data: 'SNO', targets: [0], className: '', width: '3%', },
+                { data: 'Name', targets: [1], className: '', width: '27%', },
+
+                { data: 'DistinationQty', targets: [2], className: '', width: '7%' },
+                {
+                    data: 'QtyReqeust', targets: [3], className: 'Align_Right_Col_Red', width: '5%',
+                    'mRender': function (data, type, full) {
+                        return '<span class="display-mode">' +
+                        '<input type="text" id="lblReqQty" value="' + data + '" class="display-mode disable" style="Align_Right_Col" />' +
+                        '</span>' +
+                        '<input type="text" id="ReqQty" value="' + data + '" class="edit-mode hidden AutoSelectTxt" />';
+                    }
+                },
+                { data: 'UnitID', targets: [4], className: 'hidden', width: '0%' },
+                {
+                    data: 'UnitName', targets: [5], className: '', width: '20%',
+                    'mRender': function (data, type, full) {
+                        return '<input type="text" id="UomInputName" value="' + data + '" class=" display-mode disable" />'
+                            + '<select id="UomList" class="UomAdd  edit-mode hidden" disabled  />';
+                    }
+                },
+                {
+                    data: 'Remarks', targets: [6], className: 'Align_Right_Col_Red', width: '20%',
+                    'mRender': function (data, type, full) {
+                        return '<span class="display-mode">' +
+                        '<input type="text" id="lblRemarks" value="' + data + '" class="display-mode disable" style="Align_Right_Col" />' +
+                        '</span>' +
+                        '<input type="text" id="NewRemarks" value="' + data + '" class="edit-mode hidden AutoSelectTxt" />';
+                    }
+                },
+                { data: 'MaxLevel', targets: [7], width: '6%', className: ' hidden' },
+                { data: 'QOH', targets: [8], width: '6%', className: ' hidden' },
+                { data: 'MinLevel', targets: [9], width: '6%', className: ' hidden' },
+
+                { data: 'ID', targets: [10], className: ' hidden' },
+                {
+                    data: 'Action', targets: [11], className: 'TAC',
+                    "mRender": function (data, type, full) {
+                        return '<a href="#"><span class="icon-ok save-user edit-mode hidden"></span></a> ' +
+                        '<a href="#"><span class="icon-pencil edit-user display-mode"></span></a> ' +
+                        '<a href="#"><span class="icon-trash cancel-user edit-mode hidden"></span></a>';
+
+                    }
+                }
+
+            ]
+        }).fnDraw();
+
+        SelectItemsTable = $(tblid).DataTable();
+
+        $('.disable').prop('disabled', true);
+    };
+
+
+
+    function GetAppName() {
+        var xx = $('.AppName').html();
+        return xx;
+    }
+
+    function get_InformationData(Ipid) {
+        if (Ipid) {
+
+          
+            var ParamTable = {};
+            ParamTable.IpId = Ipid;
+            
+            var URL = "/DirectIpIssues/InformationLoadList";
+            $.ajax({
+                url: GetAppName() + URL,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                dataType: 'json',
+                data: JSON.stringify(ParamTable),
+                success: function (msg) {
+                    console.log(msg);
+                   
+                    var checkAlertPatientIsInOperationTheatre = 0;
+                    $.each(msg, function (index, value) {
+                      
+                        if (value.AlertMsg !== '' && value.AlertMsg != null) {
+                            checkAlertPatientIsInOperationTheatre = checkAlertPatientIsInOperationTheatre + 1;
+                        } else {
+                            $("#s2id_Patient_IpId").select2("val", value.IpId);
+                            $("#s2id_SelectedPinNo").select2("val", value.IpId);
+                            $("#s2id_doctor").select2("val", value.DoctorId);
+                            $("#age").val(value.Age);
+                            $("#BedNO").val(value.BedName);
+                            $("#sex").val(value.Sex == '1' ? "Female" : "Male");
+                        }
+                    });
+
+                 
+                    if (checkAlertPatientIsInOperationTheatre > 0) {
+                        ShowMessage("Patient is in Operation Theatre. Do you Still want to raise this Order?");
+                                            }
+
+                    
+
+                   
+                }
+            });
+
+        }  
+
+    }
+
+    var dataLoad = '';
+    var dataPinList = '';
+    function get_PatientList()
+    {
+        
+        var ParamTable = {};
+       
+        var URL = "/DirectIpIssues/LoadPatientList";
+        $.ajax({
+            url: GetAppName() + URL,
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            dataType: 'json',
+            data: ParamTable,             success: function (msg) {
+                
+
+                $.each(msg, function (i, Item) {
+                    $("#Patient_IpId").append(new Option(Item.Name, Item.Id));
+                });
+ 
+            }
+        });
+
+
+    }
+    function get_data(Ipid)
+    {
+         
+        if (Ipid)
+        {
+
+            var end = Ipid;
+            var ParamTable = {};
+            ParamTable.IpId = end;
+
+            var URL = "/DirectIpIssues/LoadList";
+            $.ajax({
+                url: GetAppName() + URL,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                dataType: 'json',
+                data: ParamTable,                 success: function (msg) {
+                                                              
+                    $("#PinNo").select2("val", "0");
+                    $.each(dataLoad, function (index, value) {
+                       
+                        if (value.IpNo == end) {
+                            console.log(value.IpNo);
+                            $("#PinNo").select2("val", value.IpNo);
+
+                        }  
+                    });
+
+                    render_IndentView('#tblIndentView', msg);
+                    ColorTable('#tblIndentView');
+                }
+            });
+
+        } else
+        {
+            var end = $("#PinNo").val();
+            var ParamTable = {};
+            ParamTable.IpId = end;
+
+            var URL = "/DirectIpIssues/LoadList";
+            $.ajax({
+                url: GetAppName() + URL,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                cache: false,
+                dataType: 'json',
+                data: ParamTable,                 success: function (msg) {
+                    dataLoad = msg;
+                    render_IndentView('#tblIndentView', msg);
+                    ColorTable('#tblIndentView');
+                    $("#Bed").select2("val", "0");
+           
+                }
+            });
+
+        }
+
+    }
+
+    function render_IndentView(tableID, dataxc) {
+        ViewtempTbl = $(tableID).dataTable({
+            destroy: true,
+            data: dataxc,
+            paging: true,
+            ordering: false,
+            searching: true,
+            info: false,
+            processing: false,
+            scrollCollapse: false,
+            columnDefs: [
+                { data: 'Id', className: 'hidden', targets: [0] },  
+                  { data: 'StationSLno', className: 'cAR-align-center', targets: "StationSLno" },
+                   { data: 'PatientName', className: 'cAR-align-center', targets: "PatientName" },
+                    { data: 'IpNo', className: 'cAR-align-center', targets: 'IpNo' },
+                     { data: 'Bed', className: 'cAR-align-center', targets: 'Bed' },
+                      { data: 'Doctor', className: 'cAR-align-center', targets: 'Doctor' },
+                        {
+                            data: 'DateTime', className: 'cAR-align-center Date', targets: 'DateTime',
+                            "render": function (data) {
+                                var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June","July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                var date = eval(data.replace(/\/Date\((\d+)\)\                                 return monthNames[date.getMonth()] + " -" + date.getDate() + "-" + date.getFullYear();
+                            }
+                        },
+                       { data: 'Operator', className: 'cAR-align-center', targets: 'Operator' },
+            ]
+        }).fnDraw();
+
+
+        PresTbl = $(tableID).DataTable();
+
+    };
+    function ColorTable(tableID) {
+        var Presrows = $(tableID).dataTable().fnGetNodes();
+        for (var i = 0; i < Presrows.length; i++) {
+                                      if ($(Presrows[i]).find("td:eq(5)").html() == 2) {
+                $(Presrows[i]).children('td,th').css('background-color', 'rgb(153, 255, 153)');             }
+            else if ($(Presrows[i]).find("td:eq(5)").html() == 1) {
+                $(Presrows[i]).children('td,th').css('background-color', 'rgb(224, 224, 66)');             }
+            else {
+               $(Presrows[i]).children('td,th').css('background-color', 'rgba(255, 182, 193, 0.59)');                
+            }
+        }
+        return false;
+    }
+
+    function clearcontrolls(type) {
+        SelectItemsTable = null;
+        $('#allItemsList').empty();
+        $('#s2id_allItemsList').find('a').find('span').empty();
+        $('#SelectedItemtbl').dataTable().fnClearTable();
+        $('#SelectedItemtbl').dataTable().fnDestroy();
+        $('#lstSections').removeClass('UnViewTxtCSS');
+        $('#lstSections').addClass('ViewTxtCSS');
+        $('#lstSections').prop('disabled', true);
+
+        $('#lblId').val('');
+        $('#lbldate').val('');
+        $('#dtpBydate').val('');
+        $('#txtRef').val('');
+        $('#lbloperator').val('');
+        $('#lstItemCategory').val('');
+        $('#lstSections').val('');
+        $('#ToStationList').val('');
+        $('#OrderID').val(0);
+        if (type == 'view') {
+            $('.ViewWidget').show();
+            $('.DetailWidget').hide();
+        } else if (type == 'new') {
+            $('.ViewWidget').hide();
+            $('.DetailWidget').show();
+
+                                                                                                   } else if (type == 'edit') {
+            $('.ViewWidget').hide();
+            $('.DetailWidget').show();
+
+
+            $('#listitemDiv').show();
+            $('#SelectedItemtbl').prop('disabled', false);
+            $('#dtpBydate').prop('disabled', false);
+            $('#txtRef').prop('disabled', false);
+            $('#lstItemCategory').prop('disabled', false);
+            $('#ToStationList').prop('disabled', false);
+            $('#btnSave').prop('disabled', false);
+        }
+        else if (type == 'detail') {              $('.ViewWidget').hide();
+            $('.DetailWidget').show();
+
+            $('#listitemDiv').hide();
+            $('#SelectedItemtbl').prop('disabled', true);
+            $('#dtpBydate').prop('disabled', true);
+            $('#txtRef').prop('disabled', true);
+            $('#lstItemCategory').prop('disabled', true);
+            $('#ToStationList').prop('disabled', true);
+            $('#btnSave').prop('disabled', true);
+        }
+
+        return false;
+
+    }
+
+
+    function Validate() {
+        alert('Validate');
+        var rows = $('#SelectedItemtbl').dataTable().fnGetNodes();
+        if (rows.length == 0) { ShowMessage("Please select Items for order") };
+        for (var i = 0; i < rows.length; i++)
+            {
+                var itm = $(rows[i]).find("td:eq(1)").html();
+                var qty = $(rows[i]).find("#lblReqQty").val();
+                if (qty > 0) { }
+                else {
+                    ShowMessage("Please enter quantity for item " + itm);
+                    $(this).focus;
+                    return false;
+                }
+            }
+
+            var ToStationID = $('select#SelectedPinNo option:selected').val();
+            if (ToStationID <= 0 || ToStationID == null) {
+                ShowMessage("Please select Patient No. / Name! ");
+                $(this).focus;
+                return false;
+            }
+                                                                                      
+            return  finalValidation();
+
+        
+    }
+
+
+   function finalValidation()
+    {
+
+        alert('final validation');
+
+        return true;
+
+
+    }
+
+
+
+
+</script>
+
+

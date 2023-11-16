@@ -1,0 +1,132 @@
+﻿@using MMS2
+@model  IEnumerable<ManufacturerS>
+@{
+    ViewBag.Title = "Manufacturer";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+
+}
+
+
+<script type='text/javascript' src="@Url.Content("~/Scripts/Manufacturers.js")"></script>
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>Manufacturer</li>
+    </ul>
+</div>
+
+
+
+<div class="content">
+    <div class="widget">
+        <div class="head dark">
+            <div class="icon"><span class="icos-checkmark"></span></div>
+            <h2>Manufacturer List </h2>
+        </div>
+        <div class="block-fluid">
+
+            @using (@Html.BeginForm("newManufacturer", "Manufacturer", FormMethod.Post))
+            {
+                <div class="row-form">
+                    <div class="span7">
+                        <span>
+                            <p style="font-size: large; color: lightgreen">
+                                <span class="label label-important">** Deactive Manufacturer </span>
+                            </p>
+                        </span>
+                    </div>
+                    <div class="span1">
+                        <input type="submit" name="CheckBtn" id="CreateNew"
+                            class="btn btn-primary" value="Create New " />
+                    </div>
+                </div>
+            }
+
+            <div class="dr"><span></span></div>
+
+
+        </div>
+        <div class="widget">
+            <div class="head">
+                <div class="icon"><span class="icosg-target1"></span></div>
+                <h2>Table Of Results</h2>
+            </div>
+            <div class="block-fluid">
+                <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid">
+                    <table class="fpTable dataTable" cellpadding="0" cellspacing="0" width="100%" id="DataTables_Table_2"
+                        aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                        <thead>
+                            <tr role="row">
+                                <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                    aria-label="Status: activate to sort column ascending" style="width: 200px;">ID</th>
+                                <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                    aria-label="Name: activate to sort column ascending" style="width: 251px;">Supplier Name</th>
+                                <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                    aria-label="Product: activate to sort column ascending" style="width: 199px;">Contact Person</th>
+                                <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                    aria-label="Date: activate to sort column ascending" style="width: 200px;">Date</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+                            @foreach (var Vr in Model)
+                            {
+                                <tr class="">
+                                    <td>
+                                        @Vr.Manufacturerx.id
+                                    </td>
+                                    <td>
+                                        @if (Vr.Manufacturerx.Active == true)                                          { 
+                                            <span class="label label-important">
+                                            <a style="color:white" 
+                                                href="@Url.Action("ManufacturerDetails", "Manufacturer", new { ManufacturereID = @Vr.Manufacturerx.id })" >@Vr.Manufacturerx.Name</a> </span>
+                                        }
+                                        else
+                                        {
+                                            <a  href="@Url.Action("ManufacturerDetails", "Manufacturer", new { ManufacturereID = @Vr.Manufacturerx.id })" >@Vr.Manufacturerx.Name</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a  href="@Url.Action("ManufacturerDetails", "Manufacturer", new { ManufacturereID = @Vr.Manufacturerx.id })" >@Vr.Manufacturerx.ContactPerson</a>
+                                    </td>
+                                    <td>
+                                        <a  href="@Url.Action("ManufacturerDetails", "Manufacturer", new { ManufacturereID = @Vr.Manufacturerx.id })" >@Vr.Manufacturerx.StartdateTime</a>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*<script>
+    function getxxx(manid)
+    {
+        JavascriptFunction("Index?ManufacturereID=" + manid, "Manufacturer");
+
+    }
+
+    function JavascriptFunction(actionName, ControllerName) {
+        var url = '/' + ControllerName + '/' + actionName;
+        $("#divLoading").show();
+        $.get(url, {},
+                function (data) {
+
+                    $("#PID")[0].innerHTML = data;
+                    alert(data.innerHTML);
+                    $("#divLoading").hide();
+                });
+    }
+    
+</script>*@
+

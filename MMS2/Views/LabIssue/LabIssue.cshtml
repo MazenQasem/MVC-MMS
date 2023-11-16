@@ -1,0 +1,198 @@
+﻿@using MMS2
+@model LabModel
+@{
+    ViewBag.Title = "Profile Issue";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/LabIssue.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuLab').trigger('click');">Lab Prepration</a></li>
+        <li>Item Issues for Preparation  </li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuLab').trigger('click');
+    });
+</script>*@
+
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("LabIssueSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>@ViewBag.Title</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblIssueView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td class="hidden">IssueID</td>
+                                            <td>Issue No</td>
+                                            <td>Item Name</td>
+                                            <td>Department</td>
+                                            <td>Operator</td>
+                                            <td>Datetime</td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span8"></div>
+                            <div class="span4">
+                                <button class="btn btn-primary" id="btnNew" style="width: 75%">New Issue</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>@ViewBag.Title</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">Issue No</span>
+                                @Html.TextBox("IssueNo", null, new { @Class = "ViewTxtCSS" })
+                            </div>
+                            @Html.Hidden("IssueId")
+                            <div class="span4">
+                                <span class="top">Date</span>
+                                @Html.TextBox("DateTime", null, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                            <div class="span4">
+                                <span class="top">Operator</span>
+                                @Html.TextBox("Operator", null, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                        </div>
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">Reference No</span>
+                                @Html.TextBox("RefNo", null, new { @class = "" })
+
+                            </div>
+                            <div class="span4">
+                                <span class="top">Department</span>
+                                <select id="DeptList"></select>
+                            </div>
+
+
+                        </div>
+                        <div class="row-form HideTable">
+                            <div class="span6">
+
+                                <span class="top" style="font-size: x-large;">All Items</span>
+                                <table class="table" id="AllItemtbl" style="background-color: beige; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th class="hidden">ID</th>
+                                            <th style="background-color: lightyellow">Item</th>
+                                            <th style="background-color: lightyellow">Add</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+
+                            </div>
+                            <div class="span6">
+
+                                <span class="top" style="font-size: large;"s>. </span>
+                                <span class="top" style="font-size: large;">. </span>
+                                <span class="top" style="font-size: large;">. </span>
+                                <span class="top" style="font-size: large;">. </span>
+                                <div style="background-color: lightblue">
+                                    <span class="top" style="font-size: x-large">Item information</span>
+
+                                    <table class="table" id="dtlItemtbl" style="width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="background-color: lightblue">Item</th>
+                                                <th style="background-color: lightblue">R.Qty</th>
+                                                <th style="background-color: lightblue">QOH</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-form">
+                            <span class="top DarkRedFontBold">Selected Items </span>
+                            <table class="table" id="SelectedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>sl.no</th>
+                                        <th>Drug Name </th>
+                                        <th>Unit</th>
+                                        <th>Qty</th>
+                                        <th class="hidden">UnitID</th>
+                                        <th class="hidden">ID</th>
+                                        <th class="hidden">Qoh</th>
+                                        <th class="TAC">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span6">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+    </form>
+
+</div>
+

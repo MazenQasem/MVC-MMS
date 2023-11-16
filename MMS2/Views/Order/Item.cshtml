@@ -1,0 +1,16 @@
+﻿@*@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_TwitterBlankLayout.cshtml";
+    }
+
+@if (@Session["User"] == null) 
+ { 
+     @Url.Action("Index","Login");
+ }
+
+ <div class="content">
+      <p> <span><a href="@Url.Action("Enter","Login")">Go Back</a></span> </p>
+
+ 
+   
+</div>*@

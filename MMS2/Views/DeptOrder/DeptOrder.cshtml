@@ -1,0 +1,236 @@
+﻿@using MMS2
+@model IndentOrderModel
+@{
+    ViewBag.Title = "DeptOrder";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/DeptOrder.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuOrder').trigger('click');">Orders</a></li>
+        <li>Departmental Order</li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuOrder').trigger('click');
+    });
+</script>*@
+
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("DeptOrderSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Departmental Order</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span5"></div>
+                            <div class="span2">
+                                <span class="top">Date From</span>
+                                <input type="text" id="FromDate" class="datepicker" value="" />
+                            </div>
+                            <div class="span2">
+                                <span class="top">To Date</span>
+                                <input type="text" id="ToDate" class="datepicker" value="" />
+
+                            </div>
+                            <div class="span3">
+                                <span class="top">.</span>
+                                <button class="btn btn-primary" id="btnShowData" style="width: 75%">Show</button>
+                            </div>
+                        </div>
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblIndentView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td class="hidden">IndentID</td>
+                                            <td>StationSlNO</td>
+                                            <td>IndentDateTime</td>
+                                            <td class="hidden">DeliveryDate</td>
+                                            <td>referenceno</td>
+                                            <td class="hidden">Status</td>
+                                            <td>IndentTo</td>
+                                            <td>IndentByName</td>
+                                            <td class="hidden">CategoryID</td>
+                                            <td class="hidden">SectionID</td>
+                                            <td class="hidden">ToStationID</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span3">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgba(255, 182, 193, 0.59); width: 100px;">New Order</span>
+                                </div>
+                                @*<div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(224, 224, 66); width: 100px;">Pending Orders</span>
+                                </div>*@
+                                <div class="span3">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(153, 255, 153); width: 100px;">Issued Order</span>
+                                </div>
+                                <div class="span3">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnNewOrder" style="width: 75%">New Order</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Departmental Order</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span8">
+                                <span class="top">To Station</span>
+                                <select id="ToStationList"></select>
+                            </div>
+                            @Html.Hidden("OrderID")
+                            @Html.Hidden("EditAllowed")
+                            @Html.Hidden("dtpBydate", new { @class = "datepicker" })
+                            <div class="span4">
+                                <span class="top">Date</span>
+                                @Html.TextBoxFor(m => m.lbldate, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span3">
+                                <span class="top">Ref. No</span>
+                                @Html.TextBoxFor(m => m.txtRef, new { @class = "" })
+                            </div>
+                            <div class="span2"></div>
+                            <div class="span3">
+                                <span class="top">Indent No</span>
+                                @Html.TextBoxFor(m => m.lblId, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span4">
+                                <span class="top">Operator</span>
+                                @Html.TextBoxFor(m => m.lbloperator, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span3">
+                                <span class="top">Category</span>
+                                <select id="lstItemCategory"></select>
+                            </div>
+                            <div class="span3">
+                                <span class="top">Sections</span>
+                                <select id="lstSections" class="ViewTxtCSS"></select>
+                            </div>
+                            <div class="span3 hidden">
+                                <span class="top">QOH</span>
+                                <select id="lstQOH">
+                                    <option selected="selected">All Items</option>
+                                    <option>Greater than zero</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row-form" id="listitemDiv">
+                            <div class="span8">
+                                @*<span class="top">Select Item from the list (min 5 char) </span>
+                                <select id="allItemsList" class="select" style="width: 100%">
+                                    <option value="0">...</option>
+                                </select>*@
+                                <input type="text" id="allItemsList" class="js-data-example-ajax" style="width: 100%"/>
+                            </div>
+                            <div class="span1">
+                                @*<span class="top">.</span>*@
+                                <input type="button" class="button" id="btnAddItem" value="Add" />
+                            </div>
+                            <div class="dr"><span></span></div>
+                        </div>
+                        <table class="table" id="SelectedItemtbl"
+                            style="background-color: beige; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>sl.no</th>
+                                    <th>Drug Name </th>
+                                    <th>Dist.QOH</th>
+                                    <th>Req.Qty</th>
+                                    <th class="hidden">UnitID</th>
+                                    <th>Unit</th>
+                                    <th>Remarks</th>
+                                    <th class="hidden">Max Lvl</th>
+                                    <th class="hidden">QOH</th>
+                                    <th class="hidden">Min Lvl</th>
+                                    <th class="hidden">ID</th>
+                                    <th class="TAC">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnPrint" style="width: 75%">View</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+         @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+

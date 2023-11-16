@@ -1,0 +1,864 @@
+﻿@using MMS2
+@model Patient
+@{
+    ViewBag.Title = "OP Cash/Credit Issue";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/OPIssueJS.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuIssue').trigger('click');">Issue</a></li>
+        <li>OP Cash/Credit Issue</li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuIssue').trigger('click');
+    });
+</script>*@
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("OPBillSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        {
+            @Html.HiddenFor(m => m.ErrMsg)
+            <div class="block-fluid">
+                <div class="row-fluid">
+                    @*<input type="text" id="testonly"/>*@
+                    <div class="head dark">
+                        <div class="icon"><i class="icos-paragraph-justify"></i></div>
+                        <h2>OP Pharamcy Bills</h2>
+
+                        <div class="row-form" style="background-color: darkseagreen;">
+                            <div class="span6">
+                                <div class="span2">
+                                    PIN
+                                    
+                                       <span class="label label-warning VIPCLASS">VIP</span>
+                                </div>
+
+                                <div class="span4">
+                                    <div class="span5">
+                                        @Html.TextBoxFor(m => m.OrgnizationIssueCode, new { @style = "border-color:black;background-color:gray;color:yellow;", @class = "ViewTxtCSS" })
+                                    </div>
+                                    <div class="span7">
+                                        @Html.TextBoxFor(m => m.Registrationno, new { id = "txtpin" })
+                                    </div>
+
+                                    @*<input type="text" id="txtPIN" />*@
+                                    @Html.HiddenFor(m => m.Registrationno)
+                                    @Html.HiddenFor(m => m.IssueAuthorityCode)
+                                    @Html.HiddenFor(m => m.CheckEmpPin)
+                                    @Html.Hidden("OrderNo")
+                                    @Html.HiddenFor(m => m.mDeptId)
+                                    @Html.HiddenFor(m => m.mAuthorityid)
+                                    @Html.HiddenFor(m => m.BillisCredit)
+                                    @Html.HiddenFor(m => m.mLOAConsultation)
+                                    @Html.HiddenFor(m => m.Agetype)
+                                    @Html.HiddenFor(m => m.Age)
+                                    @Html.HiddenFor(m => m.Sex)
+                                    @Html.HiddenFor(m => m.mdisper)
+                                    @Html.HiddenFor(m => m.mDeductper)
+
+
+                                </div>
+                                @*<a href="@Url.Action("Index")" id="PinSearch" class="icon-search"></a>*@
+                                <a href="#" id="PinSearch" class="icon-search"></a>
+                                Search
+                            </div>
+                            <div class="span3 offset3">
+                                <a href="#" id="btnSerchBill" title="Search for old bills" style="font-size: large">Find Bill</a>
+                            </div>
+                        </div>
+
+                        <div class="row-form  ControlDivCls">
+                            <div class="span6">
+                                <div class="block-fluid">
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <div class="span2">Doctor Name</div>
+                                            <div class="span10">
+                                                @Html.HiddenFor(m => m.DoctorId, new { id = "DocIdHolder" })
+                                                <select name="DoctorList" id="DoctorList" class="select" style="width: 100%">
+                                                    <option value="0">Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <div class="span2">Dis.Doctor Name</div>
+                                            <div class="span10">
+                                                <select name="DisDoctorList" id="DisDoctorList" class="select" style="width: 100%">
+                                                    <option value="0">Select</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <div class="span2">Deposit NO#</div>
+                                            <div class="span6">
+                                                <input type="text" id="DepositChkNo" />
+                                                <input type="text" id="DepositID" class="hidden" />
+                                                <input type="text" id="NetBalance" class="hidden" />
+                                                <input type="text" id="IPBalance" class="hidden" />
+                                            </div>
+                                            <div class="span4">
+                                                <input type="text" id="txtDepositAmt" class="ViewTxtCSS" />
+                                                <span class="top">Deposit Amt</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <div class="span4">Operator Name</div>
+                                            <div class="span8">
+                                                @*<input type="text" id="OperatorName" class="ViewTxtCSS" />*@
+                                                @Html.TextBoxFor(m => m.OperatorName, new { @class = "ViewTxtCSS" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <div class="block-fluid">
+
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <div class="span4">
+                                                <span class="top head" style="font-size: large">Bill Type:</span>
+                                            </div>
+                                            <div class="span8">
+                                                <div class="span6">
+                                                    <input type="radio" id="cashbtn" name="iexr_1" class="ibtn" /><span class="top head" style="font-size: larger">Cash</span>
+                                                </div>
+                                                <div class="span6">
+                                                    <input type="radio" id="creditbtn" name="iexr_1" disabled="disabled" checked="checked" class="ibtn" /><span class="top head" style="font-size: larger">Credit</span>
+                                                </div>
+                                                @*<input type="radio" name="iexr_1" class="ibtn" disabled="disabled" />*@
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <span class="bottom">Prescription</span>
+                                            @*<div class="span12" style="height: 145px;">*@
+                                            <div class="span12">
+                                                <table id="tblPrescription" class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order No.</th>
+                                                            <th>DateTime</th>
+                                                            <th>Doctor Name</th>
+                                                            <th>Station</th>
+                                                            <th class="hidden">DoctorID</th>
+                                                            <th class="hidden">Status</th>
+                                                            <th class="hidden">VisitID</th>
+                                                            <th class="hidden">MPrescriptionF</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form ControlDivCls">
+                            <div class="span12">
+                                <div class="span4">
+
+                                    <div class="span3">Patient Name</div>
+                                    <div class="span9">
+                                        @*<input type="text" id="PatientName" class="ViewTxtCSS" />*@
+                                        @Html.TextBoxFor(m => m.PatientName, new { @class = "ViewTxtCSS" })
+                                    </div>
+                                </div>
+                                <div class="span4">
+                                    <div class="span2">Sex</div>
+                                    <div class="span3">
+                                        @*<input type="text" id="SexName" class="ViewTxtCSS" />*@
+                                        @Html.TextBoxFor(m => m.SexTitle, new { @class = "ViewTxtCSS" })
+                                    </div>
+                                    <div class="span2">Age</div>
+                                    <div class="span5">
+                                        @*<input type="text" id="AgeName" class="ViewTxtCSS" />*@
+                                        @Html.TextBoxFor(m => m.AgeTitle, new { @class = "ViewTxtCSS" })
+                                    </div>
+                                </div>
+                                <div class="span4">
+                                    <div class="span3">Drug Allergy</div>
+                                    <div class="span9">
+                                        <select class="select" id="DrugAllergyList" name="DrugAllergyList" style="width: 100%">
+                                            <option value="0">...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form ControlDivCls">
+                            <input type="text" id="lblDeductableText" class="ViewTxtCSS" value="0%" style="background-color: lightyellow; font-size: x-large; text-align: center" />
+                        </div>
+                        <div class="row-form ControlDivCls">
+                            <div class="span12">
+
+                                <div class="span1">Company </div>
+                                <div class="span3">
+                                    <input type="text" id="CompanyName" class="ViewTxtCSS" />
+                                    @Html.HiddenFor(m => m.CompanyId)
+                                </div>
+                                <div class="span1">Category </div>
+                                <div class="span3">
+                                    <input type="text" id="CategoryName" class="ViewTxtCSS" />
+                                    @Html.HiddenFor(m => m.CategoryId)
+                                </div>
+                                <div class="span1">Other Alergies</div>
+                                <div class="span3">
+                                    <select class="select" id="OtherAllergyList" name="OtherAllergyList" style="width: 100%">
+                                        <option value="0">...</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid ControlDivCls">
+                        <div class="widget">
+                            <div class="head dark">
+                                <div class="icon"><i class="icos-paragraph-justify"></i></div>
+                                <h2>Information </h2>
+                            </div>
+                            <div class="accordion">
+                                <h3>Items</h3>
+                                <div class="block-fluid" style="height: 500px;">
+                                    <div class="row-form">
+                                        <div class="span8">
+
+                                            <select id="allItemsList" class="select" style="width: 100%" tabindex="">
+                                                <option value="0">...</option>
+                                            </select>
+                                            <span class="bottom">Select Item from the list </span>
+                                        </div>
+                                        <div class="span4">
+                                            <input type="button" class="button" id="btnAddItem" value="Add Item" />
+                                        </div>
+                                    </div>
+                                    <div class="row-form">
+                                        <div id="fModal-Batch">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h3 id="myModalLabel">Item Batch Info</h3>
+                                            </div>
+                                            <div class="row-fluid">
+                                                <div class="block-fluid">
+                                                    <div class="row-form">
+                                                        <div class="span3">
+                                                            <span class="top title">QOH:</span>
+                                                            <label id="lblQTY"></label>
+                                                        </div>
+                                                        <div class="span3">
+                                                            <span class="top title">ROL:</span>
+                                                            <label id="lblROL"></label>
+                                                        </div>
+                                                        <div class="span3">
+                                                            <span class="top title">ROQ:</span>
+                                                            <label id="lblROQ"></label>
+                                                        </div>
+                                                        <div class="span3">
+                                                            <span class="top title">UOM:</span>
+                                                            <label id="lblUOM"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-form">
+                                                        <div class="span4">
+                                                            <span class="top title">Min Level:</span>
+                                                            <label id="lblMinlvl"></label>
+                                                        </div>
+                                                        <div class="span4">
+                                                            <span class="top title">Max Level:</span>
+                                                            <label id="lblMaxlvl"></label>
+                                                        </div>
+                                                        <div class="span4">
+                                                            <span class="top title">Location:</span>
+                                                            <label id="lbllocation"></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row-form">
+
+                                                        <table id="tblBatch" class="display" cellspacing="0" width="100%">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Slno</th>
+                                                                    <th>Batch Number</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>ExpiryDate</th>
+                                                                    <th>Price</th>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3>Credit Detail</h3>
+                                <div class="block-fluid" style="height: 350px;">
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <div class="span6">
+                                                <div class="span2">Category</div>
+                                                <div class="span10">
+                                                    <input type="text" class="ViewTxtCSS" id="CategoryName2" />
+                                                    <span><a href="@Url.Action("Index", "OpLoa")" target="_blank" style="color:blue;font-style: italic;" >Open OP LOA </a></span>
+                                                </div>
+                                            </div>
+                                            <div class="span6">
+                                                <div class="span2">LOA Bal.</div>
+                                                <div class="span4">
+                                                    <input type="text" id="lblLoaBal" class="ViewTxtCSS" />
+                                                </div>
+                                                <div class="span2">LOA Date</div>
+                                                <div class="span4">
+                                                    <input type="text" id="lbldate" class="ViewTxtCSS" />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row-fluid">
+                                        <div class="span6">
+                                            <div class="block-fluid">
+                                                <div class="row-form">
+                                                    <div class="span12">
+                                                        <div class="span2">Company</div>
+                                                        <div class="span10">
+                                                            <input type="text" class="ViewTxtCSS" id="CompanyName2" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+
+                                                    <div class="span12">
+
+                                                        <div class="span2">Class</div>
+                                                        <div class="span4">
+                                                            <input type="text" class="ViewTxtCSS" id="lblgrade" />
+                                                            @Html.HiddenFor(m => m.GradeId)
+                                                        </div>
+                                                        <div class="span2">Policy No.</div>
+                                                        <div class="span4">
+                                                            <input type="text" id="TxtLOAletterno" class="ViewTxtCSS" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+
+                                                    <div class="span12">
+
+                                                        <div class="span2">App No.</div>
+                                                        <div class="span4">
+                                                            <input type="text" />
+                                                        </div>
+                                                        <div class="span2">Policy Exp.</div>
+                                                        <div class="span4">
+                                                            <input type="text" class="ViewTxtCSS" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+
+                                                    <div class="span12">
+
+                                                        <div class="span2">Med ID.</div>
+                                                        <div class="span4">
+                                                            <input type="text" id="TxtInsCardno" class="ViewTxtCSS" />
+                                                        </div>
+                                                        <div class="span2">Med ID Exp.</div>
+                                                        <div class="span4">
+                                                            <input type="text" id="lblIdExpiry" class="ViewTxtCSS" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="span6">
+                                            <div class="block-fluid">
+                                                <div class="row-form">
+                                                    <div class="span12">
+                                                        <div class="span2">LOA Amt</div>
+                                                        <div class="span4">
+                                                            <input type="text" id="lblLOAAmt" class="ViewTxtCSS" />
+                                                        </div>
+                                                        <div class="span2">LOA Days</div>
+                                                        <div class="span4">
+                                                            <input type="text" id="lblLoaDays" class="ViewTxtCSS" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row-form">
+                                                    <label>Rules</label>
+                                                    <div class="typography">
+                                                        <div class="scroll" style="height: 140px;" id="TxtCompanyRemarks">
+                                                            @*<p>get other roles of the bill company for example</p>*@
+                                                            @*<input type="text" id="TxtCompanyRemarks" style="overflow-wrap:break-word" class="textarea ViewTxtCSS" />*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <h3 id="btnPrescription">View Order (Prescription)</h3>
+                                <div class="block-fluid" style="height: 350px;">
+                                    <div class="row-form">
+                                        <table id="tblPrescriptionDtl" class="display table" style="width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="hidden">drugid</th>
+                                                    <th>Drug Name</th>
+                                                    <th>Strength</th>
+                                                    <th>RouteOfAdmin</th>
+                                                    <th>Freq.</th>
+                                                    <th>QTY</th>
+
+                                                    <th>Duration</th>
+                                                    <th class="">OrderNo</th>
+                                                    <th class="">Total Qty</th>
+                                                    <th class="">Generic</th>
+                                                    <th class="hidden">DateTime</th>
+                                                    @*<th class="">remarks</th>*@
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <h3>Diagnosis</h3>
+                                <div class="block-fluid" style="height: 350px;">
+                                    <table id="DignosisTbl" class="display table" style="width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Visit ID</th>
+                                                <th>ICD Code</th>
+                                                <th>Diagnosis</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                                <h3 id="HeaderAlert">Alert</h3>
+                                <div class="block-fluid" style="height: 350px;">
+                                    <table id="AlertTbl" class="table" style="width: 100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Sl.No.</th>
+                                                <th>Message</th>
+                                                <th>Operator</th>
+                                                <th>Station</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="row-fluid ControlDivCls">
+                        <div class="widget" style="background-color: rgba(72, 61, 139, 0.2);">
+                            <div class="head dark">
+                                <div class="icon"><i class="icos-paragraph-justify"></i></div>
+                                <h2>Selected Items </h2>
+                            </div>
+                            <div class="row-form" style="background-color: rgba(72, 61, 139, 0.2); width: auto;">
+
+
+                                @* <span class="bottom">Selected Item list </span>*@
+                                <table class="table" id="SelectedItemtbl"
+                                    style="background-color: beige; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th>sl.no</th>
+                                            <th>Drug Name </th>
+                                            <th class="hidden">Batch NO</th>
+                                            <th>QOH</th>
+                                            <th>Unit</th>
+                                            <th>Price</th>
+                                            <th>Tax</th>
+                                            <th>Qty</th>
+                                            <th>UOM</th>
+                                            <th>Amount</th>
+                                            <th class="hidden">UnitID</th>
+                                            <th class="hidden">DispatchQty</th>
+                                            <th class="hidden">qoh2</th>
+                                            <th class="hidden">DrugType</th>
+                                            <th class="hidden">conversionqty</th>
+                                            <th class="hidden">BatchID</th>
+                                            <th class="hidden">PurQTY</th>
+                                            <th class="hidden">lslSmallQTY</th>
+                                            <th class="hidden">temp2</th>
+                                            <th class="hidden">PrescriptionID</th>
+                                            <th class="hidden">Deductable type</th>
+                                            <th class="hidden">Deductable Per/Amount type</th>
+                                            <th class="hidden">Deductable Per/Amount</th>
+                                            <th class="hidden">Discount Per/Amount Type</th>
+                                            <th class="hidden">Discount Per/Amount</th>
+                                            <th class="hidden">OrderItem</th>
+                                            <th class="hidden">OrderItemID</th>
+                                            <th class="hidden">temp3</th>
+                                            <th class="hidden">NAME</th>
+                                            <th class="hidden">ItemCode</th>
+                                            <th class="hidden">ID</th>
+                                            <th class="TAC">Action</th>
+                                            <th class="hidden">MinLevel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+
+                            </div>
+                            <div class="row-form hidden">
+                                <select name="Discountlist" id="DiscountList" class="select" style="width: 100%">
+                                    <option value="0">Select</option>
+                                </select>
+                                <input type="text" id="disAuthoriseID" />
+                                <input type="text" id="DisReason" />
+                            </div>
+
+                            <div class="row-form">
+                                <div class="span4"></div>
+                                <div class="span2">
+                                    <input type="button" class="btn btn-large btn-info " id="Save" title="Bill" style="width: 100%; font-size: x-large" value="Bill" />
+                                </div>
+                                <div class="span2">
+                                    <input type="button" class="btn btn-large btn-danger " id="Cancel" title="Cancel" style="width: 100%; font-size: x-large" value="Cancel" />
+                                </div>
+                                <div class="span4"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        }
+
+
+        @*Messagebox with YESNO options*@
+        @*<div class="dialog-fluid" id="jDialog_form" style="display: none;" title="?">*@
+        <div class="dialog-fluid" id="jDialog" style="display: none;" title="?">
+
+            <div class="row-fluid" id="MainAlert">
+                <div class="block-form">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <span class="top title">Message:</span>
+                                    <label id="dialogMSG" title=""></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="dialogYes">Yes</button>
+                        <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true" id="dialogNo">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" id="OtherAlert">
+                <div class="block-form">
+                    <div class="row-form dialogOtherAlert">
+                        <span class="top title">Other Alerts:</span>
+                        <label id="dialogAlert" title=""></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        @*Bill view before save*@
+        <div class="dialog-fluid" id="ViewDialog" style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Billing">
+
+            @*<div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>*@
+            <div class="row-fluid" style="background-color: rgba(72, 61, 139, 0.2);">
+                ..
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span8">
+                                    <span class="top title">Bill Amount:</span>
+                                </div>
+                                <div class="span4">
+                                    <label style="width: 130px; border: groove; text-align: right"
+                                        id="lblCreditBillAmount" title="">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span8">
+                                    <span class="top title">Discount:</span>
+                                </div>
+                                <div class="span4">
+                                    <label style="width: 130px; border: groove; text-align: right"
+                                        id="lblCreditDiscount" title="">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span8">
+                                    <span class="top title">Net Bill Amount:</span>
+                                </div>
+                                <div class="span4">
+                                    <label style="width: 130px; border: groove; text-align: right"
+                                        id="lblNetAmount" title="">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span8">
+                                    <span class="top title">Deductable Amount:</span>
+                                </div>
+                                <div class="span4">
+                                    <label style="width: 130px; border: groove; text-align: right"
+                                        id="lbldedamt" title="">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="block-fluid" style="background-color: lightgoldenrodyellow;">
+                    <div class="row-form">
+                        <div class="span12">
+                            <div class="span8">
+                                Amount To be Collected:
+                            </div>
+                            <div class="span4">
+                                @Html.Hidden("txtTotalAmount");
+                                <label style="width: 130px; border: groove; border-color: red; text-align: right"
+                                    id="txtAmountToBeCollected" title="">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <div class="span12">
+                            <div class="span8">
+                                <span class="top title">Balance:</span>
+                            </div>
+                            <div class="span4">
+                                <label style="width: 130px; border: groove; border-color: lightblue; text-align: right"
+                                    id="lblBalance" title="">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-fluid">
+                    <div class="row-form">
+                        <div class="span8">
+                            <input type="checkbox" id="chkDonate" />Donation Amount
+                        </div>
+                        <div class="span4">
+                            <label style="width: 130px; border: groove; border-color: yellow; text-align: right"
+                                id="lbldonationAMT" title="">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="BilldialogYes">Yes</button>
+                <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true" id="BilldialogNo">No</button>
+            </div>
+            @*<div class="row-fluid">
+                <div class="block-form">
+                </div>
+            </div>*@
+
+
+        </div>
+
+
+        @*Search Exist BIll*@
+        <div class="dialog-fluid" id="SearchBillDialog" style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Search Bill">
+
+            <div class="row-fluid">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="row-form">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span1">Bill No</div>
+                                <div class="span3">
+                                    <input type="text" id="srchBillNo" class="" />
+                                </div>
+                                <div class="span1">Type</div>
+                                <div class="span4">
+                                    <select class="select" id="srchBillTypelist" name="BillType" style="width: 100%">
+                                    </select>
+
+                                </div>
+                                <div class="span1">
+                                    <a href="#" id="GetSearchBill" class="icon-search"></a>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row-form">
+                    <div class="span12">
+                        <table id="tblSearchBill" class="table" style="background-color: lightcyan">
+                            <thead>
+                                <tr>
+                                    <th class="hidden">ID</th>
+                                    <th>slNo</th>
+                                    <th>Patient Name</th>
+                                    <th class="">DoctorName</th>
+                                    <th class="">DateTime</th>
+                                    <th class="">OperatorName</th>
+                                    <th class="">Bill No</th>
+                                    <th class="hidden">Creditbillid</th>
+                                    <th class="hidden">amount</th>
+                                    <th class="hidden">Canceled</th>
+                                    <th class="hidden">canceledby</th>
+                                    <th class="hidden">compcredit</th>
+                                    <th class="hidden">billtype</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="dialog-fluid" id="SearchBillDialogDetail" style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Search Bill">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="row-form" id="target">
+            </div>
+            <div class="row-fluid">
+                <div class="row-fluid">
+                    <div class="widget" style="background-color: rgba(72, 61, 139, 0.2);">
+                        <div class="head dark">
+                            <div class="icon"><i class="icos-paragraph-justify"></i></div>
+                            <h2>Selected Items </h2>
+                        </div>
+                        <div class="row-form" style="background-color: rgba(72, 61, 139, 0.2); width: auto;">
+
+
+
+                            <table class="table" id="SelectedItemtbl2"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>sl.no</th>
+                                        <th>Drug Name </th>
+                                        <th class="hidden">Batch NO</th>
+                                        <th>QOH</th>
+                                        <th>Unit</th>
+                                        <th>Price</th>
+                                        <th>Tax</th>
+                                        <th>Qty</th>
+                                        <th>UOM</th>
+                                        <th>Amount</th>
+                                        <th class="hidden">UnitID</th>
+                                        <th class="hidden">DispatchQty</th>
+                                        <th class="hidden">qoh2</th>
+                                        <th class="hidden">DrugType</th>
+                                        <th class="hidden">conversionqty</th>
+                                        <th class="hidden">BatchID</th>
+                                        <th class="hidden">PurQTY</th>
+                                        <th class="hidden">lslSmallQTY</th>
+                                        <th class="hidden">temp2</th>
+                                        <th class="hidden">PrescriptionID</th>
+                                        <th class="hidden">Deductable type</th>
+                                        <th class="hidden">Deductable Per/Amount type</th>
+                                        <th class="hidden">Deductable Per/Amount</th>
+                                        <th class="hidden">Discount Per/Amount Type</th>
+                                        <th class="hidden">Discount Per/Amount</th>
+                                        <th class="hidden">OrderItem</th>
+                                        <th class="hidden">OrderItemID</th>
+                                        <th class="hidden">temp3</th>
+                                        <th class="hidden">NAME</th>
+                                        <th class="hidden">ItemCode</th>
+                                        <th class="hidden">ID</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+

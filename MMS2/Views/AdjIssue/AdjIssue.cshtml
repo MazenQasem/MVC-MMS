@@ -1,0 +1,241 @@
+﻿@using MMS2
+@model AdjIssueModel
+@{
+    ViewBag.Title = "Adjustment Issue";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/AdjIssue.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="@Url.Content("~/")" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>Adjustment Issue</li>
+    </ul>
+</div>
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("AdjustIssueSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Adjustment Issue</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span2">
+                                <span class="top">Date From</span>
+                                <input type="text" id="FromDate" class="datepicker" value="" />
+                            </div>
+                            <div class="span2">
+                                <span class="top">To Date</span>
+                                <input type="text" id="ToDate" class="datepicker" value="" />
+
+                            </div>
+                            <div class="span5">
+                            </div>
+                            <div class="span3">
+                                <span class="top">.</span>
+                                <button class="btn btn-primary" id="btnShow" style="width: 75%">SHOW</button>
+                            </div>
+                        </div>
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblAdjIssueView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td class="hidden">AdjRecID</td>
+                                            <td>No</td>
+                                            <td>Operator</td>
+                                            <td>Date</td>
+                                            <td>Ref.No</td>
+                                            <td>IssueTo</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span9">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnNewOrder" style="width: 75%">New Order</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Adjustment Issue</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span8">
+                                <span class="top">Store</span>
+                                @Html.TextBoxFor(m => m.lblStation, new { @class = "ViewTxtCSS" })
+                            </div>
+                            @*@Html.Hidden("OrderID")
+                            @Html.Hidden("EditAllowed")*@
+                            <div class="span4">
+                                <span class="top">Date</span>
+                                @Html.TextBoxFor(m => m.lbldate, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span3">
+                                <span class="top">Reference No</span>
+                                @Html.TextBoxFor(m => m.txtRefNo, new { @class = "" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">No</span>
+                                @Html.TextBoxFor(m => m.lblNo, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">Main Reason</span>
+                                <select id="SelectReason" style="width: 100%">
+                                    <option value="1">to Warehouse</option>
+                                    <option value="2">Expiry</option>
+                                </select>
+                            </div>
+                            <div class="span4">
+                                <span class="top">Operator</span>
+                                @Html.TextBoxFor(m => m.lblOperator, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form" id="listitemDiv">
+                            <div class="span8">
+                                <input type="text" id="allItemsList" class="js-data-example-ajax" style="width: 100%" />
+                            </div>
+                            <div class="span1">
+                                <input type="button" class="button" id="btnAddItem" value="Add" />
+                            </div>
+                            <div class="dr"><span></span></div>
+                        </div>
+                        <table class="table" id="SelectedItemtbl"
+                            style="background-color: beige; width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>SNO</th>
+                                    <th>ITEM</th>
+                                    <th>Batch No</th>
+                                    <th>QOH</th>
+                                    <th>P.Rate</th>
+                                    <th>Expiry Date</th>
+                                    <th>Quantity</th>
+                                    <th>Reason</th>
+                                    <th class="hidden">ConvQty</th>
+                                    <th class="hidden">DrugType</th>
+                                    <th class="hidden">BatchID</th>
+                                    <th class="hidden">UnitID</th>
+                                    <th class="hidden">CategoryID</th>
+                                    <th class="hidden">s.price</th>
+                                    <th>UOM</th>
+                                    <th>Item Code</th>
+                                    <th class="hidden">ID</th>
+                                    <th class="hidden">NewBatchFlag</th>
+                                    <th class="TAC">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3">
+                                </div>
+
+                                <div class="span3">
+                                    @*<button class="btn btn-primary" id="btnPrint" style="width: 75%" >View</button>*@
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+        @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+        @*Messagebox with YESNO options*@
+        @*<div class="dialog-fluid" id="jDialog_form" style="display: none;" title="?">*@
+        <div class="dialog-fluid" id="jDialog" style="display: none;" title="?">
+
+            <div class="row-fluid" id="MainAlert">
+                <div class="block-form">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <span class="top title">Message:</span>
+                                    <label id="dialogMSG" title=""></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="dialogYes">Yes</button>
+                        <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true" id="dialogNo">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" id="OtherAlert">
+                <div class="block-form">
+                    <div class="row-form dialogOtherAlert">
+                        <span class="top title">Other Alerts:</span>
+                        <label id="dialogAlert" title=""></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+

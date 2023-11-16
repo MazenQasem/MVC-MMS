@@ -1,0 +1,247 @@
+﻿@using MMS2
+@model DrugOrderPrintView
+@{
+    Layout = "";
+         var date = @DateTime.Now.Date.ToString("dd MMM yyyy");
+    var Time = @DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Second.ToString().PadLeft(2, '0');
+    string ling = "";
+    ling = ling.PadRight(146, '=');
+    string lingx = "";
+    lingx = lingx.PadRight(160, '-');
+    var ReportTitle = "*** INPATIENT DRUGORDER ISSUES ***";
+    int totaline = 24;
+    string Empty = ".";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ReportTitle
+    </title>
+    <script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+
+    <link href="@Url.Content("~/css/LoaderStyle/normalize.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/LoaderStyle/main.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/stylesheets.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+    <form>
+        <div id="rptdiv">
+            <div id="fixedheader">
+                <table style="width: 100%; table-layout: fixed; border-style: none; border-color: white; background-color: white;" class="tblFont">
+                    <tbody>
+                        <tr class="HideColor">
+                            <td class="HideBorder hospitalName" style="width: 20%; text-align: center"></td>
+                            <td class="HideBorder" style="width: 60%;"></td>
+                            <td class="HideBorder" style="width: 20%">Date: @date </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder branchName" style="width: 20%; text-align: center"></td>
+                            <td class="HideBorder" style="width: 60%"></td>
+                            <td class="HideBorder" style="width: 20%">Time: @Time </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 20%; text-align: center"></td>
+                            <td class="HideBorder" style="width: 60%; font-size: x-large; text-align: center">
+                                @ReportTitle
+                            </td>
+                            <td class="HideBorder" style="width: 20%; text-align: center"></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%; table-layout: fixed; border-style: none; border-color: white; background-color: white;" class="tblFont">
+                    <tbody>
+
+
+                        <tr class="HideBorder">
+                            <td class="HideBorder" style="width: 49%;">FROM :  IN-PATIENT PHARMACY</td>
+                            <td class="HideBorder" style="width: 2%"></td>
+                            <td class="HideBorder" style="width: 49%">TO : @Html.DisplayFor(m => m.Station, new { @style = "font-size: samll;text-align-last: left" }) </td>
+
+                        </tr>
+                        <tr class="HideBorder">
+                            <td class="HideBorder" style="width: 49%">PIN :
+                            @Html.DisplayFor(m => m.PinNo, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                            <td class="HideBorder" style="width: 2%"></td>
+                            <td class="HideBorder" style="width: 49%">Patient Name :
+                            @Html.DisplayFor(m => m.PatientName, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                        </tr>
+                        <tr class="HideBorder">
+                            <td class="HideBorder" style="width: 49%">
+                                <table>
+                                    <tr class="HideBorder">
+                                        <td class="HideBorder" style="width: 30%"><span>Sex : </span>@Html.DisplayFor(m => m.Sex, new { @style = "font-size: samll;text-align-last: left" })</td>
+                                        <td class="HideBorder" style="width: 30%"><span>Age : </span>@Html.DisplayFor(m => m.Age, new { @style = "font-size: samll;text-align-last: left" })</td>
+                                        <td class="HideBorder" style="width: 30%"><span>Bed : </span>@Html.DisplayFor(m => m.Bed, new { @style = "font-size: samll;text-align-last: left" })</td>
+
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="HideBorder" style="width: 2%"></td>
+                            <td class="HideBorder" style="width: 49%">Doctor Code :
+                            @Html.DisplayFor(m => m.Doctor, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                        </tr>
+                        <tr class="HideBorder">
+                            <td class="HideBorder" style="width: 49%">RequestedON :
+                            @Html.DisplayFor(m => m.Orderdatetime, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                            <td class="HideBorder" style="width: 2%"></td>
+                            <td class="HideBorder" style="width: 49%">Dispatched ON :
+                            @Html.DisplayFor(m => m.DispatchDateTime, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                        </tr>
+
+                        <tr class="HideBorder">
+                            <td class="HideBorder" style="width: 49%">Order Type :
+                            @Html.DisplayFor(m => m.OrderType, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                            <td class="HideBorder" style="width: 2%"></td>
+                            <td class="HideBorder" style="width: 49%">Order No# :
+                            @Html.DisplayFor(m => m.OrderNo, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                        </tr>
+                        <tr class="HideBorder">
+                            <td class="HideBorder" style="width: 49%">User :
+                            @Html.DisplayFor(m => m.EmployeeID, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                            <td class="HideBorder" style="width: 2%"></td>
+                            <td class="HideBorder" style="width: 49%">Company :
+                            @Html.DisplayFor(m => m.Company, new { @style = "font-size: samll;text-align-last: left" })
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div>
+                    @ling
+                </div>
+            </div>
+        </div>
+        <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;" class="tablFont">
+            <thead>
+                <tr class="HideColor">
+                    <td class="HideColor" style="width: 5%">SQ#</td>
+                    <td class="HideColor" style="width: 10%">ItemCode</td>
+                    <td class="HideColor" style="width: 40%">Item Description</td>
+                    <td class="HideColor" style="width: 10%">Expiry</td>
+                    <td class="HideColor" style="width: 5%; text-align: right">Qty</td>
+                    <td class="HideColor" style="width: 10%">Unit</td>
+                    <td class="HideColor" style="width: 5%; text-align: right">Price</td>
+                    <td class="HideColor" style="width: 10%; text-align: right">Total </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var itm in Model.Items)
+                {
+                    totaline = totaline - 1;
+                    <tr class="HideColor">
+                        <td class="HideColor" style="width: 5%">@itm.slno</td>
+                        <td class="HideColor" style="width: 10%">@itm.ItemCode</td>
+                        <td class="HideColor" style="width: 40%">@itm.ItemName</td>
+                        <td class="HideColor" style="width: 10%">@itm.ExpiryDate</td>
+                        <td class="HideColor" style="width: 5%; text-align: right">@itm.Qty</td>
+                        <td class="HideColor" style="width: 10%">@itm.Unit</td>
+                        <td class="HideColor" style="width: 5%; text-align: right">@itm.price</td>
+                        <td class="HideColor" style="width: 10%; text-align: right">@itm.TotPrice</td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        @for (int i = 1; i < totaline; i++)
+        {
+            <p style="color: white">@Empty</p>
+
+        }
+        <div id="fixedfooter2">
+            <table style="background-color: white; border-style: hidden">
+                <tbody style="width: 100%; border-style: hidden">
+
+                    <tr style="border-style: hidden">
+                        <td style="width: 100%; border-right-style: hidden">
+                            <div>
+                                @lingx
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;" class="">
+                <thead>
+                    <tr style="border-style: hidden">
+                        <td style="width: 25%; border-right-style: hidden">Pharmacist </td>
+                        <td style="width: 25%; border-right-style: hidden">Asst Pharmacist </td>
+                        <td style="width: 25%; border-right-style: hidden">Received By </td>
+                        <td style="width: 25%; border-right-style: hidden">Ordered By </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-style: hidden">
+                        <td style="width: 25%; border-right-style: hidden">@Html.DisplayFor(m => m.Pharmacist, new { @style = "font-size: x-samll;text-align-last: left" }) </td>
+                        <td style="width: 25%; border-right-style: hidden">@Html.DisplayFor(m => m.AsstPharmacist, new { @style = "font-size: x-samll;text-align-last: left" })</td>
+                        <td style="width: 25%; border-right-style: hidden"></td>
+                        <td style="width: 25%; border-right-style: hidden">@Html.DisplayFor(m => m.Name, new { @style = "font-size: x-samll;text-align-last: left" }) </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="background-color: white; border-style: hidden">
+                <tbody style="width: 100%; border-style: hidden">
+
+                    <tr style="border-style: hidden">
+                        <td style="width: 1200px; border-right-style: hidden">
+                            <div>
+                                @lingx
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border-style: hidden">
+                        <td style="width: 800px; border-right-style: hidden">
+                            @Html.Label("SGHG-Jeddah 2016 [Owner: IT Department]", new { @style = "font-size: x-small; text-align-last: center" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </form>
+</body>
+</html>
+
+<style>
+    td.HideBorder
+    {
+        
+        
+        border: hidden;
+    }
+
+    tr.HideColor
+    {
+        background-color: white;
+        border-color: white;
+    }
+
+    table.tblFont
+    {
+        font-family: 'Courier New';
+        font-size: 14px;
+    }
+</style>
+<script>
+    $(document).ready(function (e) {
+
+        $(".hospitalName").html(gHospitalName());
+        $(".branchName").html(gBranchName());
+        $('.ui-dialog-buttonset').show();
+    });
+</script>

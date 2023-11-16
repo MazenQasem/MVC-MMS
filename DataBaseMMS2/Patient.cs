@@ -1,0 +1,113 @@
+        
+namespace MMS2
+{
+    using System;
+    using System.Collections.Generic;
+    
+    public partial class Patient
+    {
+        public System.DateTime RegDateTime { get; set; }
+        public string IssueAuthorityCode { get; set; }
+        public int Registrationno { get; set; }
+        public string Title { get; set; }
+        public string FamilyName { get; set; }
+        public string Firstname { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
+        public string MothersMaidenName { get; set; }
+        public string FathersName { get; set; }
+        public System.DateTime DateOfBirth { get; set; }
+        public short Age { get; set; }
+        public short Agetype { get; set; }
+        public short Sex { get; set; }
+        public short MaritalStatus { get; set; }
+        public string Occupation { get; set; }
+        public string Guardian { get; set; }
+        public string GRelationship { get; set; }
+        public int PCity { get; set; }
+        public string PPhone { get; set; }
+        public string PEMail { get; set; }
+        public string WrkAddress { get; set; }
+        public string WrkPhone { get; set; }
+        public string WrkEMail { get; set; }
+        public string OtherAllergies { get; set; }
+        public bool Caution { get; set; }
+        public Nullable<System.DateTime> LastModifiedDateTime { get; set; }
+        public int OperatorID { get; set; }
+        public Nullable<int> Country { get; set; }
+        public string PassportNo { get; set; }
+        public Nullable<System.DateTime> IssueDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public string CCurrency { get; set; }
+        public string ReferredDocName { get; set; }
+        public string ReferredDocAddress { get; set; }
+        public string ReferredDocPhone { get; set; }
+        public string ReferredDocEmail { get; set; }
+        public string ReferredDocCellNo { get; set; }
+        public Nullable<short> Religion { get; set; }
+        public Nullable<int> ModifiedOperator { get; set; }
+        public bool Deleted { get; set; }
+        public Nullable<bool> Vip { get; set; }
+        public string CityName { get; set; }
+        public string CountryName { get; set; }
+        public string Password { get; set; }
+        public string ReferredDocSpecialisation { get; set; }
+        public string PCellno { get; set; }
+        public string Gphone { get; set; }
+        public string Gcellno { get; set; }
+        public string Gaddress { get; set; }
+        public string Gemail { get; set; }
+        public string BloodGroup { get; set; }
+        public string WrkFax { get; set; }
+        public string Ppagerno { get; set; }
+        public string Cpagerno { get; set; }
+        public string Rpagerno { get; set; }
+        public Nullable<bool> ChequeBounce { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string Address3 { get; set; }
+        public bool NonSaudi { get; set; }
+        public string pZipCode { get; set; }
+        public Nullable<int> Nationality { get; set; }
+        public Nullable<byte> Billtype { get; set; }
+        public string WrkCompanyName { get; set; }
+        public Nullable<int> CompanyId { get; set; }
+        public Nullable<System.DateTime> SidIssueDate { get; set; }
+        public string SidIssuedAt { get; set; }
+        public string SaudiIqamaId { get; set; }
+        public Nullable<System.DateTime> SidExpiryDate { get; set; }
+        public string PassportIssuedAt { get; set; }
+        public string Sexothers { get; set; }
+        public Nullable<bool> Messages { get; set; }
+        public Nullable<bool> BilledBy { get; set; }
+        public Nullable<int> DoctorId { get; set; }
+        public string EmployeeId { get; set; }
+        public Nullable<byte> Embose { get; set; }
+        public string AFirstName { get; set; }
+        public string AMiddleName { get; set; }
+        public string ALastName { get; set; }
+        public string AFamilyName { get; set; }
+        public string AAddress1 { get; set; }
+        public string AAddress2 { get; set; }
+        public Nullable<int> CategoryId { get; set; }
+        public Nullable<int> GradeId { get; set; }
+        public string PolicyNo { get; set; }
+        public Nullable<System.DateTime> IDExpiryDate { get; set; }
+        public string MedIDNumber { get; set; }
+        public Nullable<bool> Billed { get; set; }
+        public Nullable<System.DateTime> ValidFrom { get; set; }
+        public Nullable<System.DateTime> ValidTo { get; set; }
+        public Nullable<short> MRBlocked { get; set; }
+        public Nullable<byte> IsInvoiced { get; set; }
+        public Nullable<System.DateTime> InvoiceDateTime { get; set; }
+        public Nullable<int> CompanyLetterId { get; set; }
+        public string SGHRegNO { get; set; }
+        public Nullable<System.DateTime> SGHDateTime { get; set; }
+        public Nullable<bool> EmboseCharged { get; set; }
+        public Nullable<System.DateTime> AramcoRegDateTime { get; set; }
+        public string SGHName { get; set; }
+        public Nullable<bool> UPLOADTAG { get; set; }
+        public Nullable<System.DateTime> BirthTime { get; set; }
+        public string Insert_Update { get; set; }
+    }
+}

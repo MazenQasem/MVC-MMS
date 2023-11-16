@@ -1,0 +1,280 @@
+﻿@using MMS2
+@model IPReturnHeader
+
+@{
+    ViewBag.Title = "IP Returns";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/IPReturnJS.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuReturn').trigger('click');">Return</a></li>
+        <li>IP Return</li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuReturn').trigger('click');
+    });
+</script>*@
+<style>
+    .select#hideselect
+    {
+        visibility: hidden;
+    }
+</style>
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("IPReturnSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>IP Returns </h2>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span4">
+                                <div class="span12">
+                                    <span class="top">Inpatient No (IP)</span>
+                                    <div class="span2">
+                                        @Html.TextBoxFor(m => m.gIACode, new { @class = "ViewTxtCSS" })
+                                    </div>
+                                    <div class="span8">
+                                        <input type="text" id="txtPIN" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="span6">
+                                <span class="top">Patient Name </span>
+                                <input type="text" id="txtPtName" class="ViewTxtCSS" />
+                            </div>
+                        </div>
+                        <div class="dr"><span></span></div>
+
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblListView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td class="">Retrun No</td>
+                                            <td>DateTime</td>
+                                            <td>Bed </td>
+                                            <td>Operator</td>
+                                            <td class="">VIP</td>
+
+                                            <td class="hidden">ReturnID</td>
+                                            <td class="hidden">gIACode</td>
+                                            <td class="hidden">Pin</td>
+                                            <td class="hidden">IPID</td>
+                                            <td class="hidden">PatientName</td>
+                                            <td class="hidden">DoctorID</td>
+                                            <td class="hidden">BedID</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span2">
+                                </div>
+                                <div class="span4">
+                                </div>
+                                <div class="span3">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnNew" style="width: 75%">New</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>IP Return</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span3">
+                                <span class="top">Pin No</span>
+                                @Html.TextBoxFor(m => m.Pin, new { @class = "ViewTxtCSS" })
+                                <span class="label label-warning VIPCLASS">VIP</span>
+                                <select id="lstPIN" class="select"  style="width: 100%"></select>
+                                @Html.Hidden("OrderNO")
+                                @Html.Hidden("DoctorID")
+                                @Html.Hidden("BedID")
+                            </div>
+                            <div class="span1"></div>
+                            <div class="span2">
+                                <span class="top">Prescription No</span>
+                                @Html.TextBox("txtPrescription")
+                            </div>
+                            <div class="span2"></div>
+                            <div class="span4">
+                                <span class="top">Date Time</span>
+                                @Html.TextBoxFor(m => m.DateTime, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span8">
+                                <span class="top">Name</span>
+                                @Html.TextBoxFor(m => m.PatientName, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                            <div class="span4">
+                                <span class="top">Operator</span>
+                                @Html.TextBoxFor(m => m.Operator, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                        </div>
+                        <div class="row-form">
+                            <div class="span2">
+                                <span class="top">Bed</span>
+                                @Html.TextBoxFor(m => m.Bed, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                            <div class="span4">
+                                <span class="top">Category</span>
+                                <select id="lstCategory" class="select" style="width: 100%"></select>
+                            </div>
+                            <div class="span5">
+                                <span class="top">Items List</span>
+                                <select id="lstItems" class="select" style="width: 100%"></select>
+                            </div>
+                            <div class="span1">
+                                <span class="top">.</span>
+                                <input type="button" id="btnAddItem" value="+" />
+                            </div>
+
+                        </div>
+
+                        <div class="row-form">
+
+                            <table class="table" id="SelectedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>SNO</th>
+                                        <th>Item</th>
+                                        <th>Qty.Iss</th>
+                                        <th>Unit</th>
+                                        <th>TotalRet</th>
+                                        <th>Rtns</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                        <th class="hidden">batchno</th>
+                                        <th class="hidden">UnitID</th>
+                                        <th class="hidden">batchID</th>
+                                        <th>OrderID</th>
+                                        <th class="TAC">Action</th>
+                                        <th>iTEMid</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+                        <div class="row-form">
+
+                            <span class="title">Total</span>
+                            <input type="text" id="totalamount" class="ViewTxtCSS" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3"></div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">
+                                        Save Return
+                                    </button>
+                                </div>
+                                <div class="span3">
+                                    
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        }
+
+
+
+        @*Messagebox with YESNO options*@
+        @*<div class="dialog-fluid" id="jDialog_form" style="display: none;" title="?">*@
+        <div class="dialog-fluid" id="jDialog" style="display: none;" title="?">
+
+            <div class="row-fluid" id="MainAlert">
+                <div class="block-form">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <span class="top title">Message:</span>
+                                    <label id="dialogMSG" title=""></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="dialogYes">Yes</button>
+                        <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true" id="dialogNo">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" id="OtherAlert">
+                <div class="block-form">
+                    <div class="row-form dialogOtherAlert">
+                        <span class="top title">Other Alerts:</span>
+                        <label id="dialogAlert" title=""></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+

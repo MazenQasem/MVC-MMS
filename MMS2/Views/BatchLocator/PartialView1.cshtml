@@ -1,0 +1,59 @@
+﻿@using MMS2
+@model BatchLocator
+<div class="widget">
+    <div class="head">
+        <div class="icon"><span class="icosg-target1"></span></div>
+        <h2>Table sorting pagination</h2>
+    </div>
+    <div class="block-fluid">
+        <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid">
+            <table class="fpTable dataTable" cellpadding="0" cellspacing="0" width="100%" id="DataTables_Table_2" aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                <thead>
+                    <tr role="row">
+                        <th class=" Table_Cell_Hide" style="display: none;">ID</th>
+                        <th width="3%">S#</th>
+                        <th width="10%">Item Code</th>
+                        <th width="25%">Item Name</th>
+                        <th width="10%">Batch No</th>
+                        <th width="10%">Qty</th>
+                        <th width="9%">Rack</th>
+                        <th width="9%">Shelf</th>
+                        <th width="10%">Date</th>
+                        <th width="9%">Cost</th>
+                        <th width="9%">S.Price</th>
+                        <th class=" Table_Cell_Hide" style="display: none;">ItemID</th>
+                        <th class=" Table_Cell_Hide" style="display: none;">StationID</th>
+                        <th class=" Table_Cell_Hide" style="display: none;">BatchID</th>
+                    </tr>
+                </thead>
+                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                    @if (Model.BatchLocatorList != null)
+                    {
+                        foreach (var r in Model.BatchLocatorList)
+                        {
+                        <tr class="odd">
+                            <td class="Table_Cell_Hide">@r.ID  </td>
+                            <td class=" " style="width: 30px; color: #08c;">0  </td>
+                            <td class=" " style="width: 70px; color: #08c;">@r.ItemCode   </td>
+                            <td class=" " style="width: 250px; color: #08c;">@r.ItemName  </td>
+                            <td class=" " style="width: 50px; color: #08c;">@r.BatchNo  </td>
+                            <td class=" " style="width: 50px; color: #08c;">@r.Quantity  </td>
+                            <td class=" " style="width: 50px; color: #08c;">@r.Rack  </td>
+                            <td class=" " style="width: 50px; color: #08c;">@r.Shelf  </td>
+                            <td class=" " style="width: 50px; color: #08c;">StringDate  </td>
+                            <td class=" " style="width: 50px; color: #08c;">@r.Cost  </td>
+                            <td class=" " style="width: 50px; color: #08c;">@r.SelPrice  </td>
+                            <td class="Table_Cell_Hide">@r.ItemID  </td>
+                            <td class="Table_Cell_Hide">@r.StationID  </td>
+                            <td class="Table_Cell_Hide">@r.BatchID  </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+
+
+            </table>
+        </div>
+    </div>
+</div>
+

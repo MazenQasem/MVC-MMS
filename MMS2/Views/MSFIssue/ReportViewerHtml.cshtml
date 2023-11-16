@@ -1,0 +1,176 @@
+﻿@using MMS2
+@model List<MSFreportHeader>
+@{
+    Layout = "";
+    var date = @DateTime.Now.Date.ToString("dd MMM yyyy");
+    var Time = @DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Second.ToString().PadLeft(2, '0');
+    string ling2 = ""; ling2 = ling2.PadRight(146, '=');
+          
+}
+
+<!DOCTYPE html>
+<script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    @*Setup the Varible for Jquery*@
+    @Html.Hidden("Date", @date)
+    @Html.Hidden("Time", @Time)
+    @*@Html.Hidden("ling", @ling)*@
+    <link href="@Url.Content("~/css/LoaderStyle/normalize.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/LoaderStyle/main.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/stylesheets.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/MazenPrintStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+    <form>
+
+        @foreach (var HDrow in Model)
+        {
+            <div class="MainContainer page-break-before">
+
+                <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white; font-family: 'Courier New'; font-size: 12px;">
+                    <tbody>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 60%; text-align: left">SAUDI GERMAN HOSPITALS GROUP </td>
+                            <td class="HideBorder" style="width: 20%;"></td>
+                            <td class="HideBorder" style="width: 20%">Date: @date  </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 60%; text-align: left">Jeddah </td>
+                            <td class="HideBorder" style="width: 20%"></td>
+                            <td class="HideBorder" style="width: 20%">Time: @Time </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 60%; font-size: medium; text-align: left">@HDrow.StationName  </td>
+                            <td class="HideBorder" style="width: 20%"></td>
+                            <td class="HideBorder" style="width: 20%">Page: @HDrow.Page  </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 60%;"><span style="display: inline-block; width: 90px;">PIN NO </span>: @HDrow.PatientPin </td>
+                            <td class="HideBorder" style="width: 20%">Age : @HDrow.Age              </td>
+                            <td class="HideBorder" style="width: 20%"><span style="display: inline-block; width: 50px">Sex </span>: @HDrow.Sex</td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 60%;"><span style="display: inline-block; width: 90px">Patient Name </span>: @HDrow.PatientName </td>
+                            <td class="HideBorder" style="width: 20%">Nation.: @HDrow.Nationality </td>
+                            <td class="HideBorder" style="width: 20%"></td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 60%;"><span style="display: inline-block; width: 90px">Doctor Name</span>: @HDrow.DoctorName </td>
+                            <td class="HideBorder" style="width: 20%">Req.Date: @DateTime.Parse(HDrow.ReqDate).Date.ToString("dd-MM-yy")</td>
+                            <td class="HideBorder" style="width: 20%">Req.Time : @DateTime.Parse(HDrow.ReqDate).ToShortTimeString()</td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 60%"><span style="display: inline-block; width: 90px">Company</span>: @HDrow.Company </td>
+                            <td class="HideBorder" style="width: 20%"><span style="display: inline-block; width: 10px"></span>@HDrow.Type</td>
+                            <td class="HideBorder" style="width: 20%">MSFNo# @HDrow.MSFNo</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                @ling2
+                <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white; font-family: 'Courier New'; font-size: 12px;">
+                    <thead>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 5%">Seq.</td>
+                            <td class="HideBorder" style="width: 10%">Dept</td>
+                            <td class="HideBorder" style="width: 15%">Item Code</td>
+                            <td class="HideBorder" style="width: 60%">Item Description</td>
+                            <td class="HideBorder" style="width: 7%">Qty</td>
+                            <td class="HideBorder" style="width: 3%"></td>
+                        </tr>
+                    </thead>
+                </table>
+                @ling2
+                <div>@HDrow.OrderTypeName</div>
+
+                <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white; font-family: 'Courier New'; font-size: 12px;">
+                    <tbody>
+                        @foreach (MSFreportDetail item in HDrow.rDetail)
+                        {
+                            <tr class="HideColor">
+                                <td class="HideBorder" style="width: 5%">@item.Seq</td>
+                                <td class="HideBorder" style="width: 10%">@item.DeptCode</td>
+                                <td class="HideBorder" style="width: 15%">@item.ItemCode</td>
+                                <td class="HideBorder" style="width: 60%">@item.ItemName</td>
+                                <td class="HideBorder" style="width: 7%; text-align: right">@String.Format("{0:0,0.00}", @item.Qty)</td>
+                                <td class="HideBorder" style="width: 3%"></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @ling2
+                <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white; font-family: 'Courier New'; font-size: 12px;">
+                    <tbody>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 40%"></td>
+                            <td class="HideBorder" style="width: 40%">Total Quantity </td>
+                            <td class="HideBorder" style="width: 7%; text-align: right">@String.Format("{0:0,0.00}", @HDrow.TotQty)</td>
+                            <td class="HideBorder" style="width: 3%"></td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 40%"></td>
+                            <td class="HideBorder" style="width: 40%"></td>
+                            <td class="HideBorder" style="width: 7%"></td>
+                            <td class="HideBorder" style="width: 3%"></td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 40%"></td>
+                            <td class="HideBorder" style="width: 40%"></td>
+                            <td class="HideBorder" style="width: 7%"></td>
+                            <td class="HideBorder" style="width: 3%"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white; font-family: 'Courier New'; font-size: 12px;">
+                    <tbody>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 40%">Req. Dr. Name & Sign</td>
+                            <td class="HideBorder" style="width: 40%">Order User ID/Ward Sec.</td>
+                            <td class="HideBorder" style="width: 7%">Pateint Signature</td>
+                            <td class="HideBorder" style="width: 3%"></td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 40%">@HDrow.ReqDoctorName</td>
+                            <td class="HideBorder" style="width: 40%">@HDrow.OperatorName</td>
+                            <td class="HideBorder" style="width: 7%; text-align: right"></td>
+                            <td class="HideBorder" style="width: 3%"></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </form>
+</body>
+</html>
+
+<style>
+    td.HideBorder
+    {
+        
+        
+        border: hidden;
+    }
+
+    tr.HideColor
+    {
+        background-color: white;
+        border-color: white;
+    }
+
+    div.MainContainer
+    {
+        display: block;
+        width: 100%;
+        
+        
+    }
+</style>
+

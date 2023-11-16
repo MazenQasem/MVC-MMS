@@ -1,0 +1,151 @@
+﻿@using MMS2
+@model RptMMSPrnIssue
+@{
+         TempListMdl idn = (TempListMdl)ViewData["tbl"];
+    int PageCount = 1;
+    int i = 1 + 3;      int line = 1;
+}
+
+
+<script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+<form>
+    <div id="rptdiv">
+        @*3 line header*@
+        <div id="fixedheader">
+            <table style="background-color: white; border-style: hidden">
+                <tbody style="width: 100%; border-style: hidden">
+                    <tr style="border-style: hidden">
+                        <td style="width: 200px; border-right-style: hidden">
+                            @Html.Label("Saudi German Hospitals", new { @style = "font-size: samll " })
+                        </td>
+                        <td style="width: 800px; border-right-style: hidden">
+                            @Html.Label("Indent Issue", new { @style = "font-size: large; text-align-last: center" })
+                        </td>
+                        <td style="width: 200px; border-right-style: hidden">
+                            @Html.Label("DateTime:", new { @style = "font-size: samll;" })
+                        </td>
+                    </tr>
+                    <tr style="border-style: hidden">
+                        <td style="width: 200px; border-right-style: hidden">
+                            @Html.Label("Group - Jeddah", new { @style = "font-size: samll;text-align-last: center" })
+                        </td>
+                        <td style="width: 800px; border-right-style: hidden">
+                            @Html.Label("Number : 1321545", new { @style = "font-size: large; text-align-last: center" })
+                        </td>
+                        <td style="width: 200px; border-right-style: hidden">
+                            @Html.Label("Page No: " + PageCount, new { @style = "font-size: samll" })
+                        </td>
+                    </tr>
+                    <tr style="border-style: hidden">
+                        <td style="width: 200px; border-right-style: hidden"></td>
+                        <td style="width: 800px; border-right-style: hidden"></td>
+                        <td style="width: 200px; border-right-style: hidden"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        @for (int x = 1; x < 100; x++)
+        {
+            i += 1;
+            <p>@line</p>
+            line += 1;
+            @*<p style="font-size-adjust: none; font-family: 'Courier New'; font-size: medium;">
+                @for (int j = 0; j < 150; j++)
+                {
+                    @x;
+                }
+            </p>*@
+            if (i == 37 * PageCount)
+            {
+                line = 1;
+                PageCount = PageCount + 1;
+
+                             <div>
+                <table style="background-color: white; border-style: hidden">
+                    <tbody style="width: 100%; border-style: hidden">
+                        <tr style="border-style: hidden">
+                            <td style="width: 1200px; border-right-style: hidden">
+                                @Html.Label("---------------------------------------------------------------------------------------------------------", new { @style = "font-size: samll;text-align-last: center " })
+                            </td>
+                        </tr>
+                        <tr style="border-style: hidden">
+                            <td style="width: 800px; border-right-style: hidden">
+                                @Html.Label("SGHG-Jeddah 2016 [Owner: IT Department]", new { @style = "font-size: large; text-align-last: center" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>      
+                    
+                                
+            <div>
+                <table style="background-color: white; border-style: hidden">
+                    <tbody style="width: 100%; border-style: hidden">
+                        <tr style="border-style: hidden">
+                            <td style="width: 200px; border-right-style: hidden">
+                                @Html.Label("Saudi German Hospitals", new { @style = "font-size: samll " })
+                            </td>
+                            <td style="width: 800px; border-right-style: hidden">
+                                @Html.Label("Indent Issue", new { @style = "font-size: large; text-align-last: center" })
+                            </td>
+                            <td style="width: 200px; border-right-style: hidden">
+                                @Html.Label("DateTime:", new { @style = "font-size: samll;" })
+                            </td>
+                        </tr>
+                        <tr style="border-style: hidden">
+                            <td style="width: 200px; border-right-style: hidden">
+                                @Html.Label("Group - Jeddah", new { @style = "font-size: samll;text-align-last: center" })
+                            </td>
+                            <td style="width: 800px; border-right-style: hidden">
+                                @Html.Label("Number : 1321545", new { @style = "font-size: large; text-align-last: center" })
+                            </td>
+                            <td style="width: 200px; border-right-style: hidden">
+                                @Html.Label("Page No:" + @PageCount, new { @style = "font-size: samll" })
+                            </td>
+                        </tr>
+                        <tr style="border-style: hidden">
+                            <td style="width: 200px; border-right-style: hidden"></td>
+                            <td style="width: 800px; border-right-style: hidden"></td>
+                            <td style="width: 200px; border-right-style: hidden"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+                i += 3;             }
+        }
+
+        @*3 line footer*@
+        <div id="fixedfooter">
+            <table style="background-color: white; border-style: hidden">
+                <tbody style="width: 100%; border-style: hidden">
+                    <tr style="border-style: hidden">
+                        <td style="width: 1200px; border-right-style: hidden">
+                            @Html.Label("---------------------------------------------------------------------------------------------------------", new { @style = "font-size: samll;text-align-last: center " })
+                        </td>
+                    </tr>
+                    <tr style="border-style: hidden">
+                        <td style="width: 800px; border-right-style: hidden">
+                            @Html.Label("SGHG-Jeddah 2016 [Owner: IT Department]", new { @style = "font-size: large; text-align-last: center" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</form>
+
+@*<style type="text/css">
+    
+
+    div#fixedheader
+    {
+        
+        
+    }
+
+    
+</style>*@

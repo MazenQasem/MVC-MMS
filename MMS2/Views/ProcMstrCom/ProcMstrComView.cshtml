@@ -1,0 +1,122 @@
+﻿@using MMS2
+@model ProcMstrComMdl
+@{
+    ViewBag.Title = "IndentOrder";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/ProcMstrComJS.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuOrder').trigger('click');">Main</a></li>
+        <li>Procedure Master Component System</li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuOrder').trigger('click');
+    });
+</script>*@
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("ProcMstrComSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Procedure Master Component System</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        @Html.Hidden("lOrderId")
+                        @Html.Hidden("bModify")
+
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">Department List</span>
+                                <select id="lstDepartment" class="select" style="width: 100%"></select>
+                            </div>
+                            <div class="span6">
+                                <span class="top">Procedure List</span>
+                                <select id="lstProcedure" class="select" style="width: 100%"></select>
+                            </div>
+                            <div class="span2">
+                                <span class="top">Discontinue</span>
+                                <input id="chkDiscontinue" type="checkbox" title="Discontinue" />
+                                <select id="lstProcType" class="select" style="width: 100%"></select>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row-form" id="listitemDiv">
+                            <div class="span8">
+                                <input type="text" id="allItemsList" class="js-data-example-ajax" style="width: 100%" />
+                            </div>
+                            <div class="span1">
+                                <input type="button" class="button" id="btnAddItem" value="Add" />
+                            </div>
+                            <div class="dr"><span></span></div>
+                        </div>
+                        <div class="row-form" style="height: 400px;">
+                            <table class="table" id="SelectedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>sl.no</th>
+                                        <th>Item Name </th>
+                                        <th>Unit</th>
+                                        <th>Qty</th>
+                                        <th>Item Type</th>
+                                        <th class="hidden">unitID</th>
+                                        <th class="hidden">ItemID</th>
+                                        <th class="TAC">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3">
+                                    <button class="btn btn-primary hidden" id="btnPrint" style="width: 75%">View</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary hidden" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClear" style="width: 75%">Clear</button>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+        @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+

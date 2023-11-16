@@ -1,0 +1,259 @@
+﻿@using MMS2
+@model WardReturnHeader
+
+@{
+    ViewBag.Title = "IP - Return From Station";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/WardReturnJS.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuReturn').trigger('click');">Return</a></li>
+        <li>IP - Return From Station</li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuReturn').trigger('click');
+    });
+</script>*@
+
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("WardReturnSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>IP - Return From Station</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblListView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td class="">Order No</td>
+                                            <td>Pin No</td>
+                                            <td>Patient </td>
+                                            <td>Bed</td>
+                                            <td class="">Sation</td>
+                                            <td class="">DateTime</td>
+                                            <td class="">Return BY</td>
+                                            <th class="hidden">status</th>
+                                            <th class="">Sl.No#</th>
+                                            <th class="hidden">VIP</th>
+                                            <th class="hidden">Sex</th>
+                                            <th class="hidden">Age</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgba(255, 182, 193, 0.59); width: 100px;">New return</span>
+                                </div>
+                                <div class="span4">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(153, 255, 153); width: 160px;">Received</span>
+                                </div>
+                                <div class="span3">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnShow" style="width: 75%">Refersh</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>IP - Return From Station</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span8">
+                                <span class="top">Pin No</span>
+                                @Html.TextBoxFor(m => m.Pin, new { @class = "ViewTxtCSS" })
+                            </div>
+                            @Html.Hidden("OrderID")
+                            @Html.Hidden("Status")
+                            @Html.Hidden("VIP")
+                            @Html.Hidden("SlNO")
+                            @Html.Hidden("EditAllowed")
+                            <div class="span4">
+                                <span class="top">Order No</span>
+                                @Html.TextBoxFor(m => m.OrderNO, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span8">
+                                <span class="top">Name</span>
+                                @Html.TextBoxFor(m => m.Patient, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                            <div class="span4">
+                                <span class="top">Date</span>
+                                @Html.TextBoxFor(m => m.DateTime, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                        </div>
+                        <div class="row-form">
+                            <div class="span2">
+                                <span class="top">Age</span>
+                                @Html.TextBoxFor(m => m.Age, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">Sex</span>
+                                @Html.TextBoxFor(m => m.Sex, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">Bed</span>
+                                @Html.TextBoxFor(m => m.Bed, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2">
+                            </div>
+                            <div class="span4">
+                                <span class="top">Returned By</span>
+                                @Html.TextBoxFor(m => m.ReturnBy, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                        </div>
+
+                        <div class="row-form">
+                            <table class="table" id="SelectedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>SNO</th>
+                                        <th>Item</th>
+                                        <th>Batch No</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+
+                                        <th>Total</th>
+                                        <th>Ret.Qty</th>
+                                        <th>Remarks</th>
+                                        <th>UOM</th>
+
+                                        <th class="hidden">CostPrice</th>
+                                        <th class="hidden">ItemID</th>
+                                        <th class="hidden">BatchID</th>
+                                        <th class="TAC">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span6">
+                                    <div class="span5" style="border-style: groove">
+                                        <div class="span1">
+                                            <input type="checkbox" id="chkRetrun" style="display: block" value="0" />
+                                        </div>
+                                        <div class="span1"></div>
+                                        <div class="span4">
+                                            <span style="font-size: x-large">Received</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnPrint" style="width: 75%">
+                                        Print
+                                    </button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        }
+
+
+
+        @*Messagebox with YESNO options*@
+        @*<div class="dialog-fluid" id="jDialog_form" style="display: none;" title="?">*@
+        <div class="dialog-fluid" id="jDialog" style="display: none;" title="?">
+
+            <div class="row-fluid" id="MainAlert">
+                <div class="block-form">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <span class="top title">Message:</span>
+                                    <label id="dialogMSG" title=""></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="dialogYes">Yes</button>
+                        <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true" id="dialogNo">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" id="OtherAlert">
+                <div class="block-form">
+                    <div class="row-form dialogOtherAlert">
+                        <span class="top title">Other Alerts:</span>
+                        <label id="dialogAlert" title=""></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+

@@ -1,0 +1,96 @@
+﻿@using MMS2
+@model PresJustificationModel
+@{
+    ViewBag.Title = "Prescription Justification";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/PresJustification.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuIssue').trigger('click');">DrugOrder Justification</a></li>
+        <li>Prescription Justification</li>
+    </ul>
+</div>
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("PrescriptionJustificationSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Prescription Justification</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">Selection basis</span>
+                                @Html.DropDownListFor(m => m.SelectedListID, new SelectList(Model.Tlist, "ID", "Name", Model.SelectedListID), new { id = "TransList1" })
+                            </div>
+                            <div class="span1"></div>
+                            <div class="span2">
+                            </div>
+                            <div class="span2">
+                            </div>
+
+                            <div class="span3">
+                                <span class="top">.</span>
+                                <button class="btn btn-primary" id="btnShowData" style="width: 75%">Show</button>
+                            </div>
+                        </div>
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblOrderView" class="table DarkRedFont" style="width: 100%; margin: 0;">
+                                    <thead>
+                                        <tr>
+                                            <td>Order No</td>
+                                            <td class="hidden">ServiceID</td>
+                                            <td>PIN</td>
+                                            <td>Station</td>
+                                            <td>Drug Name</td>
+                                            <td>Doctor Justification</td>
+                                            <td>Acknowledgement</td>
+                                            <td>IC Remarks</td>
+                                            <td>Ordered Doctor</td>
+                                            <td>Nurse Name</td>
+                                            <td class="hidden">MainORderNo</td>
+                                            <td class="hidden">acceptedID</td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span1"></div>
+                                <div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgba(255, 182, 193, 0.59); width: 100px;">OverLab Orders</span>
+                                </div>
+                                <div class="span6"></div>
+                                <div class="span3">
+                                    <span class="top">.</span>
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        }
+
+
+    </form>
+
+</div>
+

@@ -1,0 +1,214 @@
+﻿@using MMS2
+@model LabModel
+@{
+    ViewBag.Title = "Profile Receipt";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/LabReceipt.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuLab').trigger('click');">Lab Prepration</a></li>
+        <li>Preparation Receipt </li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuLab').trigger('click');
+    });
+</script>*@
+
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("LabReceiptSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>@ViewBag.Title</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblIssueView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td>Receipt No</td>
+                                            <td>Issue No</td>
+                                            <td>Datetime</td>
+                                            <td>Operator</td>
+                                            <td class="hidden">ID</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span8"></div>
+                            <div class="span4">
+                                <button class="btn btn-primary" id="btnNew" style="width: 75%">New Issue</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>@ViewBag.Title</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">GRN No</span>
+                                @Html.TextBox("GRN", null, new { @Class = "ViewTxtCSS" })
+                            </div>
+                            @Html.Hidden("OrderID")
+                            <div class="span4">
+                                <span class="top">Order.Date</span>
+                                @Html.TextBox("OrderDate", null, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                            <div class="span4">
+                                <span class="top">Date</span>
+                                @Html.TextBox("DateTime", null, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                        </div>
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">Reference No</span>
+                                <div class="span8">
+                                    @Html.TextBox("IssueNo", null, new { @class = "" })
+                                    @Html.Hidden("IssueID")
+
+                                </div>
+
+                                <a href="#" id="IssNoSearch" class="icon-search"></a>
+                            </div>
+                            <div class="span4">
+                                <span class="top">Rec.Date</span>
+                                @Html.TextBox("RecDate", null, new { @class = "datepicker" })
+                            </div>
+                            <div class="span4">
+                                <span class="top">Operator</span>
+                                @Html.TextBox("Operator", null, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                        </div>
+                        <div class="row-form">
+                            <span class="top DarkRedFontBold">Selected Items </span>
+                            <table class="table" id="SelectedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Slno</th>
+                                        <th>Item Description</th>
+                                        <th>UOM</th>
+                                        <th class="hidden">???</th>
+                                        <th>Ordered Qty</th>
+                                        <th>Received Qty</th>
+                                        <th>Prv.Rec. Qty</th>
+                                        <th class="hidden">unitid</th>
+                                        <th class="hidden">batchid</th>
+                                        <th class="">costprice</th>
+                                        <th class="">sellprice</th>
+                                        <th class="hidden">qty</th>
+                                        <th class="hidden">epr</th>
+                                        <th class="hidden">sp</th>
+                                        <th class="hidden">ID</th>
+                                        <th class="TAC">Action</th>
+                                        <th class="hidden">lGetQty</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClear" style="width: 75%">Clear</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+
+        <div class="dialog-fluid" id="SearchDialog" style="display: none;" title="?">
+            <div class="block-form">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="block-fluid">
+                    <div class="row-fluid">
+                        <table class="table" id="IssListTbl"
+                            style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>IssueNo</th>
+                                    <th>DateTime</th>
+                                    <th class="hidden">ID</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+
+    </form>
+
+
+
+
+
+</div>
+

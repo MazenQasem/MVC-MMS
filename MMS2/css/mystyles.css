@@ -1,0 +1,163 @@
+
+
+
+#login .validation-error
+{
+    display: block;
+    margin-left: 15px;
+    color: red;
+}
+
+#login .validation-error
+{
+    display: block;
+    margin-left: 15px;
+    color: red;
+}
+
+#login .validation-summary-errors ul
+{
+    margin: 0;
+    padding: 0;
+    color: red;
+}
+
+#login .validation-summary-errors li
+{
+    display: inline;
+    list-style: none;
+    margin: 0;
+    color: red;
+}
+
+
+.ViewTxtCSS
+{
+    border-style: ridge;
+    
+    background-color: #B6CEB3; 
+}
+
+Select.UnViewTxtCSS
+{
+    border-style: ridge;
+    
+    background-color: white; 
+}
+
+.blackground
+{
+    background-color:black;
+}
+
+
+input.ViewTxtCSS
+{
+    border-style: ridge;
+    
+    background-color: #B6CEB3; 
+}
+
+
+
+td.Align_Right_Col_Red
+{
+    text-align: right;
+    color: crimson;
+}
+
+td.Align_Right_Col
+{
+    text-align: right;
+}
+
+
+
+table tbody tr.SelectedRow:nth-child(2n+1) td
+{
+    background: lightgreen;
+}
+
+
+tr.SelectedRow
+{
+    background: lightgreen;
+}
+
+table tbody tr.UnSelectedRow:nth-child(2n+1) td
+{
+    background: inherit;
+}
+
+
+tr.UnSelectedRow
+{
+    background: #FCFCFC;
+}
+
+tr.VeryLightBackGround
+{
+    background-color: bisque;
+}
+
+
+
+.ViewTxtCSS2
+{
+    border-style: groove;
+}
+
+
+.DarkRedFont
+{
+    color: #731B1B;
+}
+
+.DarkRedFontBold
+{
+    color: #731B1B;
+    font-size: large;
+}
+
+
+
+.row-form [class^="span"] > span.SpanFonts
+{
+    font-size: 11px;
+    line-height: 14px;
+    display: block;
+    margin-top: 5px;
+    color: aliceblue;
+    background-color: darkslateblue;
+    font-size: larger;
+}
+
+
+span.SpanFonts
+{
+    font-size: 11px;
+    line-height: 14px;
+    display: block;
+    margin-top: 5px;
+    color: aliceblue;
+    background-color: darkslateblue;
+    font-size: larger;
+}
+
+
+ .block-fluidWithoutBorder{padding: 10px;margin-bottom: 20px;}
+
+.RedCircle
+{
+    background-image:url("../img/Circles/RedCircle.gif");
+    background-repeat:no-repeat;
+    background-size: 22px 20px;
+    background-position-y:10px;
+}
+.GreenCircle
+{
+    background-image:url("../img/Circles/GreenCircle.gif");
+    background-repeat:no-repeat;
+    background-size: 22px 20px;
+    background-position-y:10px;
+}

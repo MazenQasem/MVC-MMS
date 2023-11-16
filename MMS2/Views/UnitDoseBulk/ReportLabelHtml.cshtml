@@ -1,0 +1,97 @@
+﻿@using MMS2
+@model DrugOrderPrintView
+@{
+    Layout = "";
+         var date = @DateTime.Now.Date.ToString("dd MMM yyyy");
+    var Time = @DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Second.ToString().PadLeft(2, '0');
+    string ling = "";
+    ling = ling.PadRight(146, '=');
+    string lingx = "";
+    lingx = lingx.PadRight(160, '-');
+    int totaline = 2;     string Empty = ".";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+
+    <link href="@Url.Content("~/css/LoaderStyle/normalize.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/LoaderStyle/main.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/stylesheets.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form>
+
+        @foreach (var itm in Model.DrugLabels)
+        {
+            <table style="width: 50%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;" class="tablFont">
+                <tbody style="line-height: 2px;">
+                    <tr class="HideColor">
+                        <td>*** S.G.H. DRUGORDER ISSUES(<span class='branchName'></span>) ***</td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td>@itm.PatientName</td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td>@itm.Bed</td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td>@itm.Medicine</td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td>@itm.Expdate</td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td>**Package & Contents not to leave the Hospital**</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            for (int i = 1; i < totaline; i++)
+            {
+            <p style="color: white">@Empty</p>
+
+            }
+        }
+
+
+
+    </form>
+</body>
+</html>
+
+<style>
+    td.HideBorder
+    {
+        
+        
+        border: hidden;
+    }
+
+    tr.HideColor
+    {
+        background-color: white;
+        border-color: white;
+    }
+
+    table.tblFont
+    {
+        font-family: 'Courier New';
+        font-size: 8px;
+        padding: 0px;
+        line-height:3px;
+    }
+</style>
+<script>
+    $(document).ready(function (e) {
+
+        $(".hospitalName").html(gHospitalName());
+        $(".branchName").html(gBranchName());
+    });
+</script>

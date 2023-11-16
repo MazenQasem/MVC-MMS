@@ -1,0 +1,15 @@
+﻿@using MMS2
+@model  SupplierItems
+@{Layout = null;}
+<tr> 
+ <td>   @Html.HiddenFor(x => x.ItemID, new { @class="iHidden" })
+     @Html.TextBoxFor(x => x.ItemID) 
+ @Html.TextBoxFor(x => x.Itemcode) </td>
+ <td> @Html.TextBoxFor(x => x.Itemname) </td>
+    <td> @Html.TextBoxFor(x => x.SUPPLIERID) </td>
+    @if (@Model.ItemID > 0)
+    { 
+    @Html.ActionLink("SupplierItems", "Supplier");
+    
+    }
+</tr>

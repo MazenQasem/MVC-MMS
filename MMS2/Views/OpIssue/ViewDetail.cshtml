@@ -1,0 +1,162 @@
+﻿@using MMS2
+@model Patient
+@{
+    ViewBag.Title = "OP Cash/Credit Issue";
+}
+<link href="~/css/mystyles.css" rel="stylesheet" />
+<form id="validate">
+
+
+    <div class="block-fluid">
+
+        <div class="row-fluid">
+            <div class="head dark">
+                <div class="icon"><i class="icos-paragraph-justify"></i></div>
+                <h2>OP Pharamcy Bills (VIEW)</h2>
+
+                <div class="row-form" style="background-color: darkseagreen;">
+                    <div class="span12">
+                        <div class="span1">
+                            PIN
+                        </div>
+                        <div class="span8">
+                            <div class="span5 ViewTxtCSS2">
+                                @Html.DisplayFor(m => m.IssueAuthorityCode, new { @style = "border-color:black;background-color:gray;color:yellow;", @class = "ViewTxtCSS2" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span6">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span3">Doctor Name</div>
+                                    <div class="span9 ViewTxtCSS2">
+                                        @Html.DisplayFor(m => m.DoctorName, new { @class = "ViewTxtCSS2" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span3">Dis.Doctor Name</div>
+                                    <div class="span9 ViewTxtCSS2">
+                                        @Html.DisplayFor(m => m.DisDoctorName, new { @class = "ViewTxtCSS2" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span3">Operator</div>
+                                    <div class="span9 ViewTxtCSS2">
+                                        @*<input type="text" id="OperatorName" class="ViewTxtCSS2" />*@
+                                        @Html.DisplayFor(m => m.OperatorName, new { @class = "ViewTxtCSS2" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span4">
+                                        <span class="top head" style="font-size: large">Bill Type:</span>
+                                    </div>
+                                    <span class="top head" style="font-size: large">@Model.strExpBatch</span>
+                                    <div class="span8">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span3">Bill no</div>
+                                    <div class="span6 ViewTxtCSS2">
+                                        @*<input type="text" id="OperatorName" class="ViewTxtCSS2" />*@
+                                        @Html.DisplayFor(m => m.lblBillNo, new { @class = "ViewTxtCSS2" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span3">Deposit NO#</div>
+                                    <div class="span6 ViewTxtCSS2">
+                                        @Html.DisplayFor(m => m.DepositChkNo, new { @class = "ViewTxtCSS2" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span12">
+                        <div class="span6">
+
+                            <div class="span3">Patient Name</div>
+                            <div class="span9 ViewTxtCSS2">
+                                @*<input type="text" id="PatientName" class="ViewTxtCSS2" />*@
+                                @Html.DisplayFor(m => m.PatientName, new { @class = "ViewTxtCSS2" })
+                            </div>
+                        </div>
+                        <div class="span5">
+                            <div class="span1">Sex</div>
+                            <div class="span5 ViewTxtCSS2">
+                                @*<input type="text" id="SexName" class="ViewTxtCSS2" />*@
+                                @Html.DisplayFor(m => m.SexTitle, new { @class = "ViewTxtCSS2" })
+                            </div>
+                            <div class="span1">Age</div>
+                            <div class="span5 ViewTxtCSS2">
+                                @*<input type="text" id="AgeName" class="ViewTxtCSS2" />*@
+                                @Html.DisplayFor(m => m.AgeTitle, new { @class = "ViewTxtCSS2" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-form">
+                    <input type="text" id="lblDeductableText" class="ViewTxtCSS" 
+                        value="@Model.lblDeductableText"  style="background-color: lightyellow; font-size: x-large; text-align: center" />
+                </div>
+                <div class="row-form">
+                    <div class="span12">
+                        <div class="span6">
+
+                            <div class="span3">Company </div>
+                            <div class="span9 ViewTxtCSS2">
+                                @Html.DisplayFor(m => m.CompanyName, new { @class = "ViewTxtCSS2" })
+
+                            </div>
+                        </div>
+
+                        <div class="span5">
+                            <div class="span3">Category </div>
+                            <div class="span9 ViewTxtCSS2">
+                                @Html.DisplayFor(m => m.CategoryName, new { @class = "ViewTxtCSS2" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</form>
+
+
+
+
+

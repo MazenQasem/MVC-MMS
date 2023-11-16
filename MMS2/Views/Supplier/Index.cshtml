@@ -1,0 +1,120 @@
+﻿@using MMS2
+@model  IEnumerable<SupplierS>
+@{
+    ViewBag.Title = "Supplier";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+
+
+<script type='text/javascript' src="@Url.Content("~/Scripts/Suppliers.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="@Url.Content("~/")" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>Supplier</li>
+    </ul>
+</div>
+
+
+<div class="content">
+    <div class="widget">
+        <div class="head dark">
+            <div class="icon"><span class="icos-checkmark"></span></div>
+            <h2>Supplier List </h2>
+        </div>
+        <div class="block-fluid">
+            @using (@Html.BeginForm("newsupplier", "supplier", FormMethod.Post))
+            {
+                <div class="row-form">
+                    <div class="span7">
+                        <span>
+                            <p style="font-size: large; color: lightgreen">
+                                <span class="label label-important">** Deactive Suppliers </span>
+                            </p>
+                        </span>
+                    </div>
+                    <div class="span1">
+                        <input type="submit" name="CheckBtn" id="CreateNew"
+                            class="btn btn-primary" value="Create New " />
+                    </div>
+                </div>
+            }
+
+            <div class="dr"><span></span></div>
+
+
+        </div>
+
+
+        <div class="widget">
+            <div class="head">
+                <div class="icon"><span class="icosg-target1"></span></div>
+                <h2>Table Of Suppliers List</h2>
+            </div>
+            <div class="block-fluid">
+                <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper" role="grid">
+                    <table class="fpTable dataTable" cellpadding="0" cellspacing="0" width="100%" id="DataTables_Table_2"
+                        aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                        <thead>
+                            <tr role="row">
+                                <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                    aria-label="Status: activate to sort column ascending" style="width: 200px;">ID</th>
+                                <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                    aria-label="Name: activate to sort column ascending" style="width: 251px;">Supplier Name</th>
+                                <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                    aria-label="Product: activate to sort column ascending" style="width: 199px;">Contact Person</th>
+                                <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                    aria-label="Date: activate to sort column ascending" style="width: 200px;">Date</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+                            @foreach (var Vr in Model)
+                            {
+                                <tr class="">
+                                    <td>
+                                        @Vr.ID
+                                    </td>
+                                    <td>
+                                        @if (Vr.Active == true)                                          { 
+                                            <span class="label label-important">
+
+                                                <a style="color:white" href="@Url.Action("SupplierDetails", "Supplier", new { SupplierID = @Vr.ID })">@Vr.Name</a> </span>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("SupplierDetails", "Supplier", new { SupplierID = @Vr.ID })">@Vr.Name</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("SupplierDetails", "Supplier", new { SupplierID = @Vr.ID })">@Vr.ContactPerson</a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("SupplierDetails", "Supplier", new { SupplierID = @Vr.ID })">@Vr.StartdateTime</a>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+  @*  @if (string.IsNullOrEmpty(ViewBag.ErrorMsg) == false)
+    {
+        <div id="ShowDiv">
+            <a href="#fModal" id="ShowPartial" role="button" class="btn" data-toggle="modal">Show</a>
+        </div>
+        @Html.Partial("show")
+    }*@
+
+</div>
+
+
+

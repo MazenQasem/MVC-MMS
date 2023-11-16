@@ -1,0 +1,128 @@
+﻿@using MMS2
+@model DrugAllergyMdl
+@{
+    Layout = "";
+    var date = @DateTime.Now.Date.ToString("dd MMM yyyy");
+    var Time = @DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Second.ToString().PadLeft(2, '0');
+    string ling2 = ""; ling2 = ling2.PadRight(146, '=');
+          
+}
+
+<!DOCTYPE html>
+<script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    @*Setup the Varible for Jquery*@
+    @Html.Hidden("Date", @date)
+    @Html.Hidden("Time", @Time)
+    @*@Html.Hidden("ling", @ling)*@
+    <link href="@Url.Content("~/css/LoaderStyle/normalize.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/LoaderStyle/main.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/stylesheets.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/MazenPrintStyle.css")" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+    <form>
+
+
+        <div class="MainContainer page-break-before">
+
+            <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white; font-family: 'Courier New'; font-size: 12px;">
+                <tbody>
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 60%; text-align: left">SAUDI GERMAN HOSPITALS GROUP </td>
+                        <td class="HideBorder" style="width: 20%;"></td>
+                        <td class="HideBorder" style="width: 20%">Date: @date  </td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 60%; text-align: left">Jeddah </td>
+                        <td class="HideBorder" style="width: 20%"></td>
+                        <td class="HideBorder" style="width: 20%">Time: @Time </td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 60%;"><span style="display: inline-block; width: 90px;">PIN NO </span>: @Model.PinNo </td>
+                        <td class="HideBorder" style="width: 20%"></td>
+                        <td class="HideBorder" style="width: 20%">Page: 1  </td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 60%;"><span style="display: inline-block; width: 90px">Patient Name </span>:@Model.PTName </td>
+                        <td class="HideBorder" style="width: 20%">Age :@Model.Age</td>
+                        <td class="HideBorder" style="width: 20%"><span style="display: inline-block; width: 50px">Sex </span>: @Model.Sex</td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 60%;"><span style="display: inline-block; width: 90px">Reported By </span>:@Model.OperatorName </td>
+                        <td class="HideBorder" style="width: 20%">Report Date :@Model.DateTime</td>
+                        <td class="HideBorder" style="width: 20%"></td>
+                    </tr>
+                </tbody>
+            </table>
+            @ling2
+            <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white; font-family: 'Courier New'; font-size: 12px;">
+                <tbody>
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 20%; font-style: oblique">SUSPECTED DRUGS: </td>
+                        <td class="HideBorder" style="width: 60%;"></td>
+                        <td class="HideBorder" style="width: 20%"></td>
+                    </tr>
+                    @foreach (TempListMdl tmp in Model.DrugList)
+                    {
+                        <tr class="HideColor">
+
+                            <td class="HideBorder" style="width: 20%"></td>
+                            <td class="HideBorder" style="width: 60%; text-align: left">@tmp.Name </td>
+                            <td class="HideBorder" style="width: 20%"></td>
+
+                        </tr>
+                    }
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 20%; font-style: oblique"></td>
+                        <td class="HideBorder" style="width: 60%"></td>
+                        <td class="HideBorder" style="width: 20%"></td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 20%; font-style: oblique">REACTION:</td>
+                        <td class="HideBorder" style="width: 60%"></td>
+                        <td class="HideBorder" style="width: 20%"></td>
+                    </tr>
+                    <tr class="HideColor">
+                        <td class="HideBorder" style="width: 20%"></td>
+                        <td class="HideBorder" style="width: 60%;">@Model.othertxt</td>
+                        <td class="HideBorder" style="width: 20%"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </form>
+</body>
+</html>
+
+<style>
+    td.HideBorder
+    {
+        
+        
+        border: hidden;
+    }
+
+    tr.HideColor
+    {
+        background-color: white;
+        border-color: white;
+    }
+
+    div.MainContainer
+    {
+        display: block;
+        width: 100%;
+        
+        
+    }
+</style>
+

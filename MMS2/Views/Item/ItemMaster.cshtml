@@ -1,0 +1,618 @@
+﻿@using MMS2
+@model MMS_ItemMaster
+@{
+    ViewBag.Title = "Item Master";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+
+<script type='text/javascript' src="@Url.Content("~/Scripts/ItemMaster.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="@Url.Content("~/")" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>Item</li>
+    </ul>
+</div>
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("ItemMasterSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        {
+            <div class="middle">
+                <div class="button tip" title="Storage">
+                    <a href="#" id="openStorageModal">
+                        <span class="icomg-location"></span>
+                        <span class="text">Storage Info</span>
+                    </a>
+                </div>
+                <div class="button tip" title="" data-original-title="Packing">
+                    <a href="#" id="openPackingModal">
+                        <span class="icomg-cabinet"></span>
+                        <span class="text">Packing</span>
+                    </a>
+                </div>
+
+                <div class="button tip" title="" data-original-title="Supplier">
+                    <a href="#" id="openSupplierModal">
+                        <span class="icomg-user"></span>
+                        <span class="text">Supplier</span>
+                    </a>
+                </div>
+                <div class="button tip" title="" data-original-title="Batch">
+                    <a href="#" id="openBatchModal">
+                        <span class="icomg-archive"></span>
+                        <span class="text">Batch Detail</span>
+                    </a>
+                </div>
+                <div class="button tip" title="Clinical Attribute">
+                    <a href="#" id="openClinicalModal">
+                        <span class="icomg-article"></span>
+                        <span class="text">Clinical Attr</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget">
+                        <div class="head dark">
+                            <div class="icon"><i class="icos-newtab"></i></div>
+                            <h2>Item Master</h2>
+                            <div>
+                                <span class="bottom">DateTime : @Html.DisplayFor(m => m.StartDateTime) </span>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <div class="row-form">
+                                <div class="span6">
+                                    <div class="span2">Item Code : </div>
+                                    <div class="span4 ">
+                                        @*@Html.DisplayFor(m => m.ItemCode)*@
+                                        @Html.TextBoxFor(m => m.ItemCode, new { @class = "ViewTxtCSS" })
+                                        @Html.HiddenFor(m => m.Id, new { id = "txtItemID" })
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="span2">Item Name :</div>
+                                    <div class="span8">
+                                        @Html.TextBoxFor(m => m.Name)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span6">
+                                    <div class="span2">Item Prefix : </div>
+                                    <div class="span4">
+                                        @Html.TextBoxFor(m => m.ItemPrefix)
+                                    </div>
+                                    <div class="span4">@Html.CheckBoxFor(m => m.iscocktailbool) Is Cocktail</div>
+                                </div>
+                                <div class="span6">
+
+                                    <div class="span2">Manufacturer:</div>
+                                    <div class="span8">
+                                        @Html.DropDownListFor(m => m.ManufacturerId, new SelectList(Model.Manufacturerlist, "ID", "Name", Model.ManufacturerId), new { @class = "select", style = "width:100%" })
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span6">
+                                    <div class="span2">Type : </div>
+                                    <div class="span2">@Html.RadioButtonFor(m => m.DrugType, 0) Drug</div>
+                                    <div class="span3">@Html.RadioButtonFor(m => m.DrugType, 1) Consumable</div>
+                                    <div class="span2">@Html.RadioButtonFor(m => m.DrugType, 2) Other</div>
+                                </div>
+                                <div class="span6">
+                                    <div class="span2">Catalogue#</div>
+                                    <div class="span3">@Html.TextBoxFor(m => m.catalogueno)</div>
+                                    <div class="span2">Model No.</div>
+                                    <div class="span3">@Html.TextBoxFor(m => m.ModelNo)</div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span4   ">
+                                    <div class="span3">Unit Of Measure:</div>
+                                    <div class="span4">
+                                        @Html.DropDownList("PackingList", new SelectList(Model.PackingList, "ID", "Name", Model.PackingListHolder), new { id = "PackingList" })
+                                        @Html.HiddenFor(m => m.UOMName, new { id = "UOMName" })
+                                        @Html.HiddenFor(m => m.UnitID, new { id = "UnitID" })
+                                    </div>
+                                </div>
+                                <div class="span8">
+                                    <div class="span4">
+                                        <div class="span4 ">Strength /Weight: </div>
+                                        <div class="span4">@Html.TextBoxFor(m => m.Strength_no)
+                                            <span class="top">Ex: 100.00</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="span4">
+                                        <div class="span4 ">Strength Unit </div>
+                                        <div class="span4">@Html.TextBoxFor(m => m.Strength_Unit) </div>
+                                    </div>
+                                    <div class="span4">
+                                        <div class="span2">Part No.</div>
+                                        <div class="span8">@Html.TextBoxFor(m => m.PartNumber)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span12">
+                                    @*<div class="span4 ViewTxtCSS">Category1 @Html.TextBox("",null, new { @readonly = true }) </div>
+                                    <div class="span4 ViewTxtCSS">Category2 @Html.TextBox("",null, new { @readonly = true }) </div>*@
+                                    <div class="span4 ViewTxtCSS">
+                                        Category3 
+                                        <a href="#"><span class="icosg-plus addRow"></span></a>
+                                        @Html.DropDownListFor(m => m.CategoryID, new SelectList(Model.ItemCategoryList, "ID", "Name", Model.CategoryID))
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span12">
+                                    <span class="top title">Select Stations</span>
+                                    <select name="ms_Stations" multiple="multiple" id="msc">
+                                        @foreach (var tt in Model.StationList.ToList())
+                                        { 
+                                            <option value='@tt.ID'>@tt.Name</option>
+                                        }
+                                    </select>
+                                    <select id="HideSelectedList" multiple="multiple">
+                                        @foreach (var tt in Model.SelectedStationList.ToList())
+                                        { 
+                                            <option value="@tt.ID">@tt.Name</option>
+                                        }
+                                    </select>
+
+                                    <div class="btn-group">
+                                        <button class="btn btn-mini btn-primary" id="ms_select">Select all</button>
+                                        <button class="btn btn-mini btn-primary" id="ms_deselect">Deselect all</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span6">
+
+                                        <div class="span3">Maximum Level:</div>
+                                        <div class="span2">@Html.TextBoxFor(m => m.MaxLevel, new { id = "MaxLevel" })</div>
+
+                                        <div class="span1"></div>
+                                        <div class="span3">Minimum Level:</div>
+                                        <div class="span2">@Html.TextBoxFor(m => m.MinLevel, new { id = "MinLevel" })</div>
+
+                                    </div>
+                                    <div class="span2">
+                                        <div class="span3 ">ROL:</div>
+                                        <div class="span6">@Html.TextBoxFor(m => m.ROL, new { id = "ROL" })</div>
+                                    </div>
+                                    <div class="span2">
+                                        <div class="span3 ">QOH:</div>
+                                        <div class="span6 ViewTxtCSS">@Html.DisplayFor(m => m.strQOH)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+
+                                <div class="span6">
+                                    <div class="span3">Profit Center</div>
+                                    <div class="span8">
+                                        @Html.DropDownListFor(m => m.ProfitCentreID, new SelectList(Model.ProfitList, "ID", "Name", Model.ProfitCentreID))
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="span3">
+                                        <div class="span4 ">ROQ</div>
+                                        <div class="span8">@Html.TextBoxFor(m => m.ROQ)</div>
+                                    </div>
+                                    <div class="span4 offset1">
+                                        <div class="span3">Tax</div>
+                                        <div class="span6">
+                                            <input id="Tax" type="text" class="mask_percent" value="@Model.Tax"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row-form">
+                                <div class="span6">
+                                    <div class="span3">Discontinue</div>
+                                    <div class="span8">
+                                        @Html.DropDownListFor(m => m.DiscontinueListID, new SelectList(Model.DiscontinueList, "ID", "Name", Model.DiscontinueListID))
+                                    </div>
+                                </div>
+
+                                <div class="span6">
+                                    <div class="span3">Opening Balance</div>
+                                    <div class="span4 ViewTxtCSS">@Html.DisplayFor(m => m.OpeningBalance) </div>
+                                </div>
+                            </div>
+                            <div class="widget">
+                                <div class="head dark">
+                                    <div class="icon"><i class="icos-newtab"></i></div>
+                                    <h2>Item Attributes</h2>
+                                </div>
+                                <div class="span11 head">Status </div>
+                                <div class="span11" id="tab1" style="background-color: lightblue">
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <div class="span1">@Html.RadioButtonFor(m => m.ABC, 0) A</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.ABC, 1) B</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.ABC, 2) C</div>
+                                            <div class="span1"></div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.FSN, 0) F</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.FSN, 1) S</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.FSN, 2) N </div>
+                                            <div class="span1"></div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.VED, 0) V</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.VED, 1) E</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.VED, 2) D </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-form">
+                                        <div class="span12">
+                                            <div class="span6">
+                                                <span class="top title">Prescription Required</span>
+                                                <div class="span1">@Html.RadioButtonFor(m => m.Schedulebool, true) </div>
+                                                <div class="span1">Scheduled</div>
+                                                <div class="span2"></div>
+
+                                                <div class="span1">@Html.RadioButtonFor(m => m.Schedulebool, false) </div>
+                                                <div class="span3">Non-Scheduled</div>
+                                            </div>
+                                            <div class="span6">
+                                                <span class="top title">State</span>
+
+                                                <div class="span1">@Html.RadioButtonFor(m => m.DrugState, 0) </div>
+                                                <div class="span2">Solid</div>
+
+                                                <div class="span1">@Html.RadioButtonFor(m => m.DrugState, 1) </div>
+                                                <div class="span2">Liquid</div>
+
+                                                <div class="span1">@Html.RadioButtonFor(m => m.DrugState, 2) </div>
+                                                <div class="span3">Semi Solid</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="span11 head">Attributes </div>
+                                <div class="span11" id="tab2" style="background-color: lightgreen">
+                                    <div class="row-form">
+                                        <div class="span2">@Html.CheckBoxFor(m => m.EUBbool)EUB?</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.FixedAssetbool)Fixed Asset</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.NonStockedbool) non Stocked</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.BatchStatusbool)NonBatch Item</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.Narcoticbool)Narotic Drug</div>
+                                    </div>
+                                    <div class="row-form">
+                                        <div class="span2">@Html.CheckBoxFor(m => m.MRPItembool)MRP Item</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.CssdItembool)CSSD Item</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.CSSDAppbool)Cssd Approval</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.Consignmentbool)Consignment</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.CriticalItembool)Critical Item</div>
+                                    </div>
+                                    <div class="row-form">
+                                        <div class="span2">@Html.CheckBoxFor(m => m.Approvalbool)Approval</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.DepartmentIssueBool)Department</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.IndentIssueBool)Indent</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.DuplicateLabelbool)Duplicate Label</div>
+                                        <div class="span2">@Html.CheckBoxFor(m => m.Feasibilitybool)Feasiblity Item</div>
+                                    </div>
+                                </div>
+
+                                <div class="span11 head">Notes </div>
+                                <div class="span11" id="tab3" style="background-color: lightgray">
+                                    <div class="span11">
+                                        <div class="row-form">
+                                            @Html.TextAreaFor(m => m.Notes)
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+
+
+                        </div>
+                        <div class="block">
+                            <div class="row-form  offset6" id="divCommand">
+                                <input type="submit" name="BtnSave" id="BtnSave" class="btn btn-primary " value="Update" style="width: 130px; font-size: larger;" />
+
+                                @*<input type="submit" name="BtnDelete" id="BtnDelete" class="btn btn-primary" value="Delete" style="width: 90px; font-size: larger;" />
+                                <input type="submit" name="BtnClear" id="BtnClear" class="btn btn-primary" value="Clear" style="width: 90px; font-size: larger;" />
+                                <input type="submit" name="BtnClose" id="BtnClose" class="btn btn-primary" value="Close" style="width: 90px; font-size: larger;" />*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
+            <!-- Bootrstrap modal form -->
+            <div class="dialog-fluid" id="sendStorageModal" style="display: none;" title="Location/Storage information">
+                <div class="block-fluid">
+                    <a href="#" id="openUpdateStorageModal">Add Rack/Shelf</a>
+                    <div class="row-form">
+                        <div class="left">Rack</div>
+                        <div class="span3">
+                            <select id="SelectRack" class="span3"></select>
+                            <span class="top span2">select from the list</span>
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <div class="left">Shelf</div>
+                        <div class="span5">
+                            <table id="tblShelf" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="hidden">shelf Id</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="dialog-fluid" id="sendUpdateStorageModal" style="display: none;" title="Location/Storage information">
+                <div class="block-fluid">
+                    <div class="row-form">
+                        <div class="left">Rack</div>
+                        <div class="span3">
+
+                            <span class="top span2">select from the list</span>
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <div class="left">Shelf</div>
+                        <div class="span5">
+                            <table id="tblShelf2" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="hidden">shelf Id</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="dialog-fluid" id="sendPackingModal" style="display: none;" title="Packing Information">
+
+                <div class="block-fluid">
+                    <div class="row-form">
+
+                        <div class="left">
+                            Packing Details
+                            <a href="#" id="openPackModifygModal">
+                                <span class="icon-pencil"></span>
+                                @*<span class="text">Modify UOM</span>*@
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="row-form">
+
+                        <div>
+                            <div class="span6">
+                                <div class="span2">
+                                    @*<select id="SelectPacking" class="span3" multiple="multiple"></select>*@
+                                    @Html.DropDownListFor(m => m.UOMChieldSelected0, new SelectList(Model.UOMChieldList0, "ID", "Name", Model.UOMChieldSelected0))
+                                </div>
+                                <div class="span1">
+                                    @Html.TextBoxFor(m => m.UOMChieldConvQty1)
+                                </div>
+                                <div class="span2">
+                                    @Html.DropDownListFor(m => m.UOMChieldSelected1, new SelectList(Model.UOMChieldList1, "ID", "Name", Model.UOMChieldSelected1))
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="span6">
+                                <div class="span2">
+                                    @Html.TextBox("UOMCH2", "", new { @class = "ViewTxtCSS" })
+                                </div>
+                                <div class="span1">
+                                    @Html.TextBoxFor(m => m.UOMChieldConvQty2)
+                                </div>
+                                <div class="span2">
+                                    @Html.DropDownListFor(m => m.UOMChieldSelected2, new SelectList(Model.UOMChieldList2, "ID", "Name", Model.UOMChieldSelected2))
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="span6">
+                                <div class="span2">
+                                    @Html.TextBox("UOMCH3", "", new { @class = "ViewTxtCSS" })
+                                </div>
+                                <div class="span1">
+                                    @Html.TextBoxFor(m => m.UOMChieldConvQty3)
+                                </div>
+                                <div class="span2">
+                                    @Html.DropDownListFor(m => m.UOMChieldSelected3, new SelectList(Model.UOMChieldList3, "ID", "Name", Model.UOMChieldSelected3))
+                                </div>
+
+                            </div>
+                        </div>
+                        <div>
+                            <div class="span6">
+                                <div class="span2">
+                                    @Html.TextBox("UOMCH4", "", new { @class = "ViewTxtCSS" })
+                                </div>
+                                <div class="span1">
+                                    @Html.TextBoxFor(m => m.UOMChieldConvQty4)
+                                </div>
+                                <div class="span2">
+                                    @Html.DropDownListFor(m => m.UOMChieldList4, new SelectList(Model.UOMChieldList4, "ID", "Name", Model.UOMChieldSelected4))
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <input type="submit" name="BtnInsertPacking" id="BtnInsertPacking" class="btn btn-primary " value="Update" style="width: 130px; font-size: larger;" />
+                        <input type="submit" name="BtnClear" id="BtnClearNewPackage" class="btn btn-primary" value="Close" style="width: 90px; font-size: larger;" />
+                    </div>
+                </div>
+            </div> 
+                                        
+            <div class="dialog-fluid" id="sendPackModifygModal" style="display: none;" title="Packing Information1">
+                <div class="block-fluid">
+                    <div class="row-form">
+                        <div class="span4">
+                            <div class="span1">
+                                <a href="#" style="color: blue" id="openNewUOMModal">
+                                    <span class="label label-success">New UOM</span>
+                                </a>
+                            </div>
+                            <div class="span1">
+                                <a href="#" style="color: blue" id="openModifyUOMModal">
+                                    <span class="label label-warning">Modify UOM</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-form" id="UOMModifyForm">
+                        <div class="left">Chield UOM</div>
+                        <input type="hidden" id="txtModifyUOMid" />
+                        <div class="span3">
+                            <select id="SelectAllUOM" class="span3"></select>
+                        </div>
+                    </div>
+                    <div class="row-form" id="UOMNewForm">
+                        <div class="span4">
+                            Add New UOM
+                            <input type="text" id="txtNewUOM" />
+                        </div>
+                    </div>
+
+
+                    <div class="row-form">
+                        <div class="left">Parent UOM</div>
+                        <div class="span5">
+                            <table id="SelectAllParentUOM" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="hidden">This unit  is contained in the following packing units</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <input type="submit" name="BtnSave" id="BtnSaveNewPackage1" class="btn btn-primary " value="Update" style="width: 130px; font-size: larger;" />
+                        <input type="submit" name="BtnClear" id="BtnClearNewPackage1" class="btn btn-primary" value="Close" style="width: 90px; font-size: larger;" />
+                    </div>
+                </div>
+            </div>
+                  
+            <div class="dialog-fluid" id="sendSupplierModal" style="display: none;" title="Suppllier">
+                <div class="block-fluid">
+                    <div class="row-form">
+                        <div class="span5">
+
+                            <span class="top title">Select Stations</span>
+                            <select name="ms_Supplier" multiple="multiple" id="msc1">
+                                @foreach (var tt in Model.AllSupplierList.ToList())
+                                { 
+                                    <option value='@tt.ID'>@tt.Name</option>
+                                }
+                            </select>
+                            <div class="btn-group">
+                                <button class="btn btn-mini btn-primary" id="ms_select1">Select all</button>
+                                <button class="btn btn-mini btn-primary" id="ms_deselect1">Deselect all</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>       
+            <div class="dialog-fluid" id="sendBatchModal" style="display: none;" title="Batch">
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        @*<table id="tblBatch" class="display dataTable">*@
+                        <table id="tblBatch" class="display table" style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Slno</th>
+                                    <th>Batch Number</th>
+                                    <th>Quantity</th>
+                                    <th>ExpiryDate</th>
+                                </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+            </div>       
+            
+            <div class="dialog-fluid" id="sendClinicalModal" style="display: none;" title="Clinical Attr">
+                <div class="block-fluid">
+                    <div class="row-form">
+                        <div class="span10" style="border: groove">
+                            <span class="top title">Select Generic</span>
+                            @*<select name="ms_Supplier" multiple="multiple" style="width: 100%" id="msc2">
+                                @foreach (var tt in Model.AllGenericList.ToList())
+                                { 
+                                    <option value='@tt.ID'>@tt.Name</option>
+                                }
+                            </select>*@
+
+                            <select name="GGenricListName" multiple="multiple" class="select" style="width: 50%" id="GGenricList">
+                                @foreach (var tt in Model.AllGenericList.ToList())
+                                { 
+                                    <option value='@tt.ID'>@tt.Name</option>
+                                }
+                            </select>
+                            @*<div class="btn-group">
+                                <button class="btn btn-mini btn-primary" id="ms_select2">Select all</button>
+                                <button class="btn btn-mini btn-primary" id="ms_deselect2">Deselect all</button>
+                            </div>*@
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <div class="span10" style="border: groove">
+                            <span class="top title">Drug-Drug Interaction</span>
+                            <table id="tblDrugIntraction" class="fpTable dataTable" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th class="hidden">Id</th>
+                                        <th>Generic</th>
+                                        <th>Interacting</th>
+                                        <th class="hidden">itemid</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var VR in Model.DrugInteractingList)
+                                    {
+                                        <tr>
+                                            <td class="hidden">@VR.ID</td>
+                                            <td>@VR.Generic</td>
+                                            <td>@VR.Interacting</td>
+                                            <td class="hidden">@VR.ItemID</td>
+                                            <td>@VR.Discription</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+</div>
+
+

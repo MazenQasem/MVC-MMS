@@ -1,0 +1,295 @@
+﻿@using MMS2
+@model ISBSHeader
+@{
+    Layout = "";
+         var date = @DateTime.Now.Date.ToString("dd MMM yyyy");
+    var Time = @DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Second.ToString().PadLeft(2, '0');
+    int PageCount = 1;
+    
+    string ling = "";
+    var Title = Model.Title;
+    ling = ling.PadRight(146, '=');
+    var ReportTitle = "Item Stock By Supplier ";
+    <script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ReportTitle
+    </title>
+    @*Setup the Varible for Jquery*@
+    @Html.Hidden("Date", @date)
+    @Html.Hidden("Time", @Time)
+    @Html.Hidden("ling", @ling)
+    @Html.Hidden("Title", @Title)
+    @Html.Hidden("Supplier", Model.Supplier)
+
+
+
+    <link href="@Url.Content("~/css/LoaderStyle/normalize.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/LoaderStyle/main.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/stylesheets.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/css/MazenPrintStyle.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form>
+        <table id="mainTbl" style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;">
+            <thead>
+                <tr class="HideColor">
+                    <td class="HideColor" style="width: 5%">SNO</td>
+                    <td class="HideColor" style="width: 10%">Item Code</td>
+                    <td class="HideColor" style="width: 30%">Item Name</td>
+                    <td class="HideColor" style="width: 7%">Main PH Stock</td>
+
+
+                    <td class="HideColor" style="width: 7%; text-align: center">Tower PH Stock</td>
+                    <td class="HideColor" style="width: 7%; text-align: center">4th TPH Stock</td>
+                    <td class="HideColor" style="width: 7%; text-align: center">Inpatient PH Stock</td>
+                    <td class="HideColor" style="width: 7%; text-align: center">PS PH Stock</td>
+
+                    <td class="HideColor" style="width: 10%; text-align: center">Total Stock</td>
+                    <td class="HideColor" style="width: 10%; text-align: center">2Month Issuance</td>
+
+                    <td class="HideColor" style="width: 10%; text-align: center">Iss UOM</td>
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var itm in Model.TransDetail)
+                {
+                    
+                    <tr class="HideColor">
+                        <td class="HideColor" style="width: 5%">@itm.SNO</td>
+                        <td class="HideColor" style="width: 10%">@itm.ItemCode </td>
+                        <td class="HideColor" style="width: 30%">@itm.ItemName </td>
+                        <td class="HideColor" style="width: 7%; text-align: right">@string.Format("{0:0,0.00}", itm.qty1) </td>
+                        <td class="HideColor" style="width: 7%; text-align: right">@string.Format("{0:0,0.00}", itm.qty2) </td>
+                        <td class="HideColor" style="width: 7%; text-align: right">@string.Format("{0:0,0.00}", itm.qty3) </td>
+                        <td class="HideColor" style="width: 7%; text-align: right">@string.Format("{0:0,0.00}", itm.qty4) </td>
+                        <td class="HideColor" style="width: 7%; text-align: right">@string.Format("{0:0,0.00}", itm.qty5) </td>
+
+                        <td class="HideColor" style="width: 10%; text-align: right">@string.Format("{0:0,0.00}", itm.TotalStock) </td>
+                        <td class="HideColor" style="width: 10%; text-align: right">@string.Format("{0:0,0.00}", itm.TotalIssuance) </td>
+
+
+                        <td class="HideColor" style="width: 10%">@itm.inp_unit </td>
+
+
+                    </tr>
+
+                }
+            </tbody>
+
+        </table>
+        <div id="rptdiv"></div>
+      
+    </form>
+</body>
+      
+</html>
+
+
+<style>
+    td.HideBorder
+    {
+        
+        
+        border: hidden;
+    }
+
+    tr.HideColor
+    {
+        background-color: white;
+        border-color: white;
+    }
+</style>
+
+<script>
+    var PresTbl;
+    $(document).ready(function () {
+        $('.title1').append($('#Title').val());
+        var x = document.readyState;
+        if (x == "complete") {
+
+               BuildBody();
+        }
+    });
+    function BuildBody() {
+        var PageNumber = 1;
+        var line = 10;
+        var NewRowID = 0;
+        getHeader(PageNumber);
+        CreateTable(PageNumber);
+        
+                 var oTable = document.getElementById('mainTbl');
+                 var rowLength = oTable.rows.length;
+                 for (i = 1; i < rowLength; i++) { 
+            line = line + 1;
+            if (line >= 38) {                   getFooter();
+                PageNumber += 1;
+                getHeader(PageNumber);
+                CreateTable(PageNumber);
+                NewRowID = 0;                 line = 10; 
+            }
+                         var oCells = oTable.rows.item(i).cells;
+
+            var tablname = '#OutTable' + PageNumber + ' tbody';
+
+            $(tablname).append('<tr class="HideColor">'
+            + '<td class="HideColor" style="width: 5%">' + oCells.item(0).innerHTML + '</td>'
+            + '<td class="HideColor" style="width: 10%">' + oCells.item(1).innerHTML + '</td>'
+            + '<td class="HideColor" style="width: 30%;">' + oCells.item(2).innerHTML + '</td>'
+
+            + '<td class="HideColor" style="width: 7%;text-align: right">' + oCells.item(3).innerHTML + '</td>'
+            + '<td class="HideColor" style="width: 7%;text-align: right">' + oCells.item(4).innerHTML + '</td>'
+            + '<td class="HideColor" style="width: 7%;text-align: right">' + oCells.item(5).innerHTML + '</td>'
+            + '<td class="HideColor" style="width: 7%;text-align: right">' + oCells.item(6).innerHTML + '</td>'
+            + '<td class="HideColor" style="width: 7%;text-align: right">' + oCells.item(7).innerHTML + '</td>'
+
+            + '<td class="HideColor" style="width: 10%;text-align: right">' + oCells.item(8).innerHTML + '</td>'
+            + '<td class="HideColor" style="width: 10%;text-align: right">' + oCells.item(9).innerHTML + '</td>'
+            + '<td class="HideColor" style="width: 10%;">' + oCells.item(10).innerHTML + '</td>'
+            + '</tr>');
+
+            NewRowID = NewRowID + 1;
+        }
+
+        var str = '   <table style="background-color: white; border-style: hidden">'
+                    + '<tbody style="width: 100%; border-style: hidden">'
+                        + '<tr style="border-style: hidden">'
+                            + '<td style="width: 1200px; border-right-style: hidden">'
+                           + '<label style = "font-size: samll;text-align-last: center ">---------------------------------------------------------------------------------------------------------</label>'
+                            + '</td>'
+                        + '</tr>'
+                        + '<tr style="border-style: hidden">'
+                            + '<td style="width: 800px; border-right-style: hidden">'
+                           + '<label style = "font-size: x-small; text-align-last: center"> Total : ' + $('#TotalValue').val() + '</label>'
+                            + '</td>'
+                        + '</tr>'
+                    + '</tbody>'
+                + '</table>';
+
+        $('#rptdiv').append('<div class="">' + str + '</div>');
+
+        getFooter();
+        $('#mainTbl').hide();
+        return false;
+    }
+    function getHeader(pageNO) {
+        var str = '<table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;">'
+                    + '<tbody>'
+                      + '<tr class="HideColor">'
+                            + '<td class="HideBorder" style="width: 20%; text-align: center">Saudi German Hospital </td>'
+                            + '<td class="HideBorder" style="width: 65%;"></td>'
+                            + '<td class="HideBorder" style="width: 15%">Date: ' + $('#Date').val() + '</td>'
+                        + '</tr>'
+                        + '<tr class="HideColor">'
+                          + '  <td class="HideBorder" style="width: 20%; text-align: center">Jeddah </td>'
+                           + ' <td class="HideBorder" style="width: 65%"></td>'
+                            + '<td class="HideBorder" style="width: 15%">Time:' + $('#Time').val() + '</td>'
+                        + '</tr>'
+                        + '<tr class="HideColor">'
+                         + '   <td class="HideBorder" style="width: 20%; text-align: center"></td>'
+                          + '  <td class="HideBorder" style="width: 65%"></td>'
+                           + ' <td class="HideBorder" style="width: 15%">Page:' + pageNO + '</td>'
+                        + '</tr>'
+                        + '<tr class="HideColor">'
+                         + '   <td class="HideBorder"></td>'
+                          + '  <td class="HideBorder" style="width: 100%; font-size: large; text-align: center">' + $('#Title').val() + '</td>'
+                          + '  <td class="HideBorder"></td>'
+                        + ' </tr>'
+                    + ' </tbody>'
+                + ' </table>'
+         + '<table style="width: 100%; table-layout: fixed; font-size: small; border-style: none; border-color: white; background-color: white;">'
+                    + '<tbody>'
+                      + '<tr class="HideColor">'
+                            + '<td class="HideBorder" style="width: 40%;">Category : ' + $('#Supplier').val() + '</td>'
+                            + '<td class="HideBorder" style="width: 20%"></td>'
+                            + '<td class="HideBorder" style="width: 40%"></td>'
+                        + '</tr>'
+                    + ' </tbody>'
+                + ' </table>'
+        + ' <div>' + $('#ling').val() + '</div>'
+        $('#rptdiv').append('<div class="page-break-before">' + str + '</div>');
+
+
+        return false;
+    }
+    function getFooter() {
+        var str = '   <table style="background-color: white; border-style: hidden">'
+                    + '<tbody style="width: 100%; border-style: hidden">'
+                        + '<tr style="border-style: hidden">'
+                            + '<td style="width: 1200px; border-right-style: hidden">'
+                           + '<label style = "font-size: samll;text-align-last: center ">---------------------------------------------------------------------------------------------------------</label>'
+                            + '</td>'
+                        + '</tr>'
+                        + '<tr style="border-style: hidden">'
+                            + '<td style="width: 800px; border-right-style: hidden">'
+                           + '<label style = "font-size: x-small; text-align-last: center"> SGHG-Jeddah 2016 [Owner: IT Department]</label>'
+                            + '</td>'
+                        + '</tr>'
+                    + '</tbody>'
+                + '</table>';
+
+        $('#rptdiv').append('<div class="footer page-break ">' + str + '</div>');
+
+         
+        return false;
+
+    }
+    function CreateTable(PageNumber) {
+        var str = '<table id="OutTable' + PageNumber
+               + '" style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;">'
+                    + '<thead>'
+                        + '<tr class="HideColor">'
+                        + $('#mainTbl >thead >tr').html()
+                        + '</tr>'
+                    + '</thead>'
+                    + '<tbody> </tbody> </table>';
+        $('#dtlheader').html(str);
+        $('#rptdiv').append('<div>' + str + '</div>');
+        $('#OutTable' + PageNumber).focus();
+
+        return false;
+    }
+    function render_MainView(tableID, dataxc) {
+        alert(JSON.stringify(dataxc));
+        ViewtempTbl = $(tableID).dataTable({
+            destroy: true,
+            data: dataxc,
+            paging: true,
+            ordering: false,
+            searching: true,
+            info: false,
+            processing: false,
+            scrollCollapse: false,
+            columnDefs: [
+                { data: 'SNO', targets: [0], width: '5%' },
+                 { data: 'ItemCode', targets: [1], width: '10%' },
+                 { data: 'ItemName', targets: [2], width: '30%' },
+                 { data: 'qty1', targets: [3], width: '7%' },
+                 { data: 'qty2', targets: [4], width: '7%' },
+                 { data: 'qty3', targets: [5], width: '7%' },
+                 { data: 'qty4', targets: [6], width: '7%' },
+                 { data: 'qty5', targets: [7], width: '7%' },
+                 { data: 'TotalStock', targets: [8], width: '10%' },
+                 { data: 'TotalIssuance', targets: [9], width: '10%' },
+                 { data: 'inp_unit', targets: [10], width: '10%' }
+
+            ]
+        }).fnDraw();
+
+
+        PresTbl = $(tableID).DataTable();
+
+    };
+
+</script>
+

@@ -1,0 +1,256 @@
+﻿@using MMS2
+@model MMS_ItemMaster
+
+@{
+    ViewBag.Title = "Item SubStore";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+
+<script type='text/javascript' src="@Url.Content("~/Scripts/ItemSubStore.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="@Url.Content("~/")" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>Item SubStore</li>
+    </ul>
+</div>
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("ItemSubStoreSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        {
+            <div class="middle">
+                <div class="button tip" title="Storage">
+                    <a href="#" id="openStorageModal">
+                        <span class="icomg-location"></span>
+                        <span class="text">Storage Info</span>
+                    </a>
+                </div>
+
+
+                <div class="button tip" title="" data-original-title="Packing">
+                    <a href="#" id="openPackingModal">
+                        <span class="icomg-cabinet"></span>
+                        <span class="text">Packing</span>
+                    </a>
+                </div>
+
+                <div class="button tip" title="" data-original-title="Supplier">
+                    <a href="#" id="openSupplierModal">
+                        <span class="icomg-user"></span>
+                        <span class="text">Supplier</span>
+                    </a>
+                </div>
+
+                <div class="button tip" title="" data-original-title="Batch">
+                    <a href="#" id="openBatchModal">
+                        <span class="icomg-archive"></span>
+                        <span class="text">Batch Detail</span>
+                    </a>
+                </div>
+
+            </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget">
+                        <div class="head dark">
+                            <div class="icon"><i class="icos-newtab"></i></div>
+                            <h2>Item SubStore</h2>
+                        </div>
+                        <div class="block">
+                            <div class="row-form">
+                                <div class="span2">Item Code : </div>
+                                <div class="span2 ViewTxtCSS">
+                                    @*@Html.DisplayFor(m => m.ItemCode)*@
+                                    @Html.DisplayFor(m => m.ItemCode)
+                                    @Html.HiddenFor(m => m.Id, new { id = "txtItemID" })
+                                </div>
+                                <div class="span2">Item Name :</div>
+                                <div class="span6 ViewTxtCSS">
+                                    @Html.DisplayFor(m => m.Name)
+
+                                </div>
+                                @Html.DisplayFor(m => m.ProfitCenter)
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">Type : </div>
+                                <div class="span2 ViewTxtCSS">@Html.DisplayFor(m => m.ItemType) </div>
+                                <div class="span2">Category:</div>
+                                <div class="span2 ViewTxtCSS">@Html.DisplayFor(m => m.ItemCategory)</div>
+                                <div class="span2" style="text-align: right">DateTime:</div>
+                                <div class="span2 ViewTxtCSS">@Html.DisplayFor(m => m.StartDateTime)</div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">Strength/Weight : </div>
+                                <div class="span2 ViewTxtCSS">@Html.DisplayFor(m => m.Strength_no) </div>
+                                <div class="span2">Unit Of Measure:</div>
+                                <div class="span2">
+                                    @Html.DropDownList("PackingList", new SelectList(Model.PackingList, "ID", "Name", Model.PackingListHolder), new { id = "PackingList" })
+                                    @Html.HiddenFor(m => m.UOMName, new { id = "UOMName" })
+                                    @Html.HiddenFor(m => m.UnitID, new { id = "UnitID" })
+                                    @*@Html.TextBoxFor(m => m.UnitID, new { id="UnitID"})*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span8">
+                                        <div class="span2">Maximum Level:</div>
+                                        <div class="span2 ">@Html.TextBoxFor(m => m.MaxLevel, new { id = "MaxLevel" })</div>
+                                        <div class="span2">Minimum Level:</div>
+                                        <div class="span2">@Html.TextBoxFor(m => m.MinLevel, new { id = "MinLevel" })</div>
+                                    </div>
+                                    <div class="span4">
+                                        <div class="span2 ">QOH:</div>
+                                        <div class="span2 ViewTxtCSS">@Html.DisplayFor(m => m.strQOH)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span8">
+                                        <div class="span2">Status :</div>
+                                        <div class="span7">
+                                            <div class="span1">@Html.RadioButtonFor(m => m.ABC, 0) A</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.ABC, 1) B</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.ABC, 2) C</div>
+                                            <div class="span1"></div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.FSN, 0) F</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.FSN, 1) S</div>
+                                            <div class="span1">@Html.RadioButtonFor(m => m.FSN, 2) N </div>
+                                        </div>
+                                    </div>
+                                    <div class="span4">
+
+                                        <div class="span2 ">ROL:</div>
+                                        <div class="span2">@Html.TextBoxFor(m => m.ROL, new { id = "ROL" })</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="span8">
+                                        @*<div class="span2">EUB ?</div>
+                                        <div class="span1">
+                                            <div class="checker">
+                                                <span class="">
+                                                    <input type="checkbox" value="1"></span>
+                                            </div>
+                                        </div>*@
+                                        <div class="span2 ">Profit Center </div>
+                                        @*<div class="span6">@Html.TextBoxFor(m => m.ProfitCenter)</div>*@
+                                        <div class="span6 ViewTxtCSS">@Html.DisplayFor(m => m.ProfitCenter)</div>
+                                    </div>
+                                    <div class="span4">
+                                        <div class="span2 ">ROQ</div>
+                                        <div class="span2">@Html.TextBoxFor(m => m.ROQ)</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            @*<div class="row-form">
+                                <div class="span12">
+                                    <div class="radio span2">
+                                        <span class="checked">
+                                            <input type="radio" checked="checked" name="r_gItem3" value="1">
+                                        </span>
+                                        Scheduled
+                                    </div>
+                                    <div class="radio span6">
+                                        <span>
+                                            <input type="radio" name="r_gItem3" value="2"></span>
+                                        non-Scheduled
+                                    </div>
+                                </div>
+                            </div>*@
+                        </div>
+                        <div class="block">
+                            <div class="row-form  offset6" id="divCommand">
+                                <input type="submit" name="BtnSave" id="BtnSave" class="btn btn-primary " value="Update" style="width: 130px; font-size: larger;" />
+                                @*<input type="submit" name="BtnDelete" id="BtnDelete" class="btn btn-primary" value="Delete" style="width: 90px; font-size: larger;" />
+                                <input type="submit" name="BtnClear" id="BtnClear" class="btn btn-primary" value="Clear" style="width: 90px; font-size: larger;" />
+                                <input type="submit" name="BtnClose" id="BtnClose" class="btn btn-primary" value="Close" style="width: 90px; font-size: larger;" />*@
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bootrstrap modal form -->
+            
+            <div class="dialog-fluid" id="sendStorageModal" style="display: none;" title="Location/Storage information">
+                <input type="button" id="btnAddRack" class="btn btn-primary" value="Add Rack" />
+                <div class="block-fluid">
+
+                    <div class="row-form">
+                        <div class="left">Rack</div>
+                        <div class="span3">
+                            <select id="SelectRack" class="span3"></select>
+                            <span class="top span2">select from the list</span>
+                        </div>
+                        <div class="span3">
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <input type="button" id="btnAddShelf" class="btn btn-primary" value="Add Shelf" />
+                        <div class="left">Shelf</div>
+                        <div class="span5">
+                            <table id="tblShelf" class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="hidden">shelf Id</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            
+            
+            
+            <div class="dialog-fluid" id="sendPackingModal" style="display: none;" title="Packing Information">
+                <div class="block-fluid">
+                    <div class="row-form">
+                        <div class="left">Packing Details</div>
+                        <div class="span3">
+                            <select id="SelectPacking" class="span3" multiple="multiple"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>       
+            <div class="dialog-fluid" id="sendSupplierModal" style="display: none;" title="Suppllier">
+                <div class="block-fluid">
+                    <div class="row-form">
+                        <div class="left">Supplied By</div>
+                        <div class="span3">
+                            <select id="SelectSupplier" class="span3" multiple="multiple"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>       
+            <div class="dialog-fluid" id="sendBatchModal" style="display: none;" title="Batch">
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <table id="tblBatch" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Slno</th>
+                                    <th>Batch Number</th>
+                                    <th>Quantity</th>
+                                    <th>ExpiryDate</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>       
+        }
+    </form>
+</div>

@@ -1,0 +1,255 @@
+﻿@using MMS2
+@model DrugInterMdl
+@{
+    ViewBag.Title = "Drug Drug Interaction";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/FoodDrugInterJS.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>Food Drug Interaction</li>
+    </ul>
+</div>
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("FoodDrugInterSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Food Drug Interaction</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+
+                            <div class="span6 divGeneric">
+                                <span class="top">Select Generic</span>
+                                <input type="text" id="GenericList" class="js-data-example-ajax" style="width: 100%" />
+                            </div>
+                            <div class="span6 divNewGeneric">
+                                <span class="top">Enter New Generic</span>
+                                @Html.Hidden("flgNewGeneric")
+                                @Html.TextBox("NewGeneric")
+                            </div>
+
+                            <div class="span6">
+                                <span class="top">Select Food</span>
+                                <input type="text" id="DrugList" class="js-data-example-ajax" style="width: 100%" />
+                            </div>
+
+                        </div>
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblGenDrug" class="table DarkRedFont" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <td>Seq</td>
+                                            <td class="hidden">GenericID</td>
+                                            <td>Generic</td>
+                                            <td class="hidden">DrugID</td>
+                                            <td>Drug</td>
+                                            <td>Effect/Reaction</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span3">
+                                <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                            </div>
+                            <div class="span3">
+                                <button class="btn btn-primary" id="btnNew" style="width: 75%">New</button>
+                            </div>
+                            <div class="span3">
+                                <button class="btn btn-primary" id="btnClear" style="width: 75%">Clear</button>
+                            </div>
+                            <div class="span3">
+                                <button class="btn btn-primary" id="btnDrugFormulary" style="width: 75%">Drug Formulary</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Food Drug Interaction - Drug Formulary</h2>
+                </div>
+
+                <div class="row-fluid">
+                    @Html.Hidden("GenericIDF")
+                    <div class="block-fluid">
+                        <div class="row-form  divFDrugselect">
+                            <div class="span6">
+                                <span class="top">Select Generic</span>
+                                <input type="text" id="GenericListF" class="js-data-example-ajax" style="width: 100%" />
+                            </div>
+                        </div>
+                        <div class="row-form  divFDrugNew">
+                            @Html.Hidden("flgNewGenericF")
+                            <div class="span6">
+                                <span class="top">Enter New Generic</span>
+                                <input type="text" id="NewGenericFF" />
+                            </div>
+                        </div>
+                        <div class="dr"><span></span></div>
+                        <div class="EditDiv">
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Brand Name")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtBrandName" />
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Therapeutic Category")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtCategory" />
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Use")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtUse" />
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Contra Indication")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtIndication" />
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Warning/Precautions")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtWarning" />
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Adverse Reactions")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtReactions" />
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Mechanism of Action")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtMechanism" />
+                                </div>
+                            </div>
+
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Usual Dosage")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtDosage" />
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Dosage Forms")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtDosageForms" />
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    @Html.Label("Remarks")
+                                </div>
+                                <div class="span10">
+                                    <input type="text" id="txtRemarks" />
+                                </div>
+                            </div>
+                            <div class="dr"><span></span></div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    <button class="btn btn-primary" id="btnSaveF" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span2">
+                                    <button class="btn btn-primary" id="btnNewF" style="width: 75%">New</button>
+                                </div>
+                                <div class="span2">
+                                    <button class="btn btn-primary" id="btnClearF" style="width: 75%">Clear</button>
+                                </div>
+                                <div class="span2">
+                                    <button class="btn btn-primary" id="btnDeleteF" style="width: 75%">Delete</button>
+                                </div>
+                                <div class="span2">
+                                    <button class="btn btn-primary" id="btnViewF" style="width: 75%">View</button>
+                                </div>
+                                <div class="span2">
+                                    <button class="btn btn-primary" id="btnCloseF" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ReptDiv">
+                            <div class="row-form">
+                                <p>
+                                    @Html.Label("Brand Name : ")
+                                    <input type="text" readonly="readonly" id="txtBrandName2" />
+                                    @Html.Label("Therapeutic Category  : ")
+                                    <input type="text" readonly="readonly" id="txtCategory2" />
+                                    @Html.Label("Use : ")
+                                    <input type="text" readonly="readonly" id="txtUse2" />
+                                    @Html.Label("Contra Indication : ")
+                                    <input type="text" readonly="readonly" id="txtIndication2" />
+                                    @Html.Label("Warning/Precautions : ")
+                                    <input type="text" readonly="readonly" id="txtWarning2" />
+                                    @Html.Label("Adverse Reactions : ")
+                                    <input type="text" readonly="readonly" id="txtReactions2" />
+                                    @Html.Label("Mechanism of Action : ")
+                                    <input type="text" readonly="readonly" id="txtMechanism2" />
+                                    @Html.Label("Usual Dosage : ")
+                                    <input type="text" readonly="readonly" id="txtDosage2" />
+                                    @Html.Label("Dosage Forms : ")
+                                    <input type="text" readonly="readonly" id="txtDosageForms2" />
+                                    @Html.Label("Remarks : ")
+                                    <input type="text" readonly="readonly" id="txtRemarks2" />
+                                </p>
+                            </div>
+                            <div class="dr"><span></span></div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    <button class="btn btn-primary" id="btnEditF" style="width: 75%">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        }
+    </form>
+
+</div>
+

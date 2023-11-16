@@ -1,0 +1,337 @@
+﻿@using MMS2
+@model AlterMRP
+@{
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="@Url.Content("~/")" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>Alter Markup</li>
+    </ul>
+</div>
+
+<div class="content">
+    <form id="validate">
+
+        @using (Ajax.BeginForm("Save", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        {
+           
+@*Headers*@
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget">
+                        <div class="head dark">
+                            <div class="icon"><i class="icos-newtab"></i></div>
+                            <h2>Alter Mark UP</h2>
+                        </div>
+                        <div class="block">
+                            <div class="row-form">
+                                <div class="span2">Operator Name  </div>
+                                <div class="span6">
+                                    @*@Html.TextBoxFor(m => m.Name, new {@palceholder="Name", @class="validate[required]"})*@
+                                    @Html.DisplayFor(m => m.OperatorName)
+                                </div>
+
+                                <div class="span1">DateTime</div>
+                                <div class="span2">
+                                    @*@Html.TextBoxFor(m => m.StartdateTime)*@
+                                    @Html.DisplayFor(m => m.CurrentDateTime_Add)
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+@*Details*@
+            
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget">
+                        <div class="head dark">
+                            <div class="icon"><i class="icosg-gridview"></i></div>
+                            <h2>Items Type</h2>
+                        </div>
+
+                        <div class="block-fluid tabbable tabs-left">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab1" data-toggle="tab">Drugs</a></li>
+                                <li class=""><a href="#tab2" data-toggle="tab">Consumables</a></li>
+                                <li class=""><a href="#tab3" data-toggle="tab">Others</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab1">
+                                    <div class="widget">
+                                        <div class="head">
+                                            <div class="icon"><span class="icosg-target1"></span></div>
+                                            <h2>Table Of Drugs Item</h2>
+                                        </div>
+                                        <div class="block-fluid">
+                                            <div id="DataTables_Drugs_wrapper" class="dataTables_wrapper" role="grid">
+                                                <table class="fpTable dataTable" cellpadding="0" cellspacing="0" width="100%" id="DataTables_Drugs"
+                                                    aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Status: activate to sort column ascending" style="width: 200px;">ID</th>
+                                                            <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Name: activate to sort column ascending" style="width: 251px;">Item Code</th>
+                                                            <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Product: activate to sort column ascending" style="width: 199px;">Item Name</th>
+                                                            <th width="15%" class="TAC sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="Actions"
+                                                                style="width: 87px;">Actions  </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                        @foreach (var vr in Model.DrugList_Add)
+                                                        { 
+                                                        
+                                                            <tr class="odd">
+                                                                <td class="addRow "><a href="#">@vr.ID </a></td>
+                                                                <td class="addRow "><a href="#">@vr.ItemCode </a></td>
+                                                                <td class="addRow "><a href="#">@vr.Name </a></td>
+                                                                <td class="TAC ">
+                                                                    <a href="#"><span class="icosg-plus1 addRow"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        
+                                                        }
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="tab-pane" id="tab2">
+                                    <div class="widget">
+                                        <div class="head">
+                                            <div class="icon"><span class="icosg-target1"></span></div>
+                                            <h2>Table Of Consumables Item</h2>
+                                        </div>
+                                        <div class="block-fluid">
+                                            <div id="DataTables_Consum_wrapper" class="dataTables_wrapper" role="grid">
+                                                <table class="fpTable dataTable" cellpadding="0" cellspacing="0" width="100%" id="DataTables_Consum"
+                                                    aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Status: activate to sort column ascending" style="width: 200px;">ID</th>
+                                                            <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Name: activate to sort column ascending" style="width: 251px;">Item Code</th>
+                                                            <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Product: activate to sort column ascending" style="width: 199px;">Item Name</th>
+                                                            <th width="15%" class="TAC sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="Actions"
+                                                                style="width: 87px;">Actions  </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+
+                                                        @foreach (var vr in Model.ConsumableList_Add)
+                                                        { 
+                                                        
+                                                            <tr class="odd">
+                                                                <td class="addRow "><a href="#">@vr.ID </a></td>
+                                                                <td class=" addRow"><a href="#">@vr.ItemCode </a></td>
+                                                                <td class="addRow "><a href="#">@vr.Name </a></td>
+                                                                <td class="TAC ">
+                                                                    <a href="#"><span class="icosg-plus1 addRow"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        
+                                                        }
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="tab3">
+                                    <div class="widget">
+                                        <div class="head">
+                                            <div class="icon"><span class="icosg-target1"></span></div>
+                                            <h2>Table Of Others Item</h2>
+                                        </div>
+                                        <div class="block-fluid">
+                                            <div id="DataTables_Other_wrapper" class="dataTables_wrapper" role="grid">
+                                                <table class="fpTable dataTable" cellpadding="0" cellspacing="0" width="100%" id="DataTables_Other"
+                                                    aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                                                    <thead>
+                                                        <tr role="row">
+                                                            <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Status: activate to sort column ascending" style="width: 200px;">ID</th>
+                                                            <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Name: activate to sort column ascending" style="width: 251px;">Item Code</th>
+                                                            <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                                aria-label="Product: activate to sort column ascending" style="width: 199px;">Item Name</th>
+                                                            <th width="15%" class="TAC sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="Actions"
+                                                                style="width: 87px;">Actions  </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                        @foreach (var vr in Model.OthersList_Add)
+                                                        { 
+                                                        
+                                                            <tr class="odd">
+                                                                <td class="addRow "><a href="#">@vr.ID </a></td>
+                                                                <td class="addRow"><a href="#">@vr.ItemCode </a></td>
+                                                                <td class="addRow"><a href="#">@vr.Name </a></td>
+                                                                <td class="TAC ">
+                                                                    <a href="#"><span class="icosg-plus1 addRow"></span></a>
+                                                                </td>
+                                                            </tr>
+                                                        
+                                                        
+                                                        }
+
+
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="widget">
+                            @*Item INsert grid*@
+                            <div class="span12">
+
+                                <div class="widget">
+                                    <div class="head">
+                                        <div class="icon"><span class="icosg-target1"></span></div>
+                                        <h2>Modified Items</h2>
+                                    </div>
+                                    <div class="block-fluid">
+                                        <div id="DataTables_Table_Insert_wrapper" class="dataTables_wrapper no-footer">
+                                            @*<table class="table table-hover dataTable no-footer" cellpadding="0" cellspacing="0" width="100%" 
+                                                id="DataTables_Insert" style="width: 100%; overflow-y: scroll;" role="grid">*@
+                                            <table class="table-hover" width="100%" cellspacing="0" cellpadding="0"
+                                                id="DataTables_Insert" style="overflow: auto">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th class=" Table_Cell_Hide">ID</th>
+                                                        <th width="3%">S#</th>
+                                                        <th width="10%">Item Code</th>
+                                                        <th width="25%">Item Name</th>
+                                                        <th width="10%">Batch No</th>
+                                                        <th width="9%">OldCP</th>
+                                                        <th width="9%">OldMRP</th>
+                                                        <th width="10%">New MRP</th>
+                                                        <th width="10%">ExpiryDate</th>
+                                                        <th width="9%">UOM</th>
+                                                        <th class=" Table_Cell_Hide">Source Table</th>
+                                                        <th class=" Table_Cell_Hide">ConverisionQty</th>
+                                                        <th class=" Table_Cell_Hide">BatchID</th>
+                                                        <th class=" Table_Cell_Hide">tax</th>
+                                                        <th class=" Table_Cell_Hide">DrugType</th>
+                                                        <th class=" Table_Cell_Hide">OldExpiryDate</th>
+                                                        <th width="5%" class="TAC sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="Actions">Actions  </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+
+
+                                        @*<div id="DataTables_Insert_wrapper" class="dataTables_wrapper" role="grid">
+                                            <table class="fpTable dataTable" cellpadding="0" cellspacing="0" width="100%" id="DataTables_Insert"
+                                                aria-describedby="DataTables_Table_2_info" style="width: 100%;">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Status: activate to sort column ascending" style="width: 200px;">ID</th>
+                                                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Name: activate to sort column ascending" style="width: 251px;">Item Code</th>
+                                                        <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Product: activate to sort column ascending" style="width: 199px;">Item Name</th>
+                                                        
+                                                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Name: activate to sort column ascending" style="width: 251px;">Batch No</th>
+                                                        <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Product: activate to sort column ascending" style="width: 199px;">OldCP</th>
+                                                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Name: activate to sort column ascending" style="width: 251px;">OldMRP</th>
+                                                        <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Product: activate to sort column ascending" style="width: 199px;">New MRP</th>
+                                                        <th width="25%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Name: activate to sort column ascending" style="width: 251px;">ExpiryDate</th>
+                                                        <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Product: activate to sort column ascending" style="width: 199px;">UOM</th>
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        <th width="20%" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1"
+                                                            aria-label="Date: activate to sort column ascending" style="width: 200px;">Source Table</th>
+                                                        <th width="15%" class="TAC sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="Actions"
+                                                            style="width: 87px;">Actions  </th>
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody role="alert" aria-live="polite" aria-relevant="all">
+                                                </tbody>
+                                            </table>
+                                        </div>*@
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+           
+              
+           
+@*Commands*@
+            <div class="row-fluid">
+                <div class="span12">
+
+                    <div class="block">
+                        <div class="row-form" id="divCommand">
+                            <input type="submit" name="BtnSave" id="BtnSave" class="btn btn-primary hidden" value="Save" style="width: 90px; font-size: larger;" />
+                            <input type="submit" name="BtnClear" id="BtnClear" class="btn btn-primary" value="Clear" style="width: 90px; font-size: larger;" />
+                            <input type="submit" name="BtnClose" id="BtnClose" class="btn btn-primary" value="Close" style="width: 90px; font-size: larger;" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        
+        }
+    </form>
+    @*html.BeginForm END  *@
+
+
+</div>
+<script src="~/Scripts/AlterMRP.js"></script>

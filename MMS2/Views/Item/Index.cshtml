@@ -1,0 +1,65 @@
+﻿@using MMS2
+
+@{
+    ViewBag.Title = "Item";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+    }
+
+
+ <div class="content">
+     
+     <div>
+  <a href="#fModal" role="button" class="btn" data-toggle="modal">Show</a>
+
+   </div>
+      
+
+     <div class="ShowPartial">
+        @Html.Partial("show")
+     </div>
+      
+   
+  
+
+</div>
+
+
+ @*<script type='text/javascript' src="@Url.Content("~/Scripts/Items.js")"></script>*@
+
+
+@*example of using grid with inline edit *@
+          <div id="gridContent" style="padding: 20px;">
+                                                @grid.GetHtml(
+        tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        alternatingRowStyle: "webgrid-alternating-row",
+        selectedRowStyle: "webgrid-selected-row",
+        rowStyle: "webgrid-row-style",
+        mode: WebGridPagerModes.All,
+        columns:
+            grid.Columns(
+             grid.Column("ItemID", format: @<text>  <span class="display-mode">@item.ItemID </span>
+                                                @*<label id="UserID" class="edit-mode">@item.ItemID</label>*@
+                                                <span id="UserIDx" class="edit-mode">@item.ItemID </span>
+                                                </text>, style: ""),
+             grid.Column("ItemName", "ItemName", format: @<text>  
+                                                <span class="display-mode"> 
+                                                    <label id="lblName">@item.ItemName</label>
+                                                </span>
+                                                <label id="Name" class="edit-mode">@item.ItemName"</label>
+                                                @*<input type="text" id="Name" value="@item.ItemName" class="edit-mode" />*@
+                                                </text>, style:"gridlbl"),
+             grid.Column("PartNo", "PartNo Name", format: @<text> 
+                                                <span class="display-mode">
+                                                        <label id="lblSurName">@item.Partno</label>
+                                                </span>
+                                                <input type="text" id="SurName" value="@item.PartNo" class="edit-mode" />
+                                                </text>, style:""),
+             grid.Column("Action", format: @<text>
+                                                <button class="edit-user display-mode">Edit</button>
+                                                <button class="save-user edit-mode">Save</button>
+                                                <button class="cancel-user edit-mode">Cancel</button>
+                                                </text>, style:"", canSort: false)
+           ))
+                                            </div>

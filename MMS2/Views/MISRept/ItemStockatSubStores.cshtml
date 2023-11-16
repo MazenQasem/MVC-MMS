@@ -1,0 +1,617 @@
+﻿@using MMS2
+@model MISRept
+@{
+         Layout = "~/Views/Shared/_TwitterBlankLayout.cshtml";
+    var date = @DateTime.Now.Date.ToString("dd MMM yyyy");
+    var Time = @DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Second.ToString().PadLeft(2, '0');
+    string ling = "";
+    ling = ling.PadRight(146, '=');
+             <script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+}
+
+
+
+
+<body>
+
+    <div class="content">
+        <form id="validate">
+
+            @using (Ajax.BeginForm("Reprot", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+            {
+                              
+                <div class="widget ViewWidget">
+                    <div class="head dark">
+                        <div class="icon"><span class=""></span></div>
+                        <h2>@Html.DisplayFor(m => m.ReportName)</h2>
+                        @Html.HiddenFor(m => m.ReportNo)
+                        @Html.HiddenFor(m => m.AppPath, new { @class = "AppName" })
+                    </div>
+
+                    <div class="row-fluid">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span4">
+                                    <span>Category</span>
+                                    <select id="CategoryList" class="" style="width: 100%"></select>
+                                </div>
+                                <div class="span2">
+                                    <span>Type</span>
+                                    <select id="TypeList" class="" style="width: 100%"></select>
+                                </div>
+                            </div>
+
+                            <div class="row-form" id="listitemDiv">
+                                @*<div id="selector" class="span8">
+                                    <span class="top">Select Item from the list (min 5 char) </span>
+                                    <select id="ItemList" class="select" style="width: 100%">
+                                        <option value="0">...</option>
+                                    </select>
+                                </div>*@
+                                <div id="selector" class="span8">
+                                    @*<div id="ItemList"></div>*@
+                                    @*<input type="text" id="ItemList" class="form-control" />*@
+                                    <input type="text" id="ItemList" class="js-data-example-ajax" style="width: 100%"/>
+                                    
+                                </div>
+                                <div class="span1">
+                                    <span class="top">.</span>
+                                    <input type="button" class="button" id="btnShow" value="Show" />
+                                </div>
+
+                            </div>
+
+                            <div class="dr"><span></span></div>
+                        </div>
+
+
+
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span4">
+                                    <table id="DesTable">
+                                        <caption>Item Chart </caption>
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 80%;">Staion</th>
+                                                <th style="width: 20%;">Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="span8">
+                                    <div id="target" style="width: 100%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </form>
+    </div>
+</body>
+
+<style>
+    #target
+    {
+        width: 600px;
+        height: 400px;
+    }
+
+    .caption
+    {
+        display: block;
+        text-align: center;
+        font-weight: bold;
+        height: 40px;
+    }
+
+    .graph
+    {
+        position: relative;
+        float: right;
+    }
+
+        .graph ul
+        {
+            list-style: none outside none;
+            margin: 0;
+            padding: 0;
+        }
+
+    .legend
+    {
+        background: #f0f0f0;
+        border-radius: 4px;
+        bottom: 0;
+        position: relative;
+        text-align: left;
+        width: 100%;
+    }
+
+        .legend li
+        {
+            display: block;
+            float: left;
+            height: 20px;
+            margin: 0;
+            padding: 10px 20px;
+        }
+
+        .legend span.icon
+        {
+            background-position: 50% 0;
+            border-radius: 2px;
+            display: block;
+            float: left;
+            height: 16px;
+            margin: 2px 10px 0 0;
+            width: 16px;
+        }
+
+    .x-axis
+    {
+        bottom: 0;
+        color: #555;
+        position: absolute;
+        text-align: center;
+    }
+
+        .x-axis li
+        {
+            float: left;
+            margin: 0 10px;
+        }
+
+    .y-axis
+    {
+        color: #555;
+        position: absolute;
+        text-align: left;
+    }
+
+        .y-axis ul
+        {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .y-axis li
+        {
+            border-top: 1px solid #ccc;
+            display: block;
+        }
+
+            .y-axis li span
+            {
+                display: block;
+                position: relative;
+                text-align: right;
+            }
+
+    .bars
+    {
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+    }
+
+    .bar-group
+    {
+        float: left;
+        height: 100%;
+        position: relative;
+        margin: 0 10px;
+    }
+
+    .bar
+    {
+        border-radius: 3px 3px 0 0;
+        bottom: 0;
+        position: absolute;
+        text-align: center;
+        cursor: pointer;
+        display: block;
+    }
+
+        .bar span
+        {
+            margin-top: -25px;
+            *zoom: 1;
+            display: none;
+            position: relative;
+        }
+
+    .item-0
+    {
+        background: #d0e4f7; 
+        background: -moz-linear-gradient(left, #d0e4f7 0%, #73b1e7 24%, #0a77d5 50%, #539fe1 79%, #87bcea 100%); 
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,#d0e4f7), color-stop(24%,#73b1e7), color-stop(50%,#0a77d5), color-stop(79%,#539fe1), color-stop(100%,#87bcea)); 
+        background: -webkit-linear-gradient(left, #d0e4f7 0%,#73b1e7 24%,#0a77d5 50%,#539fe1 79%,#87bcea 100%); 
+        background: -o-linear-gradient(left, #d0e4f7 0%,#73b1e7 24%,#0a77d5 50%,#539fe1 79%,#87bcea 100%); 
+        background: -ms-linear-gradient(left, #d0e4f7 0%,#73b1e7 24%,#0a77d5 50%,#539fe1 79%,#87bcea 100%); 
+        background: linear-gradient(to right, #d0e4f7 0%,#73b1e7 24%,#0a77d5 50%,#539fe1 79%,#87bcea 100%); 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d0e4f7', endColorstr='#87bcea',GradientType=1 ); 
+    }
+
+    .item-1
+    {
+        background: #f0b7a1; 
+        background: -moz-linear-gradient(left, #f0b7a1 0%, #8c3310 42%, #752201 59%, #bf6e4e 100%); 
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,#f0b7a1), color-stop(42%,#8c3310), color-stop(59%,#752201), color-stop(100%,#bf6e4e)); 
+        background: -webkit-linear-gradient(left, #f0b7a1 0%,#8c3310 42%,#752201 59%,#bf6e4e 100%); 
+        background: -o-linear-gradient(left, #f0b7a1 0%,#8c3310 42%,#752201 59%,#bf6e4e 100%); 
+        background: -ms-linear-gradient(left, #f0b7a1 0%,#8c3310 42%,#752201 59%,#bf6e4e 100%); 
+        background: linear-gradient(to right, #f0b7a1 0%,#8c3310 42%,#752201 59%,#bf6e4e 100%); 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0b7a1', endColorstr='#bf6e4e',GradientType=1 ); 
+    }
+
+    .item-2
+    {
+        background: #6d6d6d; 
+        background: -moz-linear-gradient(left, #6d6d6d 0%, #828282 12%, #666666 25%, #424242 49%, #727272 72%, #666666 100%); 
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,#6d6d6d), color-stop(12%,#828282), color-stop(25%,#666666), color-stop(49%,#424242), color-stop(72%,#727272), color-stop(100%,#666666)); 
+        background: -webkit-linear-gradient(left, #6d6d6d 0%,#828282 12%,#666666 25%,#424242 49%,#727272 72%,#666666 100%); 
+        background: -o-linear-gradient(left, #6d6d6d 0%,#828282 12%,#666666 25%,#424242 49%,#727272 72%,#666666 100%); 
+        background: -ms-linear-gradient(left, #6d6d6d 0%,#828282 12%,#666666 25%,#424242 49%,#727272 72%,#666666 100%); 
+        background: linear-gradient(to right, #6d6d6d 0%,#828282 12%,#666666 25%,#424242 49%,#727272 72%,#666666 100%); 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6d6d6d', endColorstr='#666666',GradientType=1 ); 
+    }
+
+    .item-3
+    {
+        background: #bfd255; 
+        background: -moz-linear-gradient(left, #bfd255 0%, #8eb92a 28%, #72aa00 47%, #8eb92a 78%, #9ecb2d 100%); 
+        background: -webkit-gradient(linear, left top, right top, color-stop(0%,#bfd255), color-stop(28%,#8eb92a), color-stop(47%,#72aa00), color-stop(78%,#8eb92a), color-stop(100%,#9ecb2d)); 
+        background: -webkit-linear-gradient(left, #bfd255 0%,#8eb92a 28%,#72aa00 47%,#8eb92a 78%,#9ecb2d 100%); 
+        background: -o-linear-gradient(left, #bfd255 0%,#8eb92a 28%,#72aa00 47%,#8eb92a 78%,#9ecb2d 100%); 
+        background: -ms-linear-gradient(left, #bfd255 0%,#8eb92a 28%,#72aa00 47%,#8eb92a 78%,#9ecb2d 100%); 
+        background: linear-gradient(to right, #bfd255 0%,#8eb92a 28%,#72aa00 47%,#8eb92a 78%,#9ecb2d 100%); 
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bfd255', endColorstr='#9ecb2d',GradientType=1 ); 
+    }
+</style>
+
+<script>
+    
+    $(function () {
+
+             });
+    jQuery.fn.tableBarChart = function (targetDiv, caption, reverseGroup) {
+        var source = $(this);
+        var target = $(targetDiv);
+        var maxValue = 0;
+        var minValue = Number.MAX_VALUE;
+        var yAxisMax = 0;
+        var yAxisMin = 0;
+        var groupTitles = [];
+        var legends = [];
+        var tableData = [];
+        
+
+
+
+
+        function getHeaderNames(isColumn) {
+            var parentNode = isColumn ? 'thead' : 'tbody';
+            var names = [];
+            source.find(parentNode + ' th').each(function (index, element) {
+                                 if (index > 0 || isColumn === undefined || !isColumn) {
+                    names.push($(element).text());
+                }
+            });
+            return names;
+        }
+
+        function getDataByRow() {
+            var dataMatrix = [];
+            source.find('tbody tr').each(function (i, trElement) {
+                var rowValue = [];
+                $(trElement).find('td').each(function (j, tdElement) {
+                    var intValue = parseInt($(tdElement).text());
+                    if (intValue > maxValue) {
+                        maxValue = intValue;
+                    } else if (intValue < minValue) {
+                        minValue = intValue;
+                    }
+                    rowValue.push(intValue);
+                });
+                dataMatrix.push(rowValue);
+            });
+            return dataMatrix;
+        }
+
+        function getDataByColumn() {
+            var dataMatrix = [];
+            var numCols = source.find('tbody tr:eq(0) td').size();
+            for (var i = 0; i < numCols; i++) {
+                var colValue = [];
+                source.find('tbody tr').each(function () {
+                    var intValue = parseInt($($(this).find('td:eq(' + i + ')')[0]).text());
+                    if (intValue > maxValue) {
+                        maxValue = intValue;
+                    } else if (intValue < minValue) {
+                        minValue = intValue;
+                    }
+                    colValue.push(intValue);
+                });
+                dataMatrix.push(colValue);
+            }
+            return dataMatrix;
+        }
+
+        function getCaption() {
+            if (caption === undefined || caption.length === 0) {
+                caption = '';
+                source.find('caption').each(function () {
+                    caption = $(this).text();
+                });
+            }
+            return caption;
+        }
+
+        function getAxisHTML(sourceArray, cssClass) {
+            var axis = $('<ul class="' + cssClass + '"></ul>');
+            $(sourceArray).each(function () {
+                axis.append('<li><span>' + this + '</span></li>');
+            });
+            return axis;
+        }
+
+        function getYAxisArray(stepCount) {
+            var maxDigitCount = String(maxValue).length;
+            var minDigitCount = String(minValue).length;
+            var base10 = Math.pow(10, maxDigitCount - 1);
+            yAxisMax = base10 * (Math.floor(maxValue / base10) + 1);
+            if (maxDigitCount === minDigitCount) {
+                yAxisMin = base10 * (Math.floor(minValue / base10));
+            }
+            var result = [];
+            var step = (yAxisMax - yAxisMin) / stepCount;
+            for (var i = stepCount; i >= 0; i--) {
+                var stepValue = yAxisMin + step * i;
+                if (stepValue % 1 !== 0) {
+                    stepValue = parseFloat(Math.round(stepValue * 100) / 100).toFixed(2);
+                }
+                result.push(stepValue);
+            }
+            return result;
+        }
+
+        function animateBar(index) {
+            target.find('.bar.item-' + index).each(function () {
+                var bar = $(this);
+                bar.css('height', 0);
+                var value = bar.attr('value');
+                bar.animate({
+                    'height': value
+                }, 800);
+            });
+        }
+
+        function getLegendHTML() {
+            var legendContainer = $('<ul class="legend"></ul>');
+            $(legends).each(function (index) {
+                var legendItem = $('<li><span class="icon item-' + index + '"></span>' +
+                    this + '</li>');
+                legendItem.mouseenter(function () {
+                    animateBar(index);
+                });
+                legendContainer.append(legendItem);
+            });
+            return legendContainer;
+        }
+
+        function getBarChartHTML() {
+            var barsContainer = $('<div class="bars"></div>');
+            $(tableData).each(function (i, columnGroup) {
+                var barGroup = $('<div class="bar-group"></div>');
+                $(columnGroup).each(function (j, cell) {
+                    var bar = $('<div class="bar item-' + j + '" value="' +
+                        Math.floor((cell - yAxisMin) / (yAxisMax - yAxisMin) * 100) + '%"><span>' +
+                        cell + '</span></div>');
+
+                                         bar.hover(function () {
+                        bar.find('span').css('display', 'block');
+                    }, function () {
+                        bar.find('span').css('display', 'none');
+                    });
+
+                    barGroup.append(bar);
+                });
+                barsContainer.append(barGroup);
+            });
+            return barsContainer;
+        }
+
+        function layout() {
+            var defaultMargin = 10;
+            var yAxisWidth = 50;
+            target.find('.y-axis').css('width', '100%');
+            target.find('.y-axis span').css('width', yAxisWidth).css('margin', '-' + defaultMargin + 'px 0 0 -' + (yAxisWidth + defaultMargin) + 'px');
+            var graphWidth = target.width() - (yAxisWidth + 2 * defaultMargin);
+            var graphHeight = target.height() - target.find('.caption').height() - target.find('.legend').height() - 3 * defaultMargin;
+            target.find('.graph').css('width', graphWidth).css('height', graphHeight);
+            var stepHeight = Math.floor((graphHeight - target.find('.x-axis').height() - 2 * defaultMargin) / (groupTitles.length + 1));
+            target.find('.y-axis li').css('height', stepHeight).css('width', '100%');
+            var barGroupHeight = (target.find('.y-axis li').height() + 1) * (groupTitles.length + 1);
+            target.find('.bars').css('height', barGroupHeight).css('width', '100%');
+            var barGroupWidth = graphWidth / groupTitles.length - 2 * defaultMargin;
+            target.find('.bar-group').css('width', barGroupWidth).css('margin', '0 ' + defaultMargin);
+            target.find('.x-axis li').css('width', barGroupWidth);
+            var barWidth = barGroupWidth / legends.length - 2;
+            target.find('.bar').css('width', barWidth);
+            for (var i = 0; i < legends.length; i++) {
+                target.find('.bar.item-' + i).css('left', i * (barWidth + 2));
+                animateBar(i);
+            }
+        }
+
+        function render() {
+            target.append('<div class="caption">' + getCaption() + '</div>');
+            var graphContainer = $('<div class="graph"></div>');
+            graphContainer.append(getAxisHTML(groupTitles, 'x-axis'));
+            graphContainer.append(getAxisHTML(getYAxisArray(groupTitles.length + 1), 'y-axis'));
+            graphContainer.append(getBarChartHTML());
+            target.append(graphContainer);
+            target.append(getLegendHTML());
+            layout();
+        }
+
+        function initialize() {
+            groupTitles = getHeaderNames(reverseGroup ? false : true);
+            legends = getHeaderNames(reverseGroup ? true : false);
+            tableData = reverseGroup ? getDataByRow() : getDataByColumn();
+
+            render();
+        }
+
+        initialize();
+    }
+</script>
+
+
+
+<style>
+    td.HideBorder
+    {
+        
+        
+        border: hidden;
+    }
+
+    tr.HideColor
+    {
+        background-color: white;
+        border-color: white;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        loadLists();
+        $('#btnShow').click(function () {
+            $('#DesTable').find('tbody').find('tr').remove();
+            loadTable($('#ItemList').select2('val'));
+                     });
+
+
+        var URL = $('.AppName').val() + "/MazenMain/LoadListByItem";
+
+                 $("#ItemList").select2({
+            ajax: {
+                url: URL,
+                dataType: 'json',
+                type: "POST",
+                delay: 250,
+                data: function (params) {
+                    return {
+                                                                          query: "select top 100 ID,Name from Item where deleted=0 and drugtype=" + $('#TypeList').val()
+                              + " and (itemcode like '%" + params + "%' or name like '%" + params + "%') "
+                              + " and categoryid=" + $('#CategoryList').val() + " Order bY name ",
+                        page: 100
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.Name,
+                                                                 id: item.ID
+                            }
+                        })
+                    };
+                     
+                },
+                cache: true
+            },
+            minimumInputLength: 2,
+            formatResult: FormatResult,
+            formatSelection: FormatSelection,
+        });
+
+    });
+    
+
+    function loadLists() {
+
+                          LoadList2($('.AppName').val(), '#CategoryList', 'select ID,Name from ItemGroup where deleted=0', ' ', ' order by name ');
+        
+
+        $('#TypeList').append('<option selected="" value="1">Consumble</option>')
+        $('#TypeList').append('<option selected="" value="2">Other</option>')
+        $('#TypeList').append('<option selected="selected" value="0">Drug</option>')
+    }
+    $(document).on('change', '#CategoryList', function () {
+        $('#allItemsList').empty();
+        $('#s2id_allItemsList').find('a').find('span').empty();
+    });
+    $(document).on('change', '#TypeList', function () {
+        $('#ItemList').empty();
+        $('#s2id_ItemList').find('a').find('span').empty();
+    });
+    $(document).on('focusout', '#TypeList', function () {
+        $('#ItemList').empty();
+        $('#s2id_ItemList').find('a').find('span').empty();
+    });
+    function loadTable(itm) {
+
+        $('#target').empty();
+        var str = 'select s.name as Name ,sum(quantity) as ID '
+                    + ' from batchstore bs,station s '
+                    + ' where bs.stationid=s.id and bs.quantity>0 and bs.itemid =' + itm;
+        var count = 1;
+        $.ajax(
+            {
+                type: "POST",
+                url: $('.AppName').val() + "/IndentOrder/LoadList",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({ Str: str, GroupBy: '  group by s.name ', Order: ' order by ID desc,name asc ', WithStationID: false }),
+                success: function (msg) {
+                    $.each(msg, function (i, Item) {
+                        $('#DesTable >tbody').append("<tr><th>" + Item.Name + "</th><td>" + Item.ID + "</td></tr>");
+                        if (count == 5) {
+                            $('#DesTable').tableBarChart('#target', "TOP 4 : " + $("select#ItemList option:selected").html(), false);
+                        }
+                        count += 1;
+                    });
+                    if (count <= 4) {
+                        $('#DesTable').tableBarChart('#target', "TOP 4 : " + $("select#ItemList >option:selected").html(), false);
+                    }
+
+                },
+                Failure: function (msg) {
+                    ShowMessage("Failure:" + msg.Message);
+
+                }
+            });
+
+    }
+                    
+     
+                                        
+               
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

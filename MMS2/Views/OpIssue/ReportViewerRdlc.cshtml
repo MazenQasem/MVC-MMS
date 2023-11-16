@@ -1,0 +1,88 @@
+﻿@using MMS2
+@model RptMMSPrnIssue
+@{
+    Layout = null;
+    TempListMdl idn = (TempListMdl)ViewData["tbl"];
+@*<iframe runat="server" id="Reports" src="~/Views/OpIssue/PrnIssue.aspx" width="60%" height="460"></iframe>*@
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ReportViewer2  -
+
+    </title>
+    <script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+    <script>
+        function printContent() {
+                         var printcontent = $('#rptdiv').clone();
+            $('body').empty().html(printcontent);
+            window.print();
+                     }
+    </script>
+</head>
+<body>
+    <div id="rptdiv">
+        <input id="Button1" type="button" value="Print Report" onclick="printContent();" />
+        <h1>Saudi German hospital</h1>
+
+
+
+        @*<div id="fixedheader">saudi german hospital</div>*@
+        @for (int i = 0; i < 100; i++)
+        {
+           <p>line @i</p>
+        }
+
+
+
+        @*<div style="height:500px;">
+        <iframe runat="server" id="Reports" src= "@Url.Content("~/ReportsRDLC/CashBill.aspx?ReportID=" + @idn)" style="width:100%; height:100%;"></iframe>
+    </div>*@
+        @*@Html.Partial("PrintBillPage")*@
+        @*@Html.DisplayFor(m => m.Fax);*@
+        <footer>2016 only</footer>
+    </div>
+</body>
+</html>
+
+@*<h2>Our Customer List</h2>
+@Html.Partial("PrnIssue");*@
+
+
+<style type="text/css">
+    body
+    {
+        background-color: #CCC;
+        margin: 80px 80px 100px 100px;
+    }
+
+    div#fixedheader
+    {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        color: #CCC;
+        background: #333;
+        padding: 20px;
+        page-break-before:always;
+    }
+
+    div#fixedfooter
+    {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        color: #CCC;
+        background: #333;
+        padding: 8px;
+    }
+    .h1
+    {
+        color:yellow;
+        page-break-after:always;
+    }
+</style>

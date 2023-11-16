@@ -1,0 +1,167 @@
+﻿@using MMS2
+@model CashSummary
+@{
+    Layout = "";
+         var date = @DateTime.Now.Date.ToString("dd MMM yyyy");
+    var Time = @DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Second.ToString().PadLeft(2, '0');
+    int PageCount = 1;
+    string ling = "";
+    ling = ling.PadRight(146, '=');
+    var ReportTitle = "Summary of Cash/Credit Receipts";
+    decimal total = 0;
+    <script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ReportTitle
+    </title>
+
+
+    <link href="@Url.Content("~/css/LoaderStyle/normalize.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/LoaderStyle/main.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/stylesheets.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form>
+        <div id="rptdiv">
+            <div id="fixedheader">
+                <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;">
+                    <tbody>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 20%; text-align: center">Saudi German Hospital </td>
+                            <td class="HideBorder" style="width: 70%;"></td>
+                            <td class="HideBorder" style="width: 10%">Date: @date </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 20%; text-align: center">Jeddah </td>
+                            <td class="HideBorder" style="width: 70%"></td>
+                            <td class="HideBorder" style="width: 10%">Time: @Time </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 20%; text-align: center"> </td>
+                            <td class="HideBorder" style="width: 70%"></td>
+                            <td class="HideBorder" style="width: 10%">Page: @PageCount </td>
+                        </tr>
+
+                        <tr class="HideColor">
+                            <td class="HideBorder"></td>
+                            <td class="HideBorder title1" style="width: 100%; font-size: large; text-align: center"></td>
+                            <td class="HideBorder"></td>
+
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder"></td>
+                            <td class="HideBorder title2" style="width: 100%; font-size: large; text-align: center"></td>
+                            <td class="HideBorder"></td>
+
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder"></td>
+                            <td class="HideBorder title3" style="width: 100%; font-size: small; text-align: center"></td>
+                            <td class="HideBorder"></td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div>
+                    @ling
+                </div>
+            </div>
+            <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;">
+                <thead>
+                    <tr class="HideColor">
+                        <td class="HideColor" style="width: 5%">Sno</td>
+                        <td class="HideColor" style="width: 20%">Receipt#</td>
+                        <td class="HideColor" style="width: 20%">Amount</td>
+                        <td class="HideColor" style="width: 20%">PIN</td>
+                        <td class="HideColor" style="width: 15%">Time</td>
+                        <td class="HideColor" style="width: 20%">User</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var itm in Model.CashDtl)
+                    {
+                        total = total + itm.Amount;
+
+                        <tr class="HideColor">
+                            <td class="HideColor" style="width: 5%">@itm.Sno</td>
+                            <td class="HideColor" style="width: 20%">@itm.Receipt </td>
+                            <td class="HideColor" style="width: 20%; text-align: right">@String.Format("{0:0,0.00}", @itm.Amount) </td>
+                            <td class="HideColor" style="width: 20%">@itm.PIN</td>
+                            <td class="HideColor" style="width: 15%">@String.Format("{0:dd-MMM-yyyy}", @itm.Time)</td>
+                            <td class="HideColor" style="width: 20%">@itm.User</td>
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;">
+                <tbody style="width: 100%; border-style: hidden">
+                    <tr style="border-style: hidden">
+                          <td style="width: 25%; border-right-style: hidden; font-size: large">Total : </td>
+                        <td style="width: 20%; border-right-style: hidden;text-align: right">@String.Format("{0:0,0.00}", @total) </td>
+                        <td style="width: 55%; border-right-style: hidden" />
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div id="fixedfooter2">
+                <table style="background-color: white; border-style: hidden">
+                    <tbody style="width: 100%; border-style: hidden">
+
+                        <tr style="border-style: hidden">
+                            <td style="width: 1200px; border-right-style: hidden">
+                                @Html.Label("---------------------------------------------------------------------------------------------------------", new { @style = "font-size: samll;text-align-last: center " })
+                            </td>
+                        </tr>
+                        <tr style="border-style: hidden">
+                            <td style="width: 800px; border-right-style: hidden">
+                                @Html.Label("SGHG-Jeddah 2016 [Owner: IT Department]", new { @style = "font-size: x-small; text-align-last: center" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>
+
+<style>
+    td.HideBorder
+    {
+        
+        
+        border: hidden;
+    }
+
+    tr.HideColor
+    {
+        background-color: white;
+        border-color: white;
+    }
+</style>
+<script>
+
+    $(document).ready(function () {
+        $('.title1').append("SUMMARY OF " + $('select#ListBillType option:selected').text().toUpperCase() + "   RECEIPT FOR " + $('#FromDate').val());
+        $('.title2').append("Station Name : " + gStationName());
+        if ($('#EmpList').val() > 0)
+        {
+            $('.title3').append("User Name : " + $('select#EmpList option:selected').text());
+
+        }
+
+
+    });
+</script>

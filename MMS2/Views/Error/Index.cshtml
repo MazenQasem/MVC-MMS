@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_TwitterBlankLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>        
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    
+    
+    <title>Error - Service Unavaliable </title>
+    
+    
+</head>
+<body>
+    
+    <div class="errorContainer">
+        <h1>Sorry!</h1>
+        <h2>Service Unavailable</h2>
+        @*<button class="btn btn-primary btn-large" 
+            onClick="document.location.href = 'index.html';">Back to main</button> *@
+        <button class="btn btn-large" onClick="history.back();">Previous page</button>
+    </div>    
+    
+</body>
+</html>

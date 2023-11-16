@@ -1,0 +1,182 @@
+﻿@using MMS2
+@model ProcIssueMain
+@{
+    ViewBag.Title = "Issue Procedure Component";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/ProcIssComJS.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuIssue').trigger('click');">Issue</a></li>
+        <li>Procedure Component Issue</li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuOrder').trigger('click');
+    });
+</script>*@
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("ProcIssComSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Procedure Component Issue</h2>
+                </div>
+                <div class="row-fluid">
+
+                    @Html.HiddenFor(m => m.lngBillId)
+                    @Html.HiddenFor(m => m.IsInvDone)
+                    @Html.HiddenFor(m => m.txtBillNo)
+
+                    <div class="block-fluid">
+
+                        <div class="row-form">
+
+                            <div class="span3">
+                                <span class="top">Date</span>
+                                @Html.TextBoxFor(m => m.dtpFromDate, new { @class = "datepicker" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">Bill Date</span>
+                                @Html.TextBoxFor(m => m.lblOrdDate, new { @class = "ViewTxtCSS", @style = "width: 100%" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">Operator</span>
+                                @Html.TextBoxFor(m => m.lblOperator, new { @class = "ViewTxtCSS", @style = "width: 100%" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">DateTime</span>
+                                @Html.TextBoxFor(m => m.lblDateTime, new { @class = "ViewTxtCSS", @style = "width: 100%" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span3">
+                                <span class="top">Department List</span>
+                                @Html.DropDownListFor(m => m.DeptList,
+                                                new SelectList(Model.DeptList, "ID", "Name", Model.cmbDepartment),
+                                                new { @id = "DepartmentList", @class = "select", @style = "width:100%" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">Bill No#                 </span>
+
+                                @Html.DropDownListFor(m => m.BillList,
+                                                new SelectList(Model.BillList, "ID", "Name", Model.cmbBillNo),
+                                                new { @id = "BillNoList", @class = "select", @style = "width:100%" })
+                                <input type="text" id="txtSearchBill" style="width: 100%" class="hidden" />
+                              
+                            </div>
+                            <div class="span5">
+                                <span class="top">Procedure List</span>
+                                @Html.DropDownListFor(m => m.ProcList,
+                                                new SelectList(Model.ProcList, "ID", "Name", Model.cmbProcedures),
+                                                new { @id = "ProcedureList", @class = "select", @style = "width:100%" })
+                            </div>
+                            <div class="span1">
+                                <span class="top">QTY </span>
+                                @Html.TextBoxFor(m => m.lblProcQty, new { @class = "ViewTxtCSS", @style = "width: 100%" })
+                            </div>
+
+
+                        </div>
+                        <div class="row-form">
+                            <div class="span2">
+                                <span class="top">PIN</span>
+                                @Html.TextBoxFor(m => m.lblPin, new { @class = "ViewTxtCSS", @style = "width: 100%" })
+                            </div>
+                            <div class="span6">
+                                <span class="top">Patient Name</span>
+                                @Html.TextBoxFor(m => m.lblPatient, new { @class = "ViewTxtCSS", @style = "width: 100%" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">Sex</span>
+                                @Html.TextBoxFor(m => m.lblSex, new { @class = "ViewTxtCSS", @style = "width: 100%" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">Age</span>
+                                @Html.TextBoxFor(m => m.lblAge, new { @class = "ViewTxtCSS", @style = "width: 100%" })
+                            </div>
+                        </div>
+
+
+                        <div class="row-form" id="listitemDiv">
+                            <div class="span8">
+                                <input type="text" id="allItemsList" class="js-data-example-ajax" style="width: 100%" />
+                            </div>
+                            <div class="span1">
+                                <input type="button" class="button" id="btnAddItem" value="Add" />
+                            </div>
+                            <div class="dr"><span></span></div>
+                        </div>
+                        <div class="row-form">
+                            <table class="table" id="SelectedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>sl.no</th>
+                                        <th>ItemCode </th>
+                                        <th>Description </th>
+                                        <th>QOH </th>
+                                        <th>Units</th>
+                                        <th>Qty</th>
+                                        <th>U.Cost</th>
+                                        <th>OrderedItem</th>
+                                        <th class="hidden">unitID</th>
+                                        <th class="hidden">IssItemID</th>
+                                        <th class="hidden">ItemType</th>
+                                        <th class="hidden">ItemID</th>
+                                        <th class="TAC">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3">
+                                    <button class="btn btn-primary hidden" id="btnPrint" style="width: 75%">View</button>
+                                    @Html.TextBox("Total", "", new { @class = "ViewTxtCSS", @style = "width: 100%" })
+
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary hidden" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClear" style="width: 75%">Clear</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+        @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+        <select id="TempGenericList" style="visibility: hidden; width: 0%"></select>
+    </form>
+
+</div>
+

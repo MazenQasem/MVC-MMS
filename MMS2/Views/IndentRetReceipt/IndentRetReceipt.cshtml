@@ -1,0 +1,237 @@
+﻿@using MMS2
+@model IndentOrderModel
+@{
+    ViewBag.Title = "Indent Return Receipt";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/IndentRetReceipt.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuReceipt').trigger('click');">Receipts</a></li>
+        <li>Indent Return Acknowledge</li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuReceipt').trigger('click');
+    });
+</script>*@
+
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("IndentRetReturnSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Return From Store</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span5"></div>
+                            <div class="span2">
+                                <span class="top">Date From</span>
+                                <input type="text" id="FromDate" class="datepicker" value="" />
+                            </div>
+                            <div class="span2">
+                                <span class="top">To Date</span>
+                                <input type="text" id="ToDate" class="datepicker" value="" />
+
+                            </div>
+                            <div class="span3">
+                                <span class="top">.</span>
+                                <button class="btn btn-primary" id="btnShowData" style="width: 75%">Show</button>
+                            </div>
+                        </div>
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblIndentView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td>Return No</td>
+                                            <td>Return At</td>
+                                            <td>Returned By</td>
+                                            <td>Returned From</td>
+                                            <th>Received By</th>
+                                            <th>Received At</th>
+                                            <th class="hidden">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span3">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgba(255, 182, 193, 0.59); width: 160px;">New Indent Return</span>
+                                </div>
+
+                                <div class="span4">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(153, 255, 153); width: 160px;">Indent Return Acknowledge</span>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Return From Store</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        @Html.HiddenFor(m => m.mReturnId)
+                        @Html.HiddenFor(m => m.Status)
+                        @Html.HiddenFor(m=>m.SourceID)
+                        <div class="row-form">
+
+                            <div class="span4">
+                                <span class="top">Returned From</span>
+                                @Html.TextBoxFor(m => m.lblReturnfrom, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">Returned At</span>
+                                @Html.TextBoxFor(m => m.lblRetAt, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2"></div>
+                            <div class="span4">
+                                <span class="top">Operator</span>
+                                @Html.TextBoxFor(m => m.lbloperator, new { @class = "ViewTxtCSS" })
+                            </div>
+
+                        </div>
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">Returned By</span>
+                                @Html.TextBoxFor(m => m.lblRetBy, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">Return No</span>
+                                @Html.TextBoxFor(m => m.lblReturnNo, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2"></div>
+
+
+                            <div class="span4">
+                                <span class="top">Date</span>
+                                @Html.TextBoxFor(m => m.lbldate, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <table class="table" id="SelectedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>sl.no</th>
+                                        <th>Item </th>
+                                        <th>BatchNO</th>
+                                        <th>Expiry</th>
+                                        <th>QOH</th>
+                                        <th>Qty.Ret</th>
+                                        <th>Remarks</th>
+                                        <th>Qty.Rec</th>
+                                        <th>Remarks</th>
+                                        <th>Unit</th>
+                                        <th class="hidden">ConveristionQty</th>
+                                        <th class="hidden">batchid</th>
+                                        <th class="hidden">UnitID</th>
+                                        <th class="hidden">ItemID</th>
+                                        <th class="TAC">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span6">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">
+                                        save
+                                    </button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+
+        @*Messagebox with YESNO options*@
+        @*<div class="dialog-fluid" id="jDialog_form" style="display: none;" title="?">*@
+        <div class="dialog-fluid" id="jDialog" style="display: none;" title="?">
+
+            <div class="row-fluid" id="MainAlert">
+                <div class="block-form">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <span class="top title">Message:</span>
+                                    <label id="dialogMSG" title=""></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="dialogYes">Yes</button>
+                        <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true" id="dialogNo">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" id="OtherAlert">
+                <div class="block-form">
+                    <div class="row-form dialogOtherAlert">
+                        <span class="top title">Other Alerts:</span>
+                        <label id="dialogAlert" title=""></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+

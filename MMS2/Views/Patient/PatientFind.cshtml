@@ -1,0 +1,158 @@
+﻿@using MMS2
+@model Patient
+@{
+    ViewBag.Title = "OP Cash/Credit Issue";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+{@*<script type='text/javascript' src="@Url.Content("~/Scripts/PatientFind.js")"></script>*@
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("OPBillSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        {
+            <div class="block-fluid">
+                <div class="widget">
+                    <div class="head">
+                        <div class="icon"><i class="icosg-bookmark1"></i></div>
+                        <h2>Find Patient</h2>
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span4">
+                        <span class="span4">Middle Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span4">
+                        <span class="span4">Last Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span4">
+                        <span class="span4">Family Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span4">
+                        <span class="span4">Middle Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <div class="span4">
+                        <span class="span4">Last Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+
+                    <div class="span4">
+                        <span class="span4">First Name</span>
+                        <input class="span8" type="text" />
+                    </div>
+                </div>
+
+                <div class="row-form">
+                    <table id="ViweDtl" class="table">
+                        <thead>
+                            <tr>
+                                <td>Registration No</td>
+                                <td>Patient name</td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+
+
+
+            </div>
+        }
+
+    </form>
+</div>

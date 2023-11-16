@@ -1,0 +1,9 @@
+*{color: #000 !important; text-shadow: none !important;}
+.header,.navigation,.middle,.widget .head .icon,.widget .head .buttons,.toolbar,.toolbar-fluid{display: none !important;}
+.content{margin-left: 0px !important;}
+.widget .head{background: none !important; 
+              -moz-box-shadow: none !important; 
+              -webkit-box-shadow: none !important; 
+              box-shadow: none !important; 
+              border: 0px !important;}
+.fc-event{border: 0px !important; background: #EEE !important;}

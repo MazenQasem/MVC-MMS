@@ -1,0 +1,39 @@
+﻿  <div id="fModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Modal form</h3>
+            </div>        
+      @ViewBag.ErrorMsg
+            <div class="row-fluid">
+                <div class="block-fluid">
+                    <div class="row-form">
+                        <div class="span12">
+                            <span class="top title">Area ID:</span>
+                            <input type="text" name="txtAreaID" id="txtAreaID" value=""/>                        
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <div class="span12">
+                            <span class="top title">Last name:</span>
+                            <input type="text" name="lname" value=""/>
+                        </div>
+                    </div>
+                    <div class="row-form">
+                        <div class="span12">
+                            <span class="top title">Last name:</span>
+                            <input type="text" name="lname" value=""/>
+                        </div>
+                    </div>                
+                    <div class="row-form">
+                        <div class="span12">
+                            <span class="top title">About:</span>
+                            <textarea></textarea>
+                        </div>
+                    </div>       
+                </div>
+            </div>                   
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="BtnLoad" name="BtnLoad">Save updates</button> 
+                <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true">Close</button>            
+            </div>
+        </div>    

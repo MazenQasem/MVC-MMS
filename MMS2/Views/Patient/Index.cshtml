@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Find Patient";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/PatientFind.js")"></script>
+<div class="content">
+<form>
+                    <div class="widget">
+                    <div class="head">
+                        <div class="icon"><i class="icosg-bookmark1"></i></div>
+                        <h2>Form validation</h2>
+                    </div>                                               
+                    <form id="validate" method="POST" action="javascript:notify('Validation','Form #validate submited');">
+                    <div class="block-fluid">
+
+                        <div class="row-form">
+                            <div class="span2">Login:</div>
+                            <div class="span10">
+                                <input type="text" class="validate[required,maxSize[8]]"/>
+                                <span class="bottom">Required, max size = 8</span>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span2">Password:</div>
+                            <div class="span10">
+                                <input type="password" class="validate[required,minSize[5],maxSize[10]]" id="password"/>
+                                <span class="bottom">Required, min size = 5, max size = 10</span>
+                            </div>
+                        </div>                    
+                        <div class="row-form">
+                            <div class="span2">Confirm Password:</div>
+                            <div class="span10">
+                                <input type="password" class="validate[required,equals[password]]"/>
+                                <span class="bottom">Required, equals Password</span>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                        </div>                                        
+                        <div class="row-form">
+                            <div class="span2">Age:</div>
+                            <div class="span5">
+                                <input type="text" class="validate[required,custom[integer],min[18],max[120]]"/>
+                                <span class="bottom">Required, integer, min value = 18, max = 120</span>
+                            </div>                        
+                            <div class="span2 TAR">Gender:</div>
+                            <div class="span3">
+                                <nobr><input type="radio" class="validate[required]" name="gender" value="1"/> Male</nobr> <nobr><input type="radio" class="validate[required]" name="gender" value="0"/> Famale</nobr>
+                                <span class="bottom">Required</span>
+                            </div>                        
+                        </div>
+                        <div class="row-form">
+                            <div class="span2">Date of birth:</div>
+                            <div class="span10">
+                                <input type="text" class="validate[required,custom[date]]"/>
+                                <span class="bottom">Required, date YYYY-MM-DD</span>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span2">Credit card:</div>
+                            <div class="span10">
+                                <input type="text" class="validate[required,creditCard]"/>
+                                <span class="bottom">Required, credit card number</span>
+                            </div>
+                        </div>             
+                        <div class="row-form">
+                            <div class="span2">Site:</div>
+                            <div class="span10">
+                                <input type="text" value="http:                                 <span class="bottom">Required, url</span>
+                            </div>
+                        </div>                              
+                        <div class="row-form">                        
+                            <div class="span12">
+                                <input type="checkbox" class="validate[required]" name="terms" value="1"/> Yes, I accept your terms and conditions.
+                                <span class="bottom">Required</span>
+                            </div>
+                        </div>                    
+
+                        <div class="toolbar bottom TAR">
+                            <div class="btn-group">
+                                <button class="btn btn-info" type="button" onClick="$('#validate').validationEngine('hide');">Hide prompts</button>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+
+                    </div>                
+</form>
+</div>
+
+

@@ -1,0 +1,837 @@
+﻿@using MMS2
+@*@model  User*@
+@{
+
+    User u = (User)Session["User"];
+    string Version = "";
+    if (u.LiveServer == true)
+    {
+        Version = "x.7.15 (Live)";
+    }
+    else { Version = "x.7.15 (Test)"; }
+
+
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Materials Management System</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+    <!--[if gt IE 8]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <![endif]-->
+    <link href='@Url.Content("~/css/LoaderStyle/normalize.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/css/LoaderStyle/main.css")' rel="stylesheet" />
+    <link href='@Url.Content("~/css/stylesheets.css")' rel="stylesheet" type="text/css" />
+
+    <!--[if lt IE 10]>
+        <link href="css/ie.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    @*<link rel="icon" type="image/ico" href="favicon.ico" />*@
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jquery/jquery-1.11.1.min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jquery/jquery-ui-1.10.1.custom.min.js")'></script>
+
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jquery/jquery-migrate-1.1.1.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jquery/globalize.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/other/excanvas.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/other/jquery.mousewheel.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/bootstrap/bootstrap.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/cookies/jquery.cookies.2.2.0.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/fancybox/jquery.fancybox.pack.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jflot/jquery.flot.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jflot/jquery.flot.stack.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jflot/jquery.flot.pie.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jflot/jquery.flot.resize.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/epiechart/jquery.easy-pie-chart.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/knob/jquery.knob.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/sparklines/jquery.sparkline.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/pnotify/jquery.pnotify.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/fullcalendar/fullcalendar.min.js")'></script>
+
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/wookmark/jquery.wookmark.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jbreadcrumb/jquery.jBreadCrumb.1.1.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/uniform/jquery.uniform.min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/select/select2.min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/tagsinput/jquery.tagsinput.min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/maskedinput/jquery.maskedinput-1.3.min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/multiselect/jquery.multi-select.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/validationEngine/languages/jquery.validationEngine-en.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/validationEngine/jquery.validationEngine.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/stepywizard/jquery.stepy.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/animatedprogressbar/animated_progressbar.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/hoverintent/jquery.hoverIntent.minified.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/media/mediaelement-and-player.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/cleditor/jquery.cleditor.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/shbrush/XRegExp.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/shbrush/shCore.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/shbrush/shBrushXml.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/shbrush/shBrushJScript.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/shbrush/shBrushCss.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/filetree/jqueryFileTree.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/slidernav/slidernav-min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/isotope/jquery.isotope.min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jnotes/jquery-notes_1.0.8_min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/jcrop/jquery.Jcrop.min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/ibutton/jquery.ibutton.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/scrollup/jquery.scrollUp.min.js")'></script>
+
+    <script type='text/javascript' src='@Url.Content("~/js/plugins.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/charts.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/actions.js")'></script>
+
+
+
+    @*those scripts for validatation *@
+    <script src='@Url.Content("~/Scripts/jquery.validate.min.js")' type="text/javascript"></script>
+    <script src='@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")' type="text/javascript"></script>
+    <script src='@Url.Content("~/Scripts/MazenMainJava.js")' type="text/javascript"></script>
+    @*<script src='@Url.Content("~/Scripts/MainViewScript.js")' type="text/javascript"></script>*@
+
+
+    @*datatable plugin*@
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/datatables/jquery.dataTables.min.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/datatables/jquery.jeditable.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/datatables/jquery.dataTables.editable.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/js/plugins/datatables/dataTables.tableTools.min.js")'></script>
+
+    @*bootbox*@
+    <script type='text/javascript' src='@Url.Content("~/Scripts/bootbox.js")'></script>
+    <script type='text/javascript' src='@Url.Content("~/Scripts/bootbox.min.js")'></script>
+
+
+</head>
+
+
+<body class="ssTq bg_texture" oncontextmenu="">
+    <div class="AppName hidden">@u.AppName</div>
+    <div class="header">
+        @*<a href="index.html" class="logo"></a>*@
+        <a href="#" class="logo logoff"></a>
+
+        <div class="buttons">
+            <div class="popup">
+                <div class="label"><span>@u.Name.Substring(0, ((u.Name.Length > 20) ? 20 : u.Name.Length))</span></div>
+            </div>
+            <div class="popup">
+                <div class="label"><span>@u.StationName.Substring(0, ((u.StationName.Length > 25) ? 25 : u.StationName.Length))</span></div>
+                <div class="body">
+                    <div class="arrow"></div>
+                    <div class="row-fluid">
+                        <div class="row-form">
+                            @using (@Html.BeginForm("SwapEntery", "Login", FormMethod.Post, new { id = "validate" }))
+                            {
+                                <div class="span12">
+                                    <span>User Stations</span>
+                                    @Html.DropDownList("selectedStationID",
+                                      new SelectList(u.SwapStationList, "StationID", "StationName", u.selectedStationID))
+
+                                    @Html.Hidden("LocalPathAppName")
+                                    @Html.Hidden("LoginEnteryEmployeeID")
+                                    <button id="btnSwap" class="btn" type="submit">Swap</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="popup" id="subNavControll">
+                <div class="label"><span class="icos-list"></span></div>
+            </div>
+            <div class="dropdown">
+                <div class="label"><span class="icos-user2"></span></div>
+                <div class="body" style="width: 160px;">
+                    @*
+                        <div class="itemLink">
+                            <a href="#"><span class="icon-cog icon-white"></span>Settings</a>
+                        </div>
+                        <div class="itemLink">
+                            <a href="#"><span class="icon-comment icon-white"></span>Messages</a>
+                        </div>*@
+                    <div class="itemLink">
+                        <a href="#" class="logoff"><span class="icon-off icon-white"></span>Logoff</a>
+                    </div>
+                </div>
+            </div>
+            @*<div class="popup">
+                    <div class="label"><span class="icos-search1"></span></div>
+                    <div class="body">
+                        <div class="arrow"></div>
+                        <div class="row-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <div class="input-append input-prepend">
+                                        <span class="add-on"><i class="icon-search"></i></span>
+                                        <input type="text" name="search" placeholder="Keyword..." />
+                                        <button class="btn" type="button">Search</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="popup">
+                <div class="label"><span class="icos-cog"></span></div>
+                <div class="body">
+                    <div class="arrow"></div>
+                    <div class="row-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <span class="top">Themes:</span>
+                                <div class="themes">
+                                    @*<a href="#" data-theme="" class="tip" title="Default">
+                                        <img src="~/img/themes/default.jpg" /></a>*@
+                                    <a href="#" data-theme="ssDaB" class="tip" title="DaB">
+                                        <img src="~/img/themes/dab.jpg" />
+                                    </a>
+                                    <a href="#" data-theme="ssTq" class="tip" title="Tq">
+                                        <img src="~/img/themes/tq.jpg" />
+                                    </a>
+                                    <a href="#" data-theme="ssGy" class="tip" title="Gy">
+                                        <img src="~/img/themes/gy.jpg" />
+                                    </a>
+                                    <a href="#" data-theme="ssLight" class="tip" title="Light">
+                                        <img src="~/img/themes/light.jpg" />
+                                    </a>
+                                    <a href="#" data-theme="ssDark" class="tip" title="Dark">
+                                        <img src="~/img/themes/dark.jpg" />
+                                    </a>
+                                    <a href="#" data-theme="ssGreen" class="tip" title="Green">
+                                        <img src="~/img/themes/green.jpg" />
+                                    </a>
+                                    <a href="#" data-theme="ssRed" class="tip" title="Red">
+                                        <img src="~/img/themes/red.jpg" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <span class="top">Backgrounds:</span>
+                                <div class="backgrounds">
+                                    <a href="#" data-background="bg_default" class="bg_default"></a>
+                                    <a href="#" data-background="bg_mgrid" class="bg_mgrid"></a>
+                                    <a href="#" data-background="bg_crosshatch" class="bg_crosshatch"></a>
+                                    <a href="#" data-background="bg_hatch" class="bg_hatch"></a>
+                                    <a href="#" data-background="bg_light_gray" class="bg_light_gray"></a>
+                                    <a href="#" data-background="bg_dark_gray" class="bg_dark_gray"></a>
+                                    <a href="#" data-background="bg_texture" class="bg_texture"></a>
+                                    <a href="#" data-background="bg_light_orange" class="bg_light_orange"></a>
+                                    <a href="#" data-background="bg_yellow_hatch" class="bg_yellow_hatch"></a>
+                                    <a href="#" data-background="bg_green_hatch" class="bg_green_hatch"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <span class="top">Navigation:</span>
+                                <input type="radio" name="navigation" id="fixedNav" />
+                                Fixed
+
+                                <input type="radio" name="navigation" id="collapsedNav" />
+                                Collapsible
+
+                                <input type="radio" name="navigation" id="hiddenNav" />
+                                Hidden
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="poup">
+                <div class="label">
+                    <span>@Version</span>
+                </div>
+
+            </div>
+            <div class="poup">
+                <span class="clock"></span>
+            </div>
+        </div>
+
+    </div>
+    <div class="navigation">
+
+        <ul class="main" style="margin-top: 0px">
+            <li><a href="#default" id="mainMenuDefault" class="active"><span class="icom-screen"></span><span class="text">Main</span></a></li>
+            <li><a href="#OrdersMenu" id="mainMenuOrder"><span class="icom-pencil3"></span><span class="text">Orders</span></a></li>
+            <li><a href="#ReturnMenu" id="mainMenuReturn"><span class="icom-download"></span><span class="text">Return</span></a></li>
+            <li><a href="#IssuesMenu" id="mainMenuIssue"><span class="icom-upload"></span><span class="text">Issues</span></a></li>
+            <li><a href="#ReceiptMenu" id="mainMenuReceipt"><span class="icom-download1"></span><span class="text">Receipts</span></a></li>
+            <li><a href="#LabMenu" id="mainMenuLab"><span class="icom-stats-up"></span><span class="text">Lab Preparation</span></a></li>
+            <li><a href="#UnitMenu"><span class="icom-clipboard1"></span><span class="text">Unit Dose</span></a></li>
+            @*<li><a href="typography.html"><span class="icom-clipboard1"></span><span class="text">Unit Dose</span></a></li>*@
+            <li><a href="#ReportMenu" id="mainMenuReport"><span class="icom-article"></span><span class="text">Reports</span></a></li>
+        </ul>
+
+        <div class="control"></div>
+
+        <div class="submain" style="border-top: none">
+
+            <div id="default">
+                <div class="widget-fluid userInfo clearfix xxxUserInfo">
+                    @*<div class="image">
+                            <img src="~/img/examples/users/dmitry.jpg" class="img-polaroid" />
+                        </div>
+                        <div class="OperatorName">@u.Name </div>
+                        <div class="StationName">@u.StationName </div>
+                        <div class="StationID hidden">@u.selectedStationID </div>
+                        <div class="AppName hidden">@u.AppName</div>
+                        <div class="ModelID hidden">@u.ModuleID</div>
+                        <ul class="menuList">
+                            <li><a href="#"><span class="icon-cog"></span>Settings</a></li>
+                            <li><a href="#"><span class="icon-comment"></span>Messages</a></li>
+                            <li><a href="#" class="logoff"><span class="icon-share-alt"></span>Logoff</a></li>
+                        </ul>
+                        <div class="text LoginDate">
+                            Welcom back! Your last visit: 24.10.2012 in 19:55
+
+                        </div>*@
+                </div>
+                <div class="dr"><span></span></div>
+                <ul class="fmenu">
+                    @foreach (var itm in u.MenuTables)
+                    {
+                        <li>
+                            @switch (@itm.MenuID)
+                            {
+                                case 86:<a class="MenuClick" href='@Url.Action("lookup", "Item", new { ItemViewType = "Item" })' id="mnuItem">@itm.MenuTitle </a>; break;
+                            case 87: <a class="MenuClick" href='@Url.Action("lookup", "Item", new { ItemViewType = "ItemStore" })' id="mnuItemSubStore">@itm.MenuTitle </a>; break;
+                        case 92: <a class="MenuClick" href='@Url.Action("lookup", "Item", new { ItemViewType = "ItemStore" })' id="mnuItemLookUp">@itm.MenuTitle </a>; break;
+                    case 88: <a class="MenuClick" href='@Url.Action("Index", "Manufacturer")' id="mnuManufacturer">@itm.MenuTitle </a>; break;
+                case 89: <a class="MenuClick" href='@Url.Action("Index", "Supplier")' id="mnuSupplier">@itm.MenuTitle </a>; break;
+            case 90: <a class="MenuClick" href='@Url.Action("Index", "AlterMRP")' id="mnuAlterMRP">Alter MRP </a>; break;
+            case 99: <a class="MenuClick" href='@Url.Action("Index", "RolRecalcuation")' id="mnuRolRecalculation">@itm.MenuTitle </a>; break;
+        case 506: <a class="MenuClick" href='@Url.Action("Index", "OpLoa")' id="mnuOpLoa">@itm.MenuTitle </a>; break;
+    case 1089: <a class="MenuClick" href='@Url.Action("Index", "BatchLocator")' id="mnuBatchLocator">@itm.MenuTitle </a>; break;
+case 1098: <a class="MenuClick" href='@Url.Action("Index", "PHExclusion")' id="mnuPhaExl">@itm.MenuTitle </a>; break;
+case 1920: <a class="MenuClick" href='@Url.Action("Index", "MedicationErr")' id="mnuPHMedicationError">@itm.MenuTitle </a>; break;
+case 94: <a class="MenuClick" href='@Url.Action("Index", "AdjReceipt")' id="mnuAdjrecp">@itm.MenuTitle </a>; break;
+case 1094: <a class="MenuClick" href='@Url.Action("Index", "AdjIssue")' id="mnuAdjIssue">@itm.MenuTitle </a>; break;
+case 1673: <a class="MenuClick" href='@Url.Action("Index", "ProcMstrCom")' id="mnuProcMstrCom">@itm.MenuTitle </a>; break;
+case 1091:
+{
+    <a class="MenuClick" href='@Url.Action("Index", "DrugInter")' id="mnuDrugInteraction">Drug-Drug Interaction </a>; <a class="MenuClick" href='@Url.Action("Index", "FoodDrugInter")' id="mnuFoodDrugInteraction">Food-Drug Interaction </a>;
+    <a class="MenuClick" href='@Url.Action("Index", "DrugAllergy")' id="mnuDrugAllergy">Drug Allergies </a>;
+    break;
+}
+case 1086:<a class="MenuClick" href='@Url.Action("Index", "PharmacyMSG")' id="mnuPharmacyMSG">Pharmacist Alerts </a>; break;
+
+}
+
+
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div id="OrdersMenu">
+                <div class="widget-fluid userInfo clearfix xxxUserInfo">
+                </div>
+                <div class="dr"><span></span></div>
+                <ul class="fmenu">
+                    @foreach (var itm in u.MenuTables)
+                    {
+                        <li>
+                            @switch (@itm.MenuID)
+                            {
+                                case 71:<a class="MenuClick" href='@Url.Action("Index", "IndentOrder")' id="mnuIndentOrder">@itm.MenuTitle </a>; break;
+                            case 752: <a class="MenuClick" href='@Url.Action("Index", "DeptOrder")' id="mnuDeptOrder">@itm.MenuTitle </a>; break;
+                    }
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <div id="ReturnMenu">
+                <div class="widget-fluid userInfo clearfix xxxUserInfo">
+                </div>
+                <div class="dr"><span></span></div>
+                <ul class="fmenu">
+                    @foreach (var itm in u.MenuTables)
+                    {
+                        <li>
+                            @switch (@itm.MenuID)
+                            {
+                                case 73:<a class="MenuClick" href='@Url.Action("Index", "IndentReturn")' id="mnuIndentReturn">@itm.MenuTitle </a>; break;
+                            case 85: <a class="MenuClick" href='@Url.Action("Index", "WardReturn")' id="mnuWardReturn">IP Return From Station </a>; break;
+                            case 100: <a class="MenuClick" href='@Url.Action("Index", "IPReturn")' id="mnuIPReturn">@itm.MenuTitle </a>; break;
+                    }
+                        </li>
+                    }
+
+                </ul>
+            </div>
+            <div id="IssuesMenu">
+                <div class="widget-fluid userInfo clearfix xxxUserInfo">
+                </div>
+                <div class="dr"><span></span></div>
+                <ul class="fmenu">
+                    @foreach (var itm in u.MenuTables)
+                    {
+                        <li>
+                            @switch (@itm.MenuID)
+                            {
+
+                                case 79:<a class="MenuClick" href="@Url.Action("Index", "OpIssue")" id="mnuCash">Op Cash/Credit Issue </a>; break;
+
+                                case 75: <a class="MenuClick" href='@Url.Action("Index", "IndentIssue")' id="mnuIndentIssues">@itm.MenuTitle </a>; break;
+                            case 76: <a class="MenuClick" href='@Url.Action("Index", "IndentDeptIss")' id="mnuDeptIss">@itm.MenuTitle </a>; break;
+                        case 84:
+                            {
+                                <a class="MenuClick" href='@Url.Action("Index", "DrugOrderIssue")' id="mnuIPorder">@itm.MenuTitle </a>;
+                                <a class="MenuClick" href='@Url.Action("Index", "DrugJustification")' id="mnuDJust">DrugOrderJustifications </a>;
+                                <a class="MenuClick" href='@Url.Action("Index", "PresJustification")' id="mnuPreJust">PresOrderJustifications </a>;
+                                break;
+                            }
+                        case 101: <a class="MenuClick" href='@Url.Action("Index", "DirectIPIssues")' id="mnuDIPISsue">Direct IP Issues </a>; break;
+                        case 1093: <a class="MenuClick" href='@Url.Action("Index", "ProcIssCom")' id="mnuProcCompIssues">Procedure Component Issues </a>; break;
+                        case 1922: <a class="MenuClick" href='@Url.Action("Index", "MSFIssue")' id="mnuMSFCashCredit_Issue">MSF Cash/Credit Issue </a>; break;
+                    }
+
+
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div id="ReceiptMenu">
+                <div class="widget-fluid userInfo clearfix xxxUserInfo">
+                </div>
+                <div class="dr"><span></span></div>
+                <ul class="fmenu">
+                    @foreach (var itm in u.MenuTables)
+                    {
+                        <li>
+                            @switch (@itm.MenuID)
+                            {
+                                case 81:<a class="MenuClick" href='@Url.Action("Index", "IndentReceipt")' id="mnuIndentReceipts">@itm.MenuTitle </a>; break;
+                            case 82: <a class="MenuClick" href='@Url.Action("Index", "IndentRetReceipt")' id="mnuRecRet">@itm.MenuTitle </a>; break;
+
+                    }
+
+
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div id="LabMenu">
+                <div class="widget-fluid userInfo clearfix xxxUserInfo">
+                </div>
+                <div class="dr"><span></span></div>
+                <ul class="fmenu">
+                    @foreach (var itm in u.MenuTables)
+                    {
+                        <li>
+                            @switch (@itm.MenuID)
+                            {
+                                case 105:<a class="MenuClick" href='@Url.Action("Index", "LabPrepration")' id="mnuPrepDefine">@itm.MenuTitle </a>; break;
+                            case 106: <a class="MenuClick" href='@Url.Action("Index", "LabIssue")' id="mnuPrepareIssue">@itm.MenuTitle </a>; break;
+                        case 107: <a class="MenuClick" href='@Url.Action("Index", "LabReceipt")' id="mnuPrepReceipt">@itm.MenuTitle </a>; break;
+                }
+
+
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div id="UnitMenu">
+                <div class="widget-fluid userInfo clearfix xxxUserInfo">
+                </div>
+                <div class="dr"><span></span></div>
+                <ul class="fmenu">
+                    @foreach (var itm in u.MenuTables)
+                    {
+                        <li>
+                            @switch (@itm.MenuID)
+                            {
+                                case 984:<a class="MenuClick" href='@Url.Action("ActiveProfile", "MISRept")' id="mnuActiveProfile">Active Profile</a>; break;
+                                case 982: <a class="MenuClick" href='@Url.Action("Index", "UnitDoseBulk")' id="mnuBulkprocess">Bulk UniDose</a>; break;
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+            @*<div id="ReportMenu">
+                    <div class="widget-fluid userInfo clearfix xxxUserInfo">
+                    </div>
+                    <div class="dr"><span></span></div>
+                    <div class="row-from">
+                        <div class="span1"></div>
+                        <div class="span2">
+                            <span class="top">Enter Report ID then Press Enter</span>
+                            <input type="text" id="txtReportID" />
+                        </div>
+                        <div class="span1"></div>
+                    </div>
+                    <div class="dr"><span></span></div>
+                    <ul class="fmenu">
+
+                        @foreach (var itm in u.ReportList)
+                        {
+                            <li>
+                                <a href="#">@itm.Name</a><span class="caption blue">@itm.count</span>
+                                <ul>
+                                    @foreach (var chditm in u.ReportChildList)
+                                    {
+                                        if (chditm.ParentID == itm.ID)
+                                        {
+                                            <li><a href="#" id="@chditm.ID">@chditm.Name</a><span class="caption">@chditm.ID</span></li>
+
+                                        }
+
+                                    }
+                                </ul>
+                            </li>
+
+                        }
+                    </ul>
+                </div>*@
+
+
+
+            <div class="dr"><span></span></div>
+
+
+
+        </div>
+
+
+    </div>
+    @*define the Div for holding Message show for ViewBag.ErrorMsg *@
+    @* ViewBag.ErrorMsg *@
+    @if (string.IsNullOrEmpty(ViewBag.ErrorMsg) == false)
+    {
+        <div id="ShowDiv">
+            <a href="#fModal" id="ShowPartial" role="button" class="btn" data-toggle="modal">Show</a>
+        </div>
+        @Html.Partial("show")
+    }
+    @* to handle Ajax return message *@
+    @* just create this div to holde the messge box *@
+    <div id="DivMsg"></div>
+    <div>
+        <div id="MyHolder">
+            <div id="loader-wrapper">
+                <div class="ui-widget-overlay ui-front"></div>
+                <div id="loader"></div>
+            </div>
+        </div>
+
+
+        @Html.Hidden("imgSrc", "~/img/examples/users/dmitry.jpg")
+
+        @Scripts.Render("~/bundles/inputmask") @*this to load the script of inputmask needed*@
+
+
+        @RenderBody()
+    </div>
+
+</body>
+</html>
+<script>
+
+
+    $(document).ready(function () {
+        CheckBrowser();
+
+        document.cookie.split(";").forEach(function (c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        var x = document.readyState;
+        if (x == 'interactive') { HideLoader(); }
+
+        $('.LoginDate').html("Welcome! " + "@u.LoginDateTime");
+        $('.OperatorName').val("@u.Name");
+        $('.StationID').val("@u.selectedStationID");
+        $('.StationName').val("@u.StationName");
+        $('.AppName').val("@u.AppName");
+        $('.ModelID').val("@u.ModuleID");
+        $('.gIACode').val("@u.gIACode");
+
+
+
+        $('#LoginEnteryEmployeeID').val("@u.EmployeeID");
+        $('#LocalPathAppName').val(GetAppName());
+
+
+
+        $('#txtReportID').keypress(function (event) {
+            var len = 0;
+            len = $("#txtReportID").val().length;
+            if (event.which == 13) {
+                if (len >= 3) {
+                    $('#' + $("#txtReportID").val() + '').trigger('click');
+                    return false;
+                }
+            }
+
+                         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                                 (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+                                 (e.keyCode >= 35 && e.keyCode <= 40)) {
+                                 return;
+            }
+                         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+
+        });
+
+
+        setInterval(function () {
+
+            var currentTime = new Date();
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+
+                         hours = (hours < 10 ? "0" : "") + hours;
+            minutes = (minutes < 10 ? "0" : "") + minutes;
+            seconds = (seconds < 10 ? "0" : "") + seconds;
+
+                         var currentTimeString = hours + ":" + minutes + ":" + seconds;
+            $(".clock").html(currentTimeString);
+
+        }, 1000);
+
+
+
+
+
+    });
+
+
+    $(document).on("click", ".logoff", function () {
+        window.location.replace(GetAppName() + "/Login");
+    });
+
+
+    $(document).ajaxStart(function () { ShowLoader(); });
+    $(document).ajaxStop(function () { HideLoader(); });
+    $(document).ajaxError(function () { HideLoader(); });
+
+    function HideLoader() {
+        setTimeout(function () {
+            $('body').addClass('loaded');
+            $('h1').css('color', '#222222');
+        }, 1000);
+
+    }
+    function ShowLoader() {
+        $('body').removeClass('loaded');
+                 $('#MyHolder').show();
+    }
+
+    function addUserInfo() {
+        var src = "";
+        var xxx = GetAppName();
+        if (xxx != undefined && xxx != "") {
+            src = GetAppName();
+        } else {
+
+            src = "";
+        }
+
+        $('.xxxUserInfo').append('<div class="image"> '
+                    + '<img src="' + src + '/img/examples/users/dmitry.jpg" class="img-polaroid" />'
+                    + ' </div>'
+                    + ' <div class="OperatorName">"@u.Name" </div>'
+                    + ' <div class="StationName" style="font-size:larger">@u.StationName </div>'
+                    + ' <div class="StationID hidden">@u.selectedStationID </div>'
+                    + ' <div class="AppName hidden">@u.AppName</div>'
+                    + ' <div class="ModelID hidden">@u.ModuleID</div>'
+                    + ' <div class="gIACode hidden">@u.gIACode</div>'
+                    + ' <div class="text LoginDate">'
+                    + ' Welcom back! Your last visit: 24.10.2012 in 19:55'
+                    + ' </div>');
+
+    }
+
+
+
+
+
+    $(document).on("click", "#1223", function () {
+        window.open(GetAppName() + "/MISRept/CashSummary", "_blank");
+    });
+    $(document).on("click", "#1164", function () {
+
+        window.open(GetAppName() + "/MISRept/CashIssueDetails", "_blank");
+
+    });
+    $(document).on("click", "#1097", function () {
+
+        window.open(GetAppName() + "/MISRept/ItemStockatSubStores", "_blank");
+
+    });
+    $(document).on("click", "#1168", function () {
+
+        window.open(GetAppName() + "/MISRept/SummaryCashCreditReceipts", "_blank");
+
+    });
+    $(document).on("click", "#1236", function () {
+
+        window.open(GetAppName() + "/MISRept/PhOperatorWiseDispenses", "_blank");
+
+    });
+    $(document).on("click", "#1176", function () {
+
+        window.open(GetAppName() + "/MISRept/ItemWiseIssuesDetails", "_blank");
+
+    });
+    $(document).on("click", "#1103", function () {
+
+        window.open(GetAppName() + "/MISRept/ItemLedgerSheet", "_blank");
+
+    });
+    $(document).on("click", "#1104", function () {
+
+        window.open(GetAppName() + "/MISRept/ItemLedgerSheetPrice", "_blank");
+
+    });
+    $(document).on("click", "#1114", function () {
+
+        window.open(GetAppName() + "/MISRept/ExpiryDateReport", "_blank");
+
+    });
+    $(document).on("click", "#1189", function () {
+
+        window.open(GetAppName() + "/MISRept/ISBS", "_blank");
+
+    });
+    $(document).on("click", "#1087", function () {
+
+        window.open(GetAppName() + "/MISRept/ItemMasterList", "_blank");
+
+    });
+    $(document).on("click", "#1234", function () {
+
+        window.open(GetAppName() + "/MISRept/IPWiseIssue", "_blank");
+
+    });
+
+    $(document).on("click", "#1241", function () {
+
+        window.open(GetAppName() + "/MISRept/ErrMedSummary", "_blank");
+
+    });
+         $(document).on("click", "#1101", function () {
+        window.open(GetAppName() + "/MISRept/AdjIssueRPT", "_blank");
+    });
+
+         $(document).on("click", "#1102", function () {
+        window.open(GetAppName() + "/MISRept/AdjRecRPT", "_blank");
+    });
+
+         $(document).on("click", "#1233", function () {
+        window.open(GetAppName() + "/MISRept/ADT", "_blank");
+    });
+
+         $(document).on("click", "#1240", function () {
+        window.open(GetAppName() + "/MISRept/AntiUsed", "_blank");
+    });
+
+
+
+         function ShowMessage(Msg) {
+        $('#btnShowMsg').hide();
+        $('#bModal').hide();
+        $('#DivMsg').html(
+             '<a href="#bModal" role="button" class="btn" data-toggle="modal" id="btnShowMsg">Modal dialog</a>  ' +
+             '<div id="bModal" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block;">' +
+            ' <div class="modal-header">' +
+                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>' +
+            '    <h3 id="myModalLabel">Message</h3>' +
+            '</div>' +
+            '<div class="modal-body" style="font-size:14px;">' +
+                '<p>' + Msg + ' </p>' +
+            '</div>' +
+            '<div class="modal-footer">' +
+                '<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>            ' +
+            '</div>' +
+        '</div>' +
+        '</div>'
+            );
+                 $('#bModal').hide();
+        $('#btnShowMsg').click();
+        $('#btnShowMsg').hide();
+
+        return false;
+    }
+
+         if (!$(this).hasClass('active')) {
+        $("#collapsedNav, #hiddenNav").removeClass('active');
+        $(this).addClass('active');
+
+        $("body").removeClass('smw').addClass('smf');
+
+        $.cookies.set('navigation', 'fixed');
+        subNavigation = 'fixed';
+
+
+        addUserInfo();         fix();
+
+    }
+
+
+
+
+         $("input").keypress(function (evt) {
+                 var charCode = evt.charCode || evt.keyCode;
+        if (charCode == 13) {              return false;
+        }
+    });
+
+
+
+
+    function CheckBrowser() {
+        if (navigator.userAgent.indexOf("Chrome") != -1) {
+        } else {
+            ShowMessage("Please, use Google Chrome for this site.");
+            window.location.replace(GetAppName() + "/Login");
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

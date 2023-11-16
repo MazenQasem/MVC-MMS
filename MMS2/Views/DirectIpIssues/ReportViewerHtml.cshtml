@@ -1,0 +1,158 @@
+﻿@using MMS2
+@model DirectIpSaveModel
+@{
+    Layout = "";
+         var date = @DateTime.Now.Date.ToString("dd MMM yyyy");
+    var Time = @DateTime.Now.Hour.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Minute.ToString().PadLeft(2, '0') + ":"
+        + @DateTime.Now.Second.ToString().PadLeft(2, '0');
+    int PageCount = 1;
+    string ling = "";
+    ling = ling.PadRight(146, '=');
+    var ReportTitle = "Direct IP Issue Order";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ReportTitle
+    </title>
+    <script type='text/javascript' src="@Url.Content("~/Scripts/MazenMainJava.js")"></script>
+
+    <link href="@Url.Content("~/css/LoaderStyle/normalize.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/LoaderStyle/main.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/css/stylesheets.css")" rel="stylesheet" type="text/css" />
+ 
+</head>
+<body>
+
+    <form>
+        <div id="rptdiv">
+            <div id="fixedheader">
+                <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;">
+                    <tbody>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 20%; text-align: center">Saudi German Hospital </td>
+                            <td class="HideBorder" style="width: 70%;"></td>
+                            <td class="HideBorder" style="width: 10%">Date: @date </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 20%; text-align: center">Jeddah </td>
+                            <td class="HideBorder" style="width: 70%"></td>
+                            <td class="HideBorder" style="width: 10%">Time: @Time </td>
+                        </tr>
+                        <tr class="HideColor">
+                            <td class="HideBorder"></td>
+                            <td class="HideBorder" style="width: 100%; font-size: x-large; text-align: center">
+                                @ReportTitle
+                            </td>
+                            <td class="HideBorder"></td>
+                        </tr>
+                        <tr class="HideColor">
+                         <td class="HideBorder" style="width: 40%">PIN No: 
+                            @Html.DisplayFor(m => m.PinNo, new { @style = "font-size: small;text-align: left" })
+                            </td>
+                            <td class="HideBorder" style="width: 40%">Patient:
+                            @Html.DisplayFor(m => m.PatientName, new { @style = "font-size: small;text-align: left" })
+                            </td>
+                            <td class="HideBorder" style="width: 40%;">Age : 
+                            @Html.DisplayFor(m => m.Age, new { @style = "font-size: small;text-align: left" })
+                            </td>
+                        </tr>
+                        <tr class="HideColor">
+                           
+                            <td class="HideBorder" style="width: 40%">Order:
+                            @Html.DisplayFor(m => m.OrderID, new { @style = "font-size: small;text-align-last: center" })
+                            </td>
+                            <td class="HideBorder" style="width: 10%">Order Date:
+                            @Html.DisplayFor(m => m.DateTime, new { @style = "font-size: small;text-align-last: center" })
+                            </td>
+                            <td class="HideBorder" style="width: 40%">Sex:
+                            @Html.DisplayFor(m => m.Gender , new { @style = "font-size: small;text-align-last: center" })
+                     
+                            </td>
+                            @*value.Sex == '1' ? "Female" : "Male"*@
+                        </tr>
+
+                      
+                        <tr class="HideColor">
+                            <td class="HideBorder" style="width: 40%;">Bed : 
+                            @Html.DisplayFor(m => m.BedName, new { @style = "font-size: samll;text-align: left" })
+                            </td>
+                            <td class="HideBorder" style="width: 50%">Operator Name :
+                            @Html.DisplayFor(m => m.OperatorName, new { @style = "font-size: samll;text-align-last: center" })
+                            </td>
+                            <td class="HideBorder" style="width: 10%">Page: @PageCount </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    @ling
+                </div>
+            </div>
+            <table style="width: 100%; table-layout: fixed; font-size: x-small; border-style: none; border-color: white; background-color: white;">
+                <thead>
+                    <tr class="HideColor">
+                        <td class="HideColor" style="width: 5%">SQ#</td>
+                        <td class="HideColor" style="width: 60%">Item Description</td>
+                        @*<td class="HideColor" style="width: 5%">QOH</td>*@
+                        <td class="HideColor" style="width: 10%">ReqQty</td>
+                        <td class="HideColor" style="width: 10%">Units</td>
+                        <td class="HideColor" style="width: 15%">Remarks</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var itm in Model.IssueList)
+                    {
+                        <tr class="HideColor">
+                            <td class="HideColor" style="width: 5%">@itm.SNO</td>
+                            <td class="HideColor" style="width: 60%">
+                                @itm.Name
+                            </td>
+                            @*<td class="HideColor" style="width: 5%">@itm.QOH</td>*@
+                            <td class="HideColor" style="width: 10%">@itm.PrevQty</td>
+                            <td class="HideColor" style="width: 10%">@itm.Unit</td>
+                            <td class="HideColor" style="width: 15%">@itm.Remarks</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <div id="fixedfooter2">
+                <table style="background-color: white; border-style: hidden">
+                    <tbody style="width: 100%; border-style: hidden">
+                        <tr style="border-style: hidden">
+                            <td style="width: 1200px; border-right-style: hidden">
+                                @Html.Label("---------------------------------------------------------------------------------------------------------", new { @style = "font-size: samll;text-align-last: center " })
+                            </td>
+                        </tr>
+                        <tr style="border-style: hidden">
+                            <td style="width: 800px; border-right-style: hidden">
+                                @Html.Label("SGHG-Jeddah 2016 [Owner: IT Department]", new { @style = "font-size: x-small; text-align-last: center" })
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>
+
+<style>
+    td.HideBorder
+    {
+        
+        
+        border: hidden;
+    }
+
+    tr.HideColor
+    {
+        background-color: white;
+        border-color: white;
+    }
+</style>

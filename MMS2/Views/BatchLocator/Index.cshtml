@@ -1,0 +1,258 @@
+﻿@using MMS2
+@model BatchLocator
+
+@{
+    ViewBag.Title = "Batch Locator Maintenance System";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="@Url.Content("~/")" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>Batch Locator</li>
+    </ul>
+</div>
+
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("Save", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+        
+            <div class="widget">
+                <div class="head dark">
+                    <div class="icon"><i class="icos-newtab"></i></div>
+                    <h2>View Batches with respect to their locators. Assgin new batches to locators. Update existing batch locators.</h2>
+                </div>
+                <div class="tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
+                    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" role="tablist">
+                        <li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active" role="tab" tabindex="-1" aria-controls="tabs-1" aria-labelledby="ui-id-1" aria-selected="false"><a href="#tabs-1" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-1">Viewing Batch Loctor</a></li>
+                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="-1" aria-controls="tabs-2" aria-labelledby="ui-id-2" aria-selected="false"><a href="#tabs-2" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-2">Assigning Batch Locator</a></li>
+                        <li class="ui-state-default ui-corner-top" role="tab" tabindex="0" aria-controls="tabs-3" aria-labelledby="ui-id-3" aria-selected="true"><a href="#tabs-3" class="ui-tabs-anchor" role="presentation" tabindex="-1" id="ui-id-3">Updating Batch Locator</a></li>
+                    </ul>
+
+                    <div id="tabs-1" aria-labelledby="ui-id-1" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="false"
+                        aria-hidden="true" style="display: none;">
+                        <div style="top: 30px;">
+                            <div class="row-form">
+                                <div class="span3" style="border-style: groove; border-radius: 20px; padding-top: 15px;">
+                                    <div class="span1">
+                                        <div class="radio">
+                                            <span class="checked">
+                                                <input type="radio" checked="checked" name="r_gItem" value="1"></span>
+                                        </div>
+                                        All
+                                    </div>
+                                    <div class="span2">
+                                        <div class="radio">
+                                            <span>
+                                                <input type="radio" name="r_gItem" value="2"></span>
+                                        </div>
+                                        Rack/Shelf
+                                    </div>
+
+                                </div>
+                                <div class="span5" style="border-style: groove; border-radius: 20px; padding-top: 15px;">
+                                    <div class="span2">
+                                        Rack
+                                    @Html.DropDownList("Racklist", new SelectList(Model.Racklist, "ID", "NAME", Model.HoldingRackListID_Add), new { id = "Rack1" })
+                                    </div>
+                                    <div class="span2">
+                                        Shelf
+                                    @Html.DropDownList("Shelflist", new SelectList(Model.Shelflist, "ID", "NAME", Model.HoldingShelfListID_Add), new { id = "Shelf1" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">
+                                    <input type="text" id="txtSearch0" class="validate[minSize[3]]" />
+                                    <span class="bottom">Search</span>
+                                </div>
+                                <div class="span2 offset4">
+                                    <input type="submit" name="BtnShow" id="BtnShow0" class="btn btn-primary" value="Show" style="width: 190px; font-size: larger;">
+                                </div>
+                            </div>
+                            <div class="row-fluid" id="ViewPartial1">
+                                @*here the parital view should appear*@
+                                <table id="DataTables_Tab0" class="display" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>SNO</th>
+                                            <th>ItemCode</th>
+                                            <th>ItemName</th>
+                                            <th>BatchNo</th>
+                                            <th>Quantity</th>
+                                            <th>Rack</th>
+                                            <th>Shelf</th>
+                                            <th class="hidden">RackID</th>
+                                            <th class="hidden">ShelfID</th>
+                                            <th>ExpiryDate</th>
+                                            <th>CostPrice</th>
+                                            <th>SellPrice</th>
+                                            <th class="hidden">ItemID</th>
+                                            <th class="hidden">StationID</th>
+                                            <th class="hidden">receiptid</th>
+                                            <th class="hidden">BatchID</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="row-form">
+                                <div class="span3 offset6">
+                                    <input type="submit" name="BtnPrint" id="BtnPrint" class="btn btn-primary" value="Print" style="width: 190px; font-size: larger;">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tabs-2" aria-labelledby="ui-id-2" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="false"
+                        aria-hidden="true" style="display: none;">
+
+                        <div class="span9" style="padding-top: 10px;">
+                            <div class="row-form">
+                                <div class="span1">Transactions</div>
+                                <div class="span2">
+                                    @Html.DropDownListFor(r => r.HoldingTransTypeListID_Add, new SelectList(Model.TransTypeLIst, "ID", "Description", Model.HoldingTransTypeListID_Add),
+                                        new { id = "TransList1" })
+                                </div>
+
+                                <div class="span1">Trans.No#</div>
+                                <div class="span2">
+                                    @Html.DropDownListFor(r => r.HoldingTransNo_Add, new SelectList(Model.TransNoList, "ID", "NAME", Model.HoldingTransNo_Add),
+                                        new { id = "TransListNo1" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span9" style="padding-top: 10px;">
+                            <div class="row-form">
+                                <div class="span2">
+                                    <input type="text" id="txtSearch1" class="validate[minSize[3]]" />
+                                    <span class="bottom">Search</span>
+                                </div>
+                                <div class="span2 offset4">
+                                    <input type="submit" name="BtnShow" id="BtnShow1" class="btn btn-primary" value="Show" style="width: 190px; font-size: larger;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <p>Modified Items</p>
+                            <div class="block-fluid">
+                                <div id="DataTables_Table_Insert_wrapper" class="dataTables_wrapper no-footer">
+
+                                    <table id="DataTables_Tab1" class="display" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>SNO</th>
+                                                <th>ItemCode</th>
+                                                <th>ItemName</th>
+                                                <th>BatchNo</th>
+                                                <th>Quantity</th>
+                                                <th>Rack</th>
+                                                <th>Shelf</th>
+                                                <th class="hidden">RackID</th>
+                                                <th class="hidden">ShelfID</th>
+                                                <th>ExpiryDate</th>
+                                                <th>CostPrice</th>
+                                                <th>SellPrice</th>
+                                                <th class="hidden">ItemID</th>
+                                                <th class="hidden">StationID</th>
+                                                <th class="hidden">receiptid</th>
+                                                <th class="hidden">BatchID</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span2 offset4">
+                                <input type="submit" name="BtnSave" id="BtnSave" class="btn btn-primary" value="Save" style="width: 190px; font-size: larger;">
+                            </div>
+                            <div class="span2">
+                                <input type="submit" name="BtnClear" id="BtnClear" class="btn btn-primary" value="Clear" style="width: 190px; font-size: larger;">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="tabs-3" aria-labelledby="ui-id-3" class="ui-tabs-panel ui-widget-content ui-corner-bottom" role="tabpanel" aria-expanded="true" aria-hidden="false" style="display: block;">
+
+                        <div class="span9" style="padding-top: 10px;">
+                            <div class="row-form">
+                                <div class="span1">Transactions</div>
+                                <div class="span2">
+                                    @Html.DropDownListFor(r => r.HoldingTransTypeListID_Add, new SelectList(Model.TransTypeLIst, "ID", "Description", Model.HoldingTransTypeListID_Add),
+                                        new { id = "TransList2" })
+                                </div>
+
+                                <div class="span1">Trans.No#</div>
+                                <div class="span2">
+                                    @Html.DropDownListFor(r => r.HoldingTransNo_Add, new SelectList(Model.TransNoList, "ID", "NAME", Model.HoldingTransNo_Add),
+                                        new { id = "TransListNo2" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span9" style="padding-top: 10px;">
+                            <div class="row-form">
+                                <div class="span2">
+                                    <input type="text" id="txtSearch2" class="validate[minSize[3]]" />
+                                    <span class="bottom">Search</span>
+                                </div>
+                                <div class="span2 offset4">
+                                    <input type="submit" name="BtnShow" id="BtnShow2" class="btn btn-primary" value="Show" style="width: 190px; font-size: larger;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <p>Modified Items</p>
+                            <div class="block-fluid">
+                                <div id="DataTables_Table_Insert_wrapper2" class="dataTables_wrapper no-footer">
+
+                                    <table id="DataTables_Tab2" class="display" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>SNO</th>
+                                                <th>ItemCode</th>
+                                                <th>ItemName</th>
+                                                <th>BatchNo</th>
+                                                <th>Quantity</th>
+                                                <th>Rack</th>
+                                                <th>Shelf</th>
+                                                <th class="hidden">RackID</th>
+                                                <th class="hidden">ShelfID</th>
+                                                <th>ExpiryDate</th>
+                                                <th>CostPrice</th>
+                                                <th>SellPrice</th>
+                                                <th class="hidden">ItemID</th>
+                                                <th class="hidden">StationID</th>
+                                                <th class="hidden">receiptid</th>
+                                                <th class="hidden">BatchID</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span2 offset4">
+                                <input type="submit" name="BtnSave" id="BtnSave2" class="btn btn-primary" value="Save" style="width: 190px; font-size: larger;">
+                            </div>
+                            <div class="span2">
+                                <input type="submit" name="BtnClear" id="BtnClear2" class="btn btn-primary" value="Clear" style="width: 190px; font-size: larger;">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        }
+    </form>
+</div>
+<script type='text/javascript' src="@Url.Content("~/Scripts/BatchLocator.js")"></script>
+

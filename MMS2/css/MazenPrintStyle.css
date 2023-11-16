@@ -1,0 +1,36 @@
+
+
+
+
+@media print
+{
+
+    .footer
+    {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        
+    }
+
+    .page-break
+    {
+        page-break-after: always;
+    }
+
+    .page-break-before
+    {
+        page-break-before: always;
+    }
+}
+
+
+
+
+
+
+
+
+

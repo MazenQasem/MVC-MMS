@@ -1,0 +1,15 @@
+.easyPieChart {
+    position: relative;
+    text-align: center;
+}
+
+.easyPieChart canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.easyPieChart{font-size: 13px; color: #333; font-weight: bold; font-family: 'Helvetica Neue','Helvetica',Arial,sans-serif; text-shadow: 0 1px #FFF;}
+.epc{width: 110px; height: 130px; display: inline-block; margin: 10px 10px 0px 0px; *display: inline;}
+.epc .label{margin-top: 5px;}
+.epc.mini{width: 90px; height: 110px;}
+.epc:last-child{margin-right: 0px;}

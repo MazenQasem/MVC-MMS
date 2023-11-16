@@ -1,0 +1,114 @@
+﻿@using MMS2
+@model ItemAvgSale
+@{
+    ViewBag.Title = "ROL Recalculation";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="@Url.Content("~/")" onclick="$('#mainMenuDefault').trigger('click');">Main</a></li>
+        <li>ROL Calculation</li>
+    </ul>
+</div>
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("Save", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        {
+           
+@*Headers*@
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="widget">
+                        <div class="head dark">
+                            <div class="icon"><i class="icos-newtab"></i></div>
+                            <h2>ROL Recalculation</h2>
+                        </div>
+                        <div class="block">
+                            <div class="row-form">
+                                <div class="span3">ROL  =  Average Day Issuance of Last</div>
+                                <div class="span1">@Html.TextBox("ShowMonth",Model.ShowMonth ,new { disabled = true,id ="ShowMonth" }) </div>
+                                <div class="span1">Months</div>
+                                <div class="span1" style="font-size: x-large">*</div>
+                                <div class="span1">No# of</div>
+                                <div class="span1">@Html.TextBox("ShowFactor",Model.ShowFactor, new { disabled = true,id="ShowFactor" }) </div>
+                                <div class="span2">Buffer Days</div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2">Options:</div>
+                                <div class="span3">
+                                    <div class="radio">
+                                        <span class="checked">
+                                            <input type="radio" checked="checked" name="r_gItem" value="1"></span>
+                                    </div>
+                                    Calculate for all items
+                                </div>
+                                <div class="span7">
+                                    <div class="span5">
+                                        <div class="radio">
+                                            <span>
+                                                <input type="radio" name="r_gItem" value="2" ></span>
+                                        </div>
+                                        Calculate for an individual item.
+                                    </div>
+                                </div>
+                                <div class="span12">
+                                    <div class="span2"></div>
+                                    <div class="span3">
+                                        @Html.DropDownListFor(r => r.ItemGrouplistID, new SelectList(Model.ItemGroupList, "ID", "NAME", Model.ItemGrouplistID), 
+                                        new {disabled = true ,id ="ItemGroupListID" })
+                                    </div>
+                                    <div class="span3">
+                                        <input type="text" id="txtSearch" class="validate[minSize[3]] valid"/>
+                                    <span class="top">Enter 3 char for selecting the items</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2 ">
+                                    
+                                </div>
+                                <div class="span7">
+                                     
+                                     @Html.DropDownListFor(r => r.ItemListID, new SelectList(Model.ItemList, "ID", "NAME", Model.ItemListID), 
+                                        new {disabled = true ,id ="ItemListID" })
+                                </div>
+                                <div class="span3"></div>
+                            </div>
+                            <div class="row-form">
+                                <div class="span2"></div>
+                                <div class="span7">
+                                    <div class="span4">
+                                        <input type="text" id="QOH" style="background-color: lightgray;" readonly="true" value="" />QOH
+                                    </div>
+                                    <div class="span4">
+                                        <input type="text" id="ROQ" style="background-color: lightgray" readonly="true" value="" />ROQ
+                                    </div>
+                                    <div class="span4">
+                                        <input type="text" id="ROL" style="background-color: lightgray" readonly="true" value="" />ROL
+                                    </div>
+
+                                </div>
+                                <div class="span3"></div>
+                            </div>
+                            @*Commands*@
+                            <div class="row-form" id="divCommand">
+                                <div class="span3"></div>
+                                <input type="submit" name="BtnSave" id="BtnSave" class="btn btn-primary" value="Calculate ROL" style="width: 190px; font-size: larger;" />
+                                <input type="submit" name="BtnClear" id="BtnClear" class="btn btn-primary" value="Reset" style="width: 190px; font-size: larger;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </form>
+    @*html.BeginForm END  *@
+
+
+</div>
+
+<script type='text/javascript' src="@Url.Content("~/Scripts/RolRecalcuation.js")"></script>
+

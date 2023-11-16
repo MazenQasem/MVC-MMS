@@ -1,0 +1,390 @@
+﻿@using MMS2
+@model DrugOrderIssueModel
+@{
+    ViewBag.Title = "IP Issues against Orders";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/DrugOrderIssue.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuIssue').trigger('click');">Issue</a></li>
+        <li>IP Issues against Orders</li>
+    </ul>
+</div>
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("DrugOrderIssueSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>IP Issues against Orders</h2>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">Patient/Bed</span>
+                                <select id="vwPatientlist" class="select" style="width: 100%"></select>
+                            </div>
+                            <div class="span1"></div>
+                            <div class="span2">
+                                <span class="top">Date From</span>
+                                <input type="text" id="FromDate" class="datepicker" value="" />
+
+                            </div>
+                            <div class="span2">
+                                <span class="top">To Date</span>
+                                <input type="text" id="ToDate" class="datepicker" value="" />
+
+                            </div>
+
+                            <div class="span3">
+                                <span class="top">.</span>
+                                <button class="btn btn-primary" id="btnShowData" style="width: 75%">Show</button>
+                            </div>
+                        </div>
+                        <div class="dr"><span></span></div>
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblIndentView" class="table DarkRedFont" style="width: 100%; margin: 0;">
+                                    <thead>
+                                        <tr>
+                                            <td class="hidden">OrderID</td>
+                                            <td style="text-shadow: none;">OrderNo</td>
+                                            <td class="hidden">IPID</td>
+                                            <td>PINNO</td>
+                                            <td>PatientName</td>
+                                            <td>Bed</td>
+                                            <td>DateTime</td>
+                                            <td>Operator</td>
+                                            <td class="">Station</td>
+                                            <td class="hidden">status</td>
+                                            <td class="hidden">isPartial</td>
+                                            <td class="hidden">PrintStatus</td>
+                                            <td class="">StationSlno</td>
+                                            <td class="hidden">type</td>
+                                            <td class="hidden">TakeHome</td>
+                                            <td class="hidden">isCocktail</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span1"></div>
+                                <div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgba(255, 182, 193, 0.59); width: 120px;">New Orders</span>
+                                </div>
+                                <div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(246, 243, 80); width: 120px;">Dispatched Orders</span>
+                                </div>
+                                <div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(153, 255, 153); width: 120px;">Take Home</span>
+                                </div>
+                                <div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: aqua; width: 120px;">Partillay Dispatched</span>
+                                </div>
+                                <div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: coral; width: 120px;">Delayed Orders</span>
+                                </div>
+                                <div class="span1"></div>
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span1"></div>
+                            <div class="span1">
+                                <span class="top">Take Home</span>
+                                <div class="image">
+                                    <img src="~/img/Circles/GreenCircle.gif" class="cimage" style="background-repeat: no-repeat; background-size: 5px 5px" />
+                                </div>
+                            </div>
+                            <div class="span1"></div>
+                            <div class="span1">
+                                <span class="top">State</span>
+                                <div class="image">
+                                    <img src="~/img/Circles/RedCircle.gif" class="cimage" style="background-repeat: no-repeat; background-size: 5px 5px" />
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>IP Issues against Orders</h2>
+                    @Html.Hidden("OrderID")
+                    @Html.Hidden("IPID")
+                    @Html.Hidden("mAddNew")
+                    @Html.Hidden("VIP")
+                    @Html.Hidden("mDispatched")
+                    @Html.Hidden("isPartial")
+                    @Html.Hidden("CompanyID")
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span3">
+                                <span class="top">PIN NO#</span>
+                                @Html.TextBoxFor(m => m.lblPinNo, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">Bed NO#</span>
+                                @Html.TextBoxFor(m => m.lblBed, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">Ward</span>
+                                @Html.TextBoxFor(m => m.lblWard, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">Order No#</span>
+                                @Html.TextBoxFor(m => m.lblOrderNo, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span5">
+                                <span class="top">Patient Name</span>
+                                @Html.TextBoxFor(m => m.lblName, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">Sex</span>
+                                @Html.TextBoxFor(m => m.lblSex, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span2">
+                                <span class="top">Age</span>
+                                @Html.TextBoxFor(m => m.lblAge, new { @class = "ViewTxtCSS" })
+                            </div>
+                            <div class="span3">
+                                <span class="top">Date Time</span>
+                                @Html.TextBoxFor(m => m.lblDateTime, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span5">
+                                <span class="top">Food Allergies</span>
+                                <select id="FoodAllergList"></select>
+                            </div>
+                            <div class="span4">
+                                <span class="top">Pharmacist</span>
+                                @Html.DropDownListFor(r => r.CmbPHID, new SelectList(Model.PharmacistList, "ID", "Name", Model.CmbPHID),
+                                new { id = "PharmacistList", @class = "", @style = "width:100%;" })
+
+
+                            </div>
+                            <div class="span3">
+                                <span class="top">Doctor</span>
+                                @Html.TextBoxFor(m => m.lblDoctor, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span5">
+                                <span class="top">Drug Allergies</span>
+                                <select id="DrugAllergList"></select>
+                            </div>
+                            <div class="span4">
+                                <span class="top">Asst.Pharmacist</span>
+                                @Html.DropDownListFor(r => r.CmbAssPHID, new SelectList(Model.AsstPharmacistList, "ID", "Name", Model.CmbAssPHID),
+                                new { id = "AsstPharmacistList", @class = "", @style = "width:100%;" })
+
+                            </div>
+                            <div class="span3">
+                                <span class="top">Operator</span>
+                                @Html.TextBoxFor(m => m.lblOperator, new { @class = "ViewTxtCSS" })
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <span class="top DarkRedFontBold">Ordered Items </span>
+                            <table class="table" id="OrderedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Drug Name </th>
+                                        <th class="PresHeaderCol">Strength</th>
+                                        <th>Quantity</th>
+                                        <th class="PresHeaderCol">Units</th>
+                                        <th class="NONPresHeaderCol">QOH</th>
+                                        <th class="hidden">LVW</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div class="hidden">
+                            <select id="TempGenericList"></select>
+                        </div>
+                        <div class="row-form">
+                            <span class="top DarkRedFontBold">Selected Items </span>
+                            @*<table class="table" id="SelectedItemtbl"
+                                style="background-color: beige;width:auto">*@
+                            <table id="SelectedItemtbl" class="display dataTable nowrap" cellspacing="0" width="100%"
+                                style="width: 100%; margin: 0; min-height: 50px;">
+                                <thead>
+                                    <tr>
+                                        <th>sl.no</th>
+                                        <th>Drug Name </th>
+                                        <th class="">Unit</th>
+                                        <th class="">Req QTY</th>
+                                        <th class="hidden">BatchNo</th>
+                                        <th class="">Expiry</th>
+                                        <th class="">QOH</th>
+                                        <th class="">DispQty</th>
+                                        <th class="">Substitute</th>
+                                        <th class="">TQOH</th>
+                                        <th class="hidden">lQuantity</th>
+                                        <th class="">Remarks</th>
+                                        <th class="">Total</th>
+                                        <th class="">Price</th>
+
+                                        <th class="hidden">UnitID</th>
+                                        <th class="hidden">ConversionQty</th>
+                                        <th class="hidden">BatchID</th>
+                                        <th class="hidden">ItemID</th>
+                                        <th class="hidden">SubItemID</th>
+                                        <th class="hidden">CSSD</th>
+                                        <th class="TAC">Action</th>
+                                        <th class="">DrugIntr.</th>
+                                        <th class="">FoodIntr.</th>
+                                        <th class="">DrugMsg</th>
+                                        <th class="">FoodMsg</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span9">
+                            </div>
+                            <div class="span3">
+                                <span class="top">Amount</span>
+                                @Html.TextBoxFor(m => m.Amount, new { @class = "ViewTxtCSS", @Style = "font-size: large;" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">Save</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnPrint" style="width: 75%">Order Print</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnPrintlbl" style="width: 75%">Label Print</button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+
+
+
+        @*Messagebox with YESNO options*@
+        @*<div class="dialog-fluid" id="jDialog_form" style="display: none;" title="?">*@
+        <div class="dialog-fluid" id="jDialog" style="display: none;" title="?">
+
+            <div class="row-fluid" id="MainAlert">
+                <div class="block-form">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <span class="top title">Message:</span>
+                                    <label id="dialogMSG" title=""></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="dialogYes">Yes</button>
+                        <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true" id="dialogNo">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" id="OtherAlert">
+                <div class="block-form">
+                    <div class="row-form dialogOtherAlert">
+                        <span class="top title">Other Alerts:</span>
+                        <label id="dialogAlert" title=""></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@*<script>
+    $(document).ready(function (e) {
+        $('#mainMenuIssue').trigger('click');
+    });
+</script>*@
+<style>
+    .cimage
+    {
+        max-width: 35%;
+    }
+
+    .btn.ColorDrugInterAction1
+    {
+        background-color: chartreuse;
+    }
+
+    .ColorDrugInterAction2
+    {
+        background: red;
+    }
+</style>

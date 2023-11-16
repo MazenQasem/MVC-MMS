@@ -1,0 +1,253 @@
+﻿@using MMS2
+@model IndentOrderModel
+@{
+    ViewBag.Title = "Indent Departmental Issue";
+    Layout = "~/Views/Shared/_TwitterLayoutPage.cshtml";
+}
+<script type='text/javascript' src="@Url.Content("~/Scripts/IndentDeptIss.js")"></script>
+
+<div class="breadCrumb clearfix">
+    <ul id="breadcrumbs">
+        <li><a href="@Url.Content("~/")">Home</a></li>
+        <li><a href="#" onclick="$('#mainMenuIssue').trigger('click');">Issue</a></li>
+        <li>Departmental Issue</li>
+    </ul>
+</div>
+@*<script>
+    $(document).ready(function (e) {
+
+        $('#mainMenuIssue').trigger('click');
+    });
+</script>*@
+
+<div class="content">
+    <form id="validate">
+        @using (Ajax.BeginForm("IndentDeptIssSave", new AjaxOptions { HttpMethod = "Get", UpdateTargetId = "validate" }))
+        { 
+            <div class="widget ViewWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Indent Departmental Issue</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="head">
+                                <div class="icon"><span class="icosg-target1"></span></div>
+                                <h2>Table Of Results</h2>
+
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <div class="span12">
+                                <table id="tblIndentView" class="table DarkRedFont">
+                                    <thead>
+                                        <tr>
+                                            <td>Issue No.</td>
+                                            <td>Order No.</td>
+                                            <td>Department</td>
+                                            <td>Date Time</td>
+                                            <td>Operator</td>
+                                            <td>Ref No</td>
+                                            <td class="hidden">Status</td>
+                                            <td class="hidden">ID</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-form">
+
+                            <div class="span12">
+                                <div class="span2">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgba(255, 182, 193, 0.59); width: 100px;">New Indent</span>
+                                </div>
+                                <div class="span4">
+                                    <span class="label DarkRedFont" style="border: solid; border-width: thin; background-color: rgb(153, 255, 153); width: 160px;">Issued Indent</span>
+                                </div>
+                                <div class="span3">
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            
+            <div class="widget DetailWidget">
+                <div class="head dark">
+                    <div class="icon"><span class=""></span></div>
+                    <h2>Indent Departmental Issue</h2>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span8">
+                                <span class="top">Department</span>
+                                <select id="ToStationList" class="ViewTxtCSS"></select>
+                            </div>
+                            @Html.Hidden("OrderID")
+                            @Html.Hidden("Status")
+
+                            @Html.HiddenFor(m => m.CurrentStation)
+
+                        </div>
+                        <div class="row-form">
+                            <div class="span4">
+                                <span class="top">Category</span>
+                                <select id="lstItemCategory"></select>
+                            </div>
+
+
+                            <div class="span4">
+                                <span class="top">Received By</span>
+                                @Html.TextBoxFor(m => m.lbloperator, new { @class = "" })
+                            </div>
+
+                            <div class="span4">
+
+                                <span class="top">
+                                    <input type="checkbox" id="issueflag" class="top" />
+                                    Date</span>
+                                <input type="text" id="lbldate" class="datepicker" value="" />
+                            </div>
+                        </div>
+
+
+
+                        <div class="row-form" id="listitemDiv">
+                            <div class="span8">
+                                <span class="top">Select Item from the list (min 5 char) </span>
+                                <select id="allItemsList" class="select" style="width: 100%">
+                                    <option value="0">...</option>
+                                </select>
+                            </div>
+                            <div class="span1">
+                                <span class="top">.</span>
+                                <input type="button" class="button" id="btnAddItem" value="Add" />
+                            </div>
+                        </div>
+                        <div class="row-form">
+                            <table class="table" id="SelectedItemtbl"
+                                style="background-color: beige; width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>sl.no</th>
+                                        <th>Drug Name </th>
+                                        <th>Batch</th>
+                                        <th>QOH</th>
+                                        <th>UOM</th>
+                                        <th>IssQTY</th>
+                                        <th>Unit</th>
+
+                                        <th class="hidden">ItemID</th>
+                                        <th class="hidden">substituteid</th>
+                                        <th class="hidden">DrugType</th>
+
+                                        <th class="hidden">lstsub</th>
+                                        <th class="hidden">IssueUnitID</th>
+                                        <th class="hidden">conversionqty</th>
+                                        <th class="hidden">PrevQty</th>
+                                        <th class="hidden">OrderQty</th>
+
+                                        <th class="hidden">PrevUnitID</th>
+                                        <th class="hidden">IndentUnitID</th>
+                                        <th class="hidden">batchqty</th>
+                                        <th class="hidden">totqty</th>
+                                        <th class="hidden">MinLevel</th>
+
+                                        <th class="TAC">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="block-fluid">
+                        <div class="row-form">
+                            <div class="span12">
+                                <div class="span3">
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnSave" style="width: 75%">
+                                        save
+                                    </button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnPrint" style="width: 75%">
+                                        View
+                                    </button>
+                                </div>
+                                <div class="span3">
+                                    <button class="btn btn-primary" id="btnClose" style="width: 75%">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+
+        @*Messagebox with YESNO options*@
+        @*<div class="dialog-fluid" id="jDialog_form" style="display: none;" title="?">*@
+        <div class="dialog-fluid" id="jDialog" style="display: none;" title="?">
+
+            <div class="row-fluid" id="MainAlert">
+                <div class="block-form">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="block-fluid">
+                            <div class="row-form">
+                                <div class="span12">
+                                    <span class="top title">Message:</span>
+                                    <label id="dialogMSG" title=""></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true" id="dialogYes">Yes</button>
+                        <button class="btn btn-warning" data-dismiss="modal" aria-hidden="true" id="dialogNo">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid" id="OtherAlert">
+                <div class="block-form">
+                    <div class="row-form dialogOtherAlert">
+                        <span class="top title">Other Alerts:</span>
+                        <label id="dialogAlert" title=""></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        
+         @*report Modal*@
+        <div class="dialog-fluid" id="ReportDialog"
+            style="display: none; background-color: rgba(72, 61, 139, 0.2);" title="Report">
+            <div class="block-fluid">
+                <div id="DivRpt" style="overflow: auto; max-height: 350px; overflow-x: auto"></div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
