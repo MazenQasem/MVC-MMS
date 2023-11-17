@@ -60,55 +60,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinesClass\AlterMRPFun.cs" />
     <Compile Include="BusinesClass\AutoPrint.cs" />
     <Compile Include="BusinesClass\BatchLocatorFun.cs" />
-    <Compile Include="BusinesClass\AdjReceiptFun.cs" />
-    <Compile Include="BusinesClass\AdjIssueFun.cs" />
     <Compile Include="BusinesClass\PharmacyMSGFun.cs" />
-    <Compile Include="BusinesClass\DrguAllergyFun.cs" />
-    <Compile Include="BusinesClass\FoodDrguInterFun.cs" />
-    <Compile Include="BusinesClass\DrguInterFun.cs" />
-    <Compile Include="BusinesClass\MSFIssueFun.cs" />
     <Compile Include="BusinesClass\ProcIssComFun.cs" />
     <Compile Include="BusinesClass\ProcMstrComFun.cs" />
-    <Compile Include="BusinesClass\UnitDosBulkFun.cs" />
-    <Compile Include="BusinesClass\PresJustficationFun.cs" />
-    <Compile Include="BusinesClass\DrugJustficationFun.cs" />
-    <Compile Include="BusinesClass\DirectIpIssueFun.cs" />
-    <Compile Include="BusinesClass\DrugOrderIssueFun.cs" />
     <Compile Include="BusinesClass\Extension.cs" />
     <Compile Include="BusinesClass\ListAllFun.cs" />
     <Compile Include="BusinesClass\MedicationErrorFun.cs" />
-    <Compile Include="BusinesClass\IPReturnFun.cs" />
     <Compile Include="BusinesClass\WardReturnFun.cs" />
     <Compile Include="BusinesClass\MISReptFun.cs" />
-    <Compile Include="BusinesClass\LabReceiptFun.cs" />
-    <Compile Include="BusinesClass\LabIssueFun.cs" />
     <Compile Include="BusinesClass\PHExclusionFun.cs" />
-    <Compile Include="BusinesClass\LabPreprationFun.cs" />
-    <Compile Include="BusinesClass\IndentRetReceiptFun.cs" />
-    <Compile Include="BusinesClass\IndentReceiptFun.cs" />
-    <Compile Include="BusinesClass\IndentDeptIssFun.cs" />
-    <Compile Include="BusinesClass\IndentIssueFun.cs" />
-    <Compile Include="BusinesClass\IndentReturnFun.cs" />
-    <Compile Include="BusinesClass\DeptOrderFun.cs" />
     <Compile Include="BusinesClass\EmployeeEntry.cs" />
-    <Compile Include="BusinesClass\IndentOrderFun.cs" />
-    <Compile Include="BusinesClass\ItemFun.cs" />
-    <Compile Include="BusinesClass\MainFunction.cs" />
-    <Compile Include="BusinesClass\ManufacturerFun.cs" />
     <Compile Include="BusinesClass\modul_print_reports.cs" />
     <Compile Include="BusinesClass\OpIssueFun.cs" />
-    <Compile Include="BusinesClass\OpLOAFun.cs" />
-    <Compile Include="BusinesClass\RolReCalculationFun.cs" />
     <Compile Include="BusinesClass\SupplierFun.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataBaseMMS2\DataBaseMMS2.csproj">

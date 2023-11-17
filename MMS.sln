@@ -5,13 +5,6 @@ VisualStudioVersion = 15.0.34031.82
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MMS22", "MMS2\MMS22.csproj", "{76F0A6BE-69FF-41BD-B2F2-DE2787A45B0A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C125AB0F-57F0-4081-B40B-9A2F7AC97933}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseMMS2", "DataBaseMMS2\DataBaseMMS2.csproj", "{DD21749D-4ED1-4ACC-B310-0809ABBB5BC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinesClassMMS22", "BusinesClassMMS2\BusinesClassMMS22.csproj", "{97ABF699-4F7B-48F6-8B5F-00D303357F35}"

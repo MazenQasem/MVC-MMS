@@ -78,144 +78,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="AlterMRP.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AlterMRP_mdl.cs" />
-    <Compile Include="Bank.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AdjReceiptModel.cs" />
-    <Compile Include="Models\AdjIssueModel.cs" />
-    <Compile Include="Models\DrugAllergyMdl.cs" />
-    <Compile Include="Manufacturer.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MSFIssueMdl.cs" />
     <Compile Include="Models\ProcMstrComMdl.cs" />
-    <Compile Include="Models\UnitDoseBulkModel.cs" />
-    <Compile Include="Models\PresJustificationModel.cs" />
-    <Compile Include="Models\DrugJustificationModel.cs" />
-    <Compile Include="Models\DirectIpIssuesModel.cs" />
-    <Compile Include="Models\DrugOrderIssueModel.cs" />
     <Compile Include="Models\MainModels.cs" />
     <Compile Include="Models\MedicationErrorMdl.cs" />
-    <Compile Include="Models\IPReturnModel.cs" />
     <Compile Include="Models\WardReturnModel.cs" />
     <Compile Include="Models\MISReptModel.cs" />
-    <Compile Include="Models\PHExclusionModel.cs" />
-    <Compile Include="Batch.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BatchLocator.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BatchLocator_Mdl.cs" />
-    <Compile Include="BatchStore.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Category.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Company.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Copy of BankS.cs" />
-    <Compile Include="Models\LabModel.cs" />
-    <Compile Include="Department.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Doctor.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Employee.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EmpModel.cs" />
-    <Compile Include="Grade.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HISDB.Context.cs">
-      <DependentUpon>HISDB.Context.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="HISDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HISDB.Designer.cs">
-      <DependentUpon>HISDB.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Models\IndentOrderModel.cs" />
-    <Compile Include="Item.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ItemAvgSale.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ItemGroup.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ItemLocation.cs" />
-    <Compile Include="Models\ITEMS.cs" />
-    <Compile Include="ItemStore.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\jQueryDataTableParamModel.cs" />
     <Compile Include="Models\OpIssueModel.cs" />
-    <Compile Include="Models\OpLoaModel.cs" />
     <Compile Include="Models\ManufacturerS.cs" />
     <Compile Include="Models\MessageModel.cs" />
-    <Compile Include="MMS_ItemMaster.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OPBService.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OPLOAOrder.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OPLOAOrderModify.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="OPLOAService.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Packing.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Patient.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PurchaseReceipt.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="PurchaseReceiptDetail.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Rack.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\RolCalcuation_mdl.cs" />
-    <Compile Include="Shelf.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="supplier.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SupplierS.cs" />
     <Compile Include="Models\RptMMSPrnIssue.cs" />
     <Compile Include="Models\TempListMdl.cs" />
-    <Compile Include="TransactionType.cs">
-      <DependentUpon>HISDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DrugInterMdl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -224,36 +99,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="HISDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HISDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="HISDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HISDB.edmx</DependentUpon>
-      <LastGenOutput>HISDB.Context.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="HISDB.edmx.diagram">
-      <DependentUpon>HISDB.edmx</DependentUpon>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="HISDB.edmx.sql" />
-    <Content Include="HISDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HISDB.edmx</DependentUpon>
-      <LastGenOutput>HISDB.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
